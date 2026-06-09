@@ -2034,8 +2034,8 @@ function formatNumber(n) {
 }
 
 function formatCurrency(n) {
-  if (n === null || n === undefined || isNaN(n)) return '0 ?';
-  return Number(n).toLocaleString('vi-VN') + ' ?';
+  if (n === null || n === undefined || isNaN(n)) return '0 \u0111';
+  return Number(n).toLocaleString('vi-VN') + ' \u0111';
 }
 
 function formatDate(dateStr) {
