@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Há»‡ Thá»‘ng Theo DÃµi Tá»“n Kho</title>
-<meta name="description" content="á»¨ng dá»¥ng quáº£n lÃ½ vÃ  theo dÃµi tá»“n kho - Nháº­p xuáº¥t tá»“n kho chuyÃªn nghiá»‡p">
+<title>Hệ Thống Theo Dõi Tồn Kho</title>
+<meta name="description" content="Ứng dụng quản lý và theo dõi tồn kho - Nhập xuất tồn kho chuyên nghiệp">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <!-- SheetJS library for Excel Import/Export -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -48,92 +48,6 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
-}
-
-body.auth-locked {
-  overflow: hidden;
-}
-
-body.auth-locked .app-layout {
-  display: none;
-}
-
-body:not(.auth-locked) .auth-screen {
-  display: none;
-}
-
-.auth-screen {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: radial-gradient(circle at 18% 20%, rgba(34,211,238,0.18), transparent 28%),
-              radial-gradient(circle at 80% 12%, rgba(99,102,241,0.18), transparent 25%),
-              linear-gradient(135deg, #06060e, #101827 58%, #0f172a);
-}
-
-.auth-card {
-  width: min(420px, 100%);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 28px;
-  background: rgba(12,12,29,0.96);
-  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
-}
-
-.auth-card h1 {
-  font-size: 24px;
-  margin-bottom: 6px;
-}
-
-.auth-card p {
-  color: var(--text-secondary);
-  font-size: 13px;
-  margin-bottom: 22px;
-}
-
-.auth-card label {
-  display: block;
-  margin: 14px 0 8px;
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.auth-card input {
-  width: 100%;
-  height: 46px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  color: var(--text-primary);
-  padding: 0 14px;
-  outline: none;
-}
-
-.auth-card input:focus {
-  border-color: var(--info);
-  box-shadow: 0 0 0 3px rgba(6,182,212,0.15);
-}
-
-.auth-card button {
-  width: 100%;
-  height: 46px;
-  margin-top: 22px;
-  border: 0;
-  border-radius: 8px;
-  color: #03111f;
-  background: linear-gradient(135deg, var(--info), var(--primary-hover));
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.auth-error {
-  min-height: 20px;
-  margin-top: 12px;
-  color: #fca5a5;
-  font-size: 13px;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -922,18 +836,59 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 }
 .suggest-item:hover { background: var(--bg-card-hover); color: var(--text-primary); }
 .form-group.has-suggest { position: relative; overflow: visible !important; }
+
+
+body.auth-locked {
+  overflow: hidden;
+}
+
+body.auth-locked .app-layout {
+  display: none;
+}
+
+body:not(.auth-locked) .auth-screen {
+  display: none;
+}
+
+.auth-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(circle at 18% 20%, rgba(34,211,238,0.18), transparent 28%),
+              radial-gradient(circle at 80% 12%, rgba(99,102,241,0.18), transparent 25%),
+              linear-gradient(135deg, #06060e, #101827 58%, #0f172a);
+}
+
+.auth-card {
+  width: min(420px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  background: rgba(12,12,29,0.96);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
+
+.auth-card h1 { font-size: 24px; margin-bottom: 6px; }
+.auth-card p { color: var(--text-secondary); font-size: 13px; margin-bottom: 22px; }
+.auth-card label { display: block; margin: 14px 0 8px; color: var(--text-secondary); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.auth-card input { width: 100%; height: 46px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.06); color: var(--text-primary); padding: 0 14px; outline: none; }
+.auth-card input:focus { border-color: var(--info); box-shadow: 0 0 0 3px rgba(6,182,212,0.15); }
+.auth-card button { width: 100%; height: 46px; margin-top: 22px; border: 0; border-radius: 8px; color: #03111f; background: linear-gradient(135deg, var(--info), var(--primary-hover)); font-weight: 800; cursor: pointer; }
+.auth-error { min-height: 20px; margin-top: 12px; color: #fca5a5; font-size: 13px; }
+
 </style>
 </head>
 <body class="auth-locked">
 <form class="auth-screen" id="authForm" autocomplete="off">
   <div class="auth-card">
-    <h1>Dang nhap BVN</h1>
-    <p>Nhap tai khoan duoc cap de truy cap he thong ton kho.</p>
-    <label for="authUser">Ten dang nhap</label>
+    <h1>??ng nh?p BVN</h1>
+    <p>Nh?p t?i kho?n ???c c?p ?? truy c?p h? th?ng t?n kho.</p>
+    <label for="authUser">T?n ??ng nh?p</label>
     <input id="authUser" type="text" autocomplete="username" required autofocus>
-    <label for="authPass">Mat khau</label>
+    <label for="authPass">M?t kh?u</label>
     <input id="authPass" type="password" autocomplete="current-password" required>
-    <button type="submit">Dang nhap</button>
+    <button type="submit">??ng nh?p</button>
     <div class="auth-error" id="authError" aria-live="polite"></div>
   </div>
 </form>
@@ -956,7 +911,7 @@ tbody td.number { font-variant-numeric: tabular-nums; }
         error.textContent = '';
         unlock();
       } else {
-        error.textContent = 'Sai ten dang nhap hoac mat khau.';
+        error.textContent = 'Sai t?n ??ng nh?p ho?c m?t kh?u.';
         pass.value = '';
         pass.focus();
       }
@@ -965,62 +920,63 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 })();
 </script>
 
-<button class="mobile-toggle" onclick="toggleSidebar()" id="mobileToggle">â˜°</button>
+
+<button class="mobile-toggle" onclick="toggleSidebar()" id="mobileToggle">☰</button>
 
 <div class="app-layout">
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">
-        <div class="logo-icon">ðŸ“¦</div>
-        <h1>Quáº£n LÃ½ Tá»“n Kho<span>Inventory Management System</span></h1>
+        <div class="logo-icon">📦</div>
+        <h1>Quản Lý Tồn Kho<span>Inventory Management System</span></h1>
       </div>
     </div>
 
     <nav class="sidebar-nav">
       <div class="nav-item active" onclick="switchTab('summary')" id="nav-summary">
-        <span class="nav-icon">ðŸ“Š</span> Tá»•ng Há»£p Nháº­p Xuáº¥t Tá»“n
+        <span class="nav-icon">📊</span> Tổng Hợp Nhập Xuất Tồn
       </div>
       <div class="nav-item" onclick="switchTab('report')" id="nav-report">
-        <span class="nav-icon">ðŸ“ˆ</span> BÃ¡o CÃ¡o Tá»•ng Há»£p
+        <span class="nav-icon">📈</span> Báo Cáo Tổng Hợp
       </div>
       <div class="nav-item" onclick="switchTab('category')" id="nav-category">
-        <span class="nav-icon">ðŸ—‚ï¸</span> Danh Má»¥c Váº­t TÆ°
+        <span class="nav-icon">🗂️</span> Danh Mục Vật Tư
       </div>
       <div class="nav-item" onclick="switchTab('opening')" id="nav-opening">
-        <span class="nav-icon">ðŸ“‹</span> Sá»‘ DÆ° Äáº§u Ká»³
+        <span class="nav-icon">📋</span> Số Dư Đầu Kỳ
       </div>
       <div class="nav-item" onclick="switchTab('import')" id="nav-import">
-        <span class="nav-icon">ðŸ“¥</span> Nháº­p Kho
+        <span class="nav-icon">📥</span> Nhập Kho
         <span class="nav-badge" id="badge-import">0</span>
       </div>
       <div class="nav-item" onclick="switchTab('export')" id="nav-export">
-        <span class="nav-icon">ðŸ“¤</span> Xuáº¥t Kho
+        <span class="nav-icon">📤</span> Xuất Kho
         <span class="nav-badge" id="badge-export">0</span>
       </div>
       <div class="nav-item" onclick="switchTab('temporary')" id="nav-temporary">
-        <span class="nav-icon">ðŸ·ï¸</span> Váº­t TÆ° Gá»­i Táº¡m
+        <span class="nav-icon">🏷️</span> Vật Tư Gửi Tạm
       </div>
       <div class="nav-item" onclick="switchTab('lend')" id="nav-lend">
-        <span class="nav-icon">ðŸ¤</span> Xuáº¥t Cho MÆ°á»£n
+        <span class="nav-icon">🤝</span> Xuất Cho Mượn
       </div>
       <div class="nav-item" onclick="switchTab('aging')" id="nav-aging">
-        <span class="nav-icon">â³</span> BÃ¡o CÃ¡o LÆ°u Kho
+        <span class="nav-icon">⏳</span> Báo Cáo Lưu Kho
       </div>
     </nav>
 
     <div class="sidebar-footer">
       <button class="sidebar-btn" onclick="exportData()">
-        <span>ðŸ’¾</span> Sao lÆ°u dá»¯ liá»‡u (JSON)
+        <span>💾</span> Sao lưu dữ liệu (JSON)
       </button>
       <button class="sidebar-btn" onclick="document.getElementById('importFile').click()">
-        <span>ðŸ“‚</span> KhÃ´i phá»¥c dá»¯ liá»‡u
+        <span>📂</span> Khôi phục dữ liệu
       </button>
       <button class="sidebar-btn" onclick="exportExcel()">
-        <span>ðŸ“‘</span> Xuáº¥t bÃ¡o cÃ¡o CSV
+        <span>📑</span> Xuất báo cáo CSV
       </button>
       <button class="sidebar-btn danger" onclick="confirmClearAll()">
-        <span>ðŸ—‘ï¸</span> XÃ³a toÃ n bá»™ dá»¯ liá»‡u
+        <span>🗑️</span> Xóa toàn bộ dữ liệu
       </button>
       <input type="file" id="importFile" class="file-import-hidden" accept=".json" onchange="importData(event)">
     </div>
@@ -1029,57 +985,57 @@ tbody td.number { font-variant-numeric: tabular-nums; }
   <!-- Main Content -->
   <main class="main-content">
 
-    <!-- ===== TAB: Tá»”NG Há»¢P ===== -->
+    <!-- ===== TAB: TỔNG HỢP ===== -->
     <div class="tab-panel active" id="panel-summary">
       <div class="page-header">
         <div class="page-title">
-          Tá»•ng Há»£p Nháº­p Xuáº¥t Tá»“n PhÃ¢n NhÃ³m
-          <span>BÃ¡o cÃ¡o tá»•ng há»£p theo chá»§ng loáº¡i váº­t tÆ°</span>
+          Tổng Hợp Nhập Xuất Tồn Phân Nhóm
+          <span>Báo cáo tổng hợp theo chủng loại vật tư</span>
         </div>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-outline" onclick="exportSummaryExcel()">ðŸ“Š Xuáº¥t Excel</button>
-          <button class="btn btn-outline" onclick="window.print()">ðŸ–¨ï¸ In bÃ¡o cÃ¡o</button>
+          <button class="btn btn-outline" onclick="exportSummaryExcel()">📊 Xuất Excel</button>
+          <button class="btn btn-outline" onclick="window.print()">🖨️ In báo cáo</button>
         </div>
       </div>
 
       <div class="stats-grid" id="summaryStats"></div>
 
       <div class="summary-filters">
-        <label style="font-size:13px;color:var(--text-secondary);">Ká»³ bÃ¡o cÃ¡o:</label>
+        <label style="font-size:13px;color:var(--text-secondary);">Kỳ báo cáo:</label>
         <select id="summaryMonth" onchange="renderSummary()">
-          <option value="1">ThÃ¡ng 1</option><option value="2">ThÃ¡ng 2</option><option value="3">ThÃ¡ng 3</option>
-          <option value="4">ThÃ¡ng 4</option><option value="5">ThÃ¡ng 5</option><option value="6">ThÃ¡ng 6</option>
-          <option value="7">ThÃ¡ng 7</option><option value="8">ThÃ¡ng 8</option><option value="9">ThÃ¡ng 9</option>
-          <option value="10">ThÃ¡ng 10</option><option value="11">ThÃ¡ng 11</option><option value="12">ThÃ¡ng 12</option>
+          <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option>
+          <option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+          <option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option>
+          <option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
         </select>
         <select id="summaryYear" onchange="renderSummary()"></select>
         <label style="margin-left:12px;font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
-          <input type="checkbox" id="summaryWarningOnly" onchange="renderSummary()"> Chá»‰ hiá»‡n cáº£nh bÃ¡o tá»“n tá»‘i thiá»ƒu
+          <input type="checkbox" id="summaryWarningOnly" onchange="renderSummary()"> Chỉ hiện cảnh báo tồn tối thiểu
         </label>
-        <input type="text" id="summarySearch" placeholder="ðŸ” TÃ¬m kiáº¿m mÃ£/tÃªn váº­t tÆ°..." oninput="renderSummary()" style="padding:8px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;width:250px;margin-left:auto;">
+        <input type="text" id="summarySearch" placeholder="🔍 Tìm kiếm mã/tên vật tư..." oninput="renderSummary()" style="padding:8px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;width:250px;margin-left:auto;">
       </div>
 
       <div class="table-card">
         <div class="table-header">
-          <h3>ðŸ“Š Báº£ng tá»•ng há»£p tá»“n kho phÃ¢n nhÃ³m chá»§ng loáº¡i</h3>
+          <h3>📊 Bảng tổng hợp tồn kho phân nhóm chủng loại</h3>
         </div>
         <div class="table-wrapper">
           <table id="summaryTable">
             <thead>
               <tr>
                 <th>STT</th>
-                <th>MÃ£ VT</th>
-                <th class="col-ten-vat-tu">TÃªn Váº­t TÆ°</th>
-                <th>ÄVT</th>
-                <th class="right" style="color:var(--warning)">Tá»“n Tá»‘i Thiá»ƒu</th>
-                <th class="right">SL Äáº§u Ká»³</th>
-                <th class="right">GT Äáº§u Ká»³</th>
-                <th class="right">SL Nháº­p</th>
-                <th class="right">GT Nháº­p</th>
-                <th class="right">SL Xuáº¥t</th>
-                <th class="right">GT Xuáº¥t</th>
-                <th class="right">SL Cuá»‘i Ká»³</th>
-                <th class="right">GT Cuá»‘i Ká»³</th>
+                <th>Mã VT</th>
+                <th class="col-ten-vat-tu">Tên Vật Tư</th>
+                <th>ĐVT</th>
+                <th class="right" style="color:var(--warning)">Tồn Tối Thiểu</th>
+                <th class="right">SL Đầu Kỳ</th>
+                <th class="right">GT Đầu Kỳ</th>
+                <th class="right">SL Nhập</th>
+                <th class="right">GT Nhập</th>
+                <th class="right">SL Xuất</th>
+                <th class="right">GT Xuất</th>
+                <th class="right">SL Cuối Kỳ</th>
+                <th class="right">GT Cuối Kỳ</th>
               </tr>
             </thead>
             <tbody id="summaryBody"></tbody>
@@ -1088,41 +1044,41 @@ tbody td.number { font-variant-numeric: tabular-nums; }
       </div>
     </div>
 
-    <!-- ===== TAB: BÃO CÃO Tá»”NG Há»¢P ===== -->
+    <!-- ===== TAB: BÁO CÁO TỔNG HỢP ===== -->
     <div class="tab-panel" id="panel-report">
       <div class="page-header">
         <div class="page-title">
-          BÃ¡o CÃ¡o Tá»•ng Há»£p
-          <span>BÃ¡o cÃ¡o giÃ¡ trá»‹ nháº­p xuáº¥t tá»“n theo chá»§ng loáº¡i hÃ ng</span>
+          Báo Cáo Tổng Hợp
+          <span>Báo cáo giá trị nhập xuất tồn theo chủng loại hàng</span>
         </div>
-        <button class="btn btn-outline" onclick="window.print()">ðŸ–¨ï¸ In bÃ¡o cÃ¡o</button>
+        <button class="btn btn-outline" onclick="window.print()">🖨️ In báo cáo</button>
       </div>
 
       <div class="summary-filters">
-        <label style="font-size:13px;color:var(--text-secondary);">Ká»³ bÃ¡o cÃ¡o:</label>
+        <label style="font-size:13px;color:var(--text-secondary);">Kỳ báo cáo:</label>
         <select id="reportMonth" onchange="renderReport()">
-          <option value="1">ThÃ¡ng 1</option><option value="2">ThÃ¡ng 2</option><option value="3">ThÃ¡ng 3</option>
-          <option value="4">ThÃ¡ng 4</option><option value="5">ThÃ¡ng 5</option><option value="6">ThÃ¡ng 6</option>
-          <option value="7">ThÃ¡ng 7</option><option value="8">ThÃ¡ng 8</option><option value="9">ThÃ¡ng 9</option>
-          <option value="10">ThÃ¡ng 10</option><option value="11">ThÃ¡ng 11</option><option value="12">ThÃ¡ng 12</option>
+          <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option>
+          <option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+          <option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option>
+          <option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
         </select>
         <select id="reportYear" onchange="renderReport()"></select>
       </div>
 
       <div class="table-card">
         <div class="table-header">
-          <h3>ðŸ“ˆ BÃ¡o cÃ¡o giÃ¡ trá»‹ theo chá»§ng loáº¡i hÃ ng</h3>
+          <h3>📈 Báo cáo giá trị theo chủng loại hàng</h3>
         </div>
         <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>STT</th>
-                <th>Chá»§ng Loáº¡i HÃ ng</th>
-                <th class="right">GiÃ¡ Trá»‹ Äáº§u Ká»³</th>
-                <th class="right">GiÃ¡ Trá»‹ Nháº­p</th>
-                <th class="right">GiÃ¡ Trá»‹ Xuáº¥t</th>
-                <th class="right">GiÃ¡ Trá»‹ Tá»“n Kho</th>
+                <th>Chủng Loại Hàng</th>
+                <th class="right">Giá Trị Đầu Kỳ</th>
+                <th class="right">Giá Trị Nhập</th>
+                <th class="right">Giá Trị Xuất</th>
+                <th class="right">Giá Trị Tồn Kho</th>
               </tr>
             </thead>
             <tbody id="reportBody"></tbody>
@@ -1131,56 +1087,56 @@ tbody td.number { font-variant-numeric: tabular-nums; }
       </div>
     </div>
 
-    <!-- ===== TAB: DANH Má»¤C Váº¬T TÆ¯ ===== -->
+    <!-- ===== TAB: DANH MỤC VẬT TƯ ===== -->
     <div class="tab-panel" id="panel-category">
       <div class="page-header">
         <div class="page-title">
-          Danh Má»¥c Váº­t TÆ° Há»‡ Thá»‘ng
-          <span>Khai bÃ¡o mÃ£ hÃ ng, tÃªn hÃ ng vÃ  phÃ¢n loáº¡i chá»§ng loáº¡i</span>
+          Danh Mục Vật Tư Hệ Thống
+          <span>Khai báo mã hàng, tên hàng và phân loại chủng loại</span>
         </div>
       </div>
 
       <div class="form-card open" id="categoryFormCard">
         <div class="form-card-header" onclick="toggleFormCard('categoryFormCard')">
-          <h3>âž• ThÃªm váº­t tÆ° má»›i vÃ o danh má»¥c</h3>
+          <h3>➕ Thêm vật tư mới vào danh mục</h3>
           <span class="toggle-icon">â–¼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
             <div class="form-grid">
               <div class="form-group">
-                <label>MÃ£ hÃ ng <span class="req">*</span></label>
+                <label>Mã hàng <span class="req">*</span></label>
                 <input type="text" id="cat_maHang" placeholder="VD: VT001">
               </div>
               <div class="form-group">
-                <label>TÃªn hÃ ng <span class="req">*</span></label>
-                <input type="text" id="cat_tenHang" placeholder="TÃªn phá»¥ tÃ¹ng, váº­t tÆ°">
+                <label>Tên hàng <span class="req">*</span></label>
+                <input type="text" id="cat_tenHang" placeholder="Tên phụ tùng, vật tư">
               </div>
               <div class="form-group">
-                <label>ÄÆ¡n vá»‹ tÃ­nh <span class="req">*</span></label>
-                <input type="text" id="cat_dvt" placeholder="CÃ¡i, Bá»™, Kg, LÃ­t...">
+                <label>Đơn vị tính <span class="req">*</span></label>
+                <input type="text" id="cat_dvt" placeholder="Cái, Bộ, Kg, Lít...">
               </div>
               <div class="form-group">
-                <label>Chá»§ng loáº¡i <span class="req">*</span></label>
+                <label>Chủng loại <span class="req">*</span></label>
                 <select id="cat_chungLoai">
-                  <option value="A">A - MÃ¡y Ã©p viÃªn Andritz</option>
-                  <option value="B">B - MÃ¡y nghiá»n ANDRITZ VÃ€ SHT</option>
-                  <option value="C">C - Kho phá»¥ tÃ¹ng mÃ¡y BÄƒm dÄƒm</option>
-                  <option value="D">D - Kho Dáº§u - Nhá»›t - Má»¡</option>
-                  <option value="E">E - Kho váº­t tÆ° há»‡ thá»‘ng phá»¥ trá»£</option>
-                  <option value="F">F - Kho cÃ´ng cá»¥ dá»¥ng cá»¥</option>
-                  <option value="G">G - Váº­t tÆ° phá»¥</option>
-                  <option value="Z">Z - Kho cho mÆ°á»£n</option>
+                  <option value="A">A - Máy ép viên Andritz</option>
+                  <option value="B">B - Máy nghiền ANDRITZ VÀ SHT</option>
+                  <option value="C">C - Kho phụ tùng máy Băm dăm</option>
+                  <option value="D">D - Kho Dầu - Nhớt - Mỡ</option>
+                  <option value="E">E - Kho vật tư hệ thống phụ trợ</option>
+                  <option value="F">F - Kho công cụ dụng cụ</option>
+                  <option value="G">G - Vật tư phụ</option>
+                  <option value="Z">Z - Kho cho mượn</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Tá»“n kho tá»‘i thiá»ƒu</label>
+                <label>Tồn kho tối thiểu</label>
                 <input type="number" id="cat_tonKhoToiThieu" placeholder="VD: 10" min="0">
               </div>
             </div>
             <div class="form-actions">
               <button class="btn btn-outline" onclick="resetCategoryForm()">Há»§y</button>
-              <button class="btn btn-primary" onclick="addCategoryMaterial()">ðŸ’¾ LÆ°u danh má»¥c</button>
+              <button class="btn btn-primary" onclick="addCategoryMaterial()">💾 Lưu danh mục</button>
             </div>
           </div>
         </div>
@@ -1188,14 +1144,14 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 
       <div class="table-card">
         <div class="table-header">
-          <h3>ðŸ—‚ï¸ Danh sÃ¡ch danh má»¥c váº­t tÆ° Ä‘Ã£ Ä‘Äƒng kÃ½</h3>
+          <h3>🗂️ Danh sách danh mục vật tư đã đăng ký</h3>
           <div class="table-controls">
-            <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('category')">ðŸ“ Táº£i File Máº«u Excel</button>
-            <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('category')">ðŸ“¥ Xuáº¥t Excel</button>
-            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelCategory').click()">ðŸ“¤ Nháº­p Excel</button>
+            <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('category')">📝 Tải File Mẫu Excel</button>
+            <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('category')">📥 Xuất Excel</button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelCategory').click()">📤 Nhập Excel</button>
             <input type="file" id="importExcelCategory" style="display:none;" accept=".xlsx, .xls" onchange="importExcelSheet(event, 'category')">
             <div class="table-search">
-              <input type="text" placeholder="ðŸ” TÃ¬m kiáº¿m..." id="searchCategory" oninput="renderCategory()">
+              <input type="text" placeholder="🔍 Tìm kiếm..." id="searchCategory" oninput="renderCategory()">
             </div>
           </div>
         </div>
@@ -1204,70 +1160,70 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>MÃ£ HÃ ng</th>
-                <th class="col-ten-vat-tu">TÃªn HÃ ng</th>
-                <th>ÄÆ¡n Vá»‹ TÃ­nh</th>
-                <th>Chá»§ng Loáº¡i</th>
-                <th class="right">Tá»“n Tá»‘i Thiá»ƒu</th>
-                <th>Thao TÃ¡c</th>
+                <th>Mã Hàng</th>
+                <th class="col-ten-vat-tu">Tên Hàng</th>
+                <th>Đơn Vị Tính</th>
+                <th>Chủng Loại</th>
+                <th class="right">Tồn Tối Thiểu</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody id="categoryBody"></tbody>
           </table>
         </div>
         <div class="table-footer">
-          <span id="categoryCount">0 váº­t tÆ°</span>
+          <span id="categoryCount">0 vật tư</span>
           <span></span>
         </div>
       </div>
     </div>
 
-    <!-- ===== TAB: Sá» DÆ¯ Äáº¦U Ká»² ===== -->
+    <!-- ===== TAB: SỐ DƯ ĐẦU KỲ ===== -->
     <div class="tab-panel" id="panel-opening">
       <div class="page-header">
         <div class="page-title">
-          Khai BÃ¡o Sá»‘ DÆ° Äáº§u Ká»³
-          <span>Nháº­p tá»“n kho ban Ä‘áº§u cho há»‡ thá»‘ng</span>
+          Khai Báo Số Dư Đầu Kỳ
+          <span>Nhập tồn kho ban đầu cho hệ thống</span>
         </div>
       </div>
 
       <div class="form-card open" id="openingFormCard">
         <div class="form-card-header" onclick="toggleFormCard('openingFormCard')">
-          <h3>âž• ThÃªm váº­t tÆ° Ä‘áº§u ká»³</h3>
+          <h3>➕ Thêm vật tư đầu kỳ</h3>
           <span class="toggle-icon">â–¼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
             <div class="form-grid">
               <div class="form-group has-suggest">
-                <label>MÃ£ váº­t tÆ° <span class="req">*</span></label>
-                <input type="text" id="op_maVatTu" placeholder="Nháº­p mÃ£ hoáº·c chá»n tá»« gá»£i Ã½" oninput="suggestMaterial('op')" onfocus="suggestMaterial('op')">
+                <label>Mã vật tư <span class="req">*</span></label>
+                <input type="text" id="op_maVatTu" placeholder="Nhập mã hoặc chọn từ gợi ý" oninput="suggestMaterial('op')" onfocus="suggestMaterial('op')">
                 <div class="suggest-dropdown" id="op_suggest"></div>
               </div>
               <div class="form-group">
-                <label>TÃªn váº­t tÆ° <span class="req">*</span></label>
-                <input type="text" id="op_tenVatTu" placeholder="Nháº­p tÃªn váº­t tÆ°">
+                <label>Tên vật tư <span class="req">*</span></label>
+                <input type="text" id="op_tenVatTu" placeholder="Nhập tên vật tư">
               </div>
               <div class="form-group">
-                <label>ÄÆ¡n vá»‹ tÃ­nh <span class="req">*</span></label>
-                <input type="text" id="op_dvt" placeholder="VD: CÃ¡i, Kg, Há»™p">
+                <label>Đơn vị tính <span class="req">*</span></label>
+                <input type="text" id="op_dvt" placeholder="VD: Cái, Kg, Hộp">
               </div>
               <div class="form-group">
-                <label>Sá»‘ lÆ°á»£ng <span class="req">*</span></label>
+                <label>Số lượng <span class="req">*</span></label>
                 <input type="number" id="op_soLuong" placeholder="0" min="0">
               </div>
               <div class="form-group">
-                <label>ÄÆ¡n giÃ¡</label>
+                <label>Đơn giá</label>
                 <input type="number" id="op_donGia" placeholder="0" min="0">
               </div>
               <div class="form-group">
-                <label>ThÃ nh tiá»n</label>
-                <input type="text" id="op_thanhTien" readonly placeholder="Tá»± Ä‘á»™ng tÃ­nh">
+                <label>Thành tiền</label>
+                <input type="text" id="op_thanhTien" readonly placeholder="Tự động tính">
               </div>
             </div>
             <div class="form-actions">
               <button class="btn btn-outline" onclick="resetOpeningForm()">Há»§y</button>
-              <button class="btn btn-primary" onclick="addOpening()">ðŸ’¾ LÆ°u</button>
+              <button class="btn btn-primary" onclick="addOpening()">💾 Lưu</button>
             </div>
           </div>
         </div>
@@ -1275,14 +1231,14 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 
       <div class="table-card">
         <div class="table-header">
-          <h3>ðŸ“‹ Danh sÃ¡ch váº­t tÆ° Ä‘áº§u ká»³</h3>
+          <h3>📋 Danh sách vật tư đầu kỳ</h3>
           <div class="table-controls">
-            <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('opening')">ðŸ“ Táº£i File Máº«u Excel</button>
-            <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('opening')">ðŸ“¥ Xuáº¥t Excel</button>
-            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelOpening').click()">ðŸ“¤ Nháº­p Excel</button>
+            <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('opening')">📝 Tải File Mẫu Excel</button>
+            <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('opening')">📥 Xuất Excel</button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelOpening').click()">📤 Nhập Excel</button>
             <input type="file" id="importExcelOpening" style="display:none;" accept=".xlsx, .xls" onchange="importExcelSheet(event, 'opening')">
             <div class="table-search">
-              <input type="text" placeholder="ðŸ” TÃ¬m kiáº¿m..." id="searchOpening" oninput="renderOpening()">
+              <input type="text" placeholder="🔍 Tìm kiếm..." id="searchOpening" oninput="renderOpening()">
             </div>
           </div>
         </div>
@@ -1291,78 +1247,78 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>MÃ£ Váº­t TÆ°</th>
-                <th>TÃªn Váº­t TÆ°</th>
-                <th>ÄVT</th>
-                <th class="right">Sá»‘ LÆ°á»£ng</th>
-                <th class="right">ÄÆ¡n GiÃ¡</th>
-                <th class="right">ThÃ nh Tiá»n</th>
-                <th>Thao TÃ¡c</th>
+                <th>Mã Vật Tư</th>
+                <th>Tên Vật Tư</th>
+                <th>ĐVT</th>
+                <th class="right">Số Lượng</th>
+                <th class="right">Đơn Giá</th>
+                <th class="right">Thành Tiền</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody id="openingBody"></tbody>
           </table>
         </div>
         <div class="table-footer">
-          <span id="openingCount">0 váº­t tÆ°</span>
-          <span id="openingTotal">Tá»•ng giÃ¡ trá»‹: 0 â‚«</span>
+          <span id="openingCount">0 vật tư</span>
+          <span id="openingTotal">Tổng giá trị: 0 ₫</span>
         </div>
       </div>
     </div>
 
-    <!-- ===== TAB: NHáº¬P KHO ===== -->
+    <!-- ===== TAB: NHẬP KHO ===== -->
     <div class="tab-panel" id="panel-import">
       <div class="page-header">
         <div class="page-title">
-          Nháº­p Kho ChuyÃªn Nghiá»‡p
-          <span>Láº­p phiáº¿u nháº­p kho nhiá»u máº·t hÃ ng & kiá»ƒm tra biáº¿n Ä‘á»™ng giÃ¡</span>
+          Nhập Kho Chuyên Nghiệp
+          <span>Lập phiếu nhập kho nhiều mặt hàng & kiểm tra biến động giá</span>
         </div>
       </div>
 
       <div class="form-card open" id="importFormCard">
         <div class="form-card-header" onclick="toggleFormCard('importFormCard')">
-          <h3>âž• Láº¬P PHIáº¾U NHáº¬P KHO Má»šI (Nhiá»u dÃ²ng)</h3>
+          <h3>➕ LẬP PHIẾU NHẬP KHO MỚI (Nhiều dòng)</h3>
           <span class="toggle-icon">â–¼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
-            <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;">ðŸ“‹ 1. ThÃ´ng tin chung phiáº¿u</h4>
+            <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;">📋 1. Thông tin chung phiếu</h4>
             <div class="form-grid" style="margin-bottom:20px;">
               <div class="form-group">
-                <label>NgÃ y nháº­p <span class="req">*</span></label>
+                <label>Ngày nhập <span class="req">*</span></label>
                 <input type="date" id="im_ngayNhap">
               </div>
               <div class="form-group">
-                <label>Sá»‘ phiáº¿u nháº­p <span class="req">*</span></label>
+                <label>Số phiếu nhập <span class="req">*</span></label>
                 <input type="text" id="im_soPhieu" placeholder="VD: PN2606-001">
               </div>
               <div class="form-group">
-                <label>NhÃ  cung cáº¥p</label>
-                <input type="text" id="im_ncc" placeholder="TÃªn NCC">
+                <label>Nhà cung cấp</label>
+                <input type="text" id="im_ncc" placeholder="Tên NCC">
               </div>
               <div class="form-group">
-                <label>Ghi chÃº phiáº¿u</label>
-                <input type="text" id="im_ghiChu" placeholder="Ghi chÃº chung">
+                <label>Ghi chú phiếu</label>
+                <input type="text" id="im_ghiChu" placeholder="Ghi chú chung">
               </div>
             </div>
 
             <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;display:flex;justify-content:space-between;align-items:center;">
-              <span>ðŸ“¦ 2. Chi tiáº¿t danh sÃ¡ch váº­t tÆ° nháº­p</span>
-              <button class="btn btn-primary btn-sm" onclick="addVoucherItemRow('import')" style="padding:4px 10px;">âž• ThÃªm máº·t hÃ ng</button>
+              <span>📦 2. Chi tiết danh sách vật tư nhập</span>
+              <button class="btn btn-primary btn-sm" onclick="addVoucherItemRow('import')" style="padding:4px 10px;">➕ Thêm mặt hàng</button>
             </h4>
             
             <!-- Multi-row container -->
             <div id="importVoucherItemsContainer" class="voucher-lines-scroll" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
-              <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">Tá»”NG Cá»˜NG GIÃ TRá»Š PHIáº¾U:</span>
-              <span id="importVoucherTotal" style="font-weight:800;font-size:18px;color:var(--success);">0 â‚«</span>
+              <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">TỔNG CỘNG GIÁ TRỊ PHIẾU:</span>
+              <span id="importVoucherTotal" style="font-weight:800;font-size:18px;color:var(--success);">0 â'«</span>
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-outline" onclick="resetImportForm()">XÃ³a phiáº¿u lÃ m láº¡i</button>
-              <button class="btn btn-outline" onclick="printVoucher('import')">ðŸ–¨ï¸ In phiáº¿u nháº­p</button>
-              <button class="btn btn-success" onclick="saveImportVoucher()">ðŸ“¥ LÆ°u Phiáº¿u Nháº­p Kho</button>
+              <button class="btn btn-outline" onclick="resetImportForm()">Xóa phiếu làm lại</button>
+              <button class="btn btn-outline" onclick="printVoucher('import')">🖨️ In phiếu nhập</button>
+              <button class="btn btn-success" onclick="saveImportVoucher()">📥 Lưu Phiếu Nhập Kho</button>
             </div>
           </div>
         </div>
@@ -1371,11 +1327,11 @@ tbody td.number { font-variant-numeric: tabular-nums; }
       <div class="table-card">
         <div class="table-header" style="flex-direction:column;align-items:stretch;gap:16px;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-            <h3>ðŸ“¥ Lá»‹ch sá»­ nháº­p kho</h3>
+            <h3>📥 Lịch sử nhập kho</h3>
             <div class="table-controls">
-              <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('import')">ðŸ“ Táº£i File Máº«u Excel</button>
-              <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('import')">ðŸ“¥ Xuáº¥t Excel</button>
-              <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelImport').click()">ðŸ“¤ Nháº­p Excel</button>
+              <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('import')">📝 Tải File Mẫu Excel</button>
+              <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('import')">📥 Xuất Excel</button>
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelImport').click()">📤 Nhập Excel</button>
               <input type="file" id="importExcelImport" style="display:none;" accept=".xlsx, .xls" onchange="importExcelSheet(event, 'import')">
             </div>
           </div>
@@ -1383,22 +1339,22 @@ tbody td.number { font-variant-numeric: tabular-nums; }
           <!-- Multi-field Filters -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div class="form-group" style="margin:0;">
-              <input type="date" id="filterImportFromDate" onchange="renderImports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Tá»« ngÃ y">
+              <input type="date" id="filterImportFromDate" onchange="renderImports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Từ ngày">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="date" id="filterImportToDate" onchange="renderImports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Äáº¿n ngÃ y">
+              <input type="date" id="filterImportToDate" onchange="renderImports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Đến ngày">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterImportSoPhieu" oninput="renderImports()" placeholder="Sá»‘ phiáº¿u..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterImportSoPhieu" oninput="renderImports()" placeholder="Số phiếu..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterImportMaTen" oninput="renderImports()" placeholder="MÃ£/TÃªn váº­t tÆ°..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterImportMaTen" oninput="renderImports()" placeholder="Mã/Tên vật tư..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterImportNCC" oninput="renderImports()" placeholder="NhÃ  cung cáº¥p..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterImportNCC" oninput="renderImports()" placeholder="Nhà cung cấp..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div style="display:flex;align-items:center;">
-              <button class="btn btn-outline btn-sm" onclick="clearImportFilters()" style="height:32px;width:100%;justify-content:center;">ðŸ§¹ XÃ³a bá»™ lá»c</button>
+              <button class="btn btn-outline btn-sm" onclick="clearImportFilters()" style="height:32px;width:100%;justify-content:center;">🧹 Xóa bộ lọc</button>
             </div>
           </div>
         </div>
@@ -1410,88 +1366,88 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>NgÃ y Nháº­p</th>
-                <th>Sá»‘ Phiáº¿u</th>
-                <th>MÃ£ VT</th>
-                <th>TÃªn Váº­t TÆ°</th>
-                <th>ÄVT</th>
+                <th>Ngày Nhập</th>
+                <th>Số Phiếu</th>
+                <th>Mã VT</th>
+                <th>Tên Vật Tư</th>
+                <th>ĐVT</th>
                 <th class="right">SL</th>
-                <th class="right">ÄÆ¡n GiÃ¡ Mua</th>
-                <th class="right">GiÃ¡ Gáº§n Nháº¥t</th>
-                <th class="right">% Biáº¿n Äá»™ng</th>
-                <th class="right">ThÃ nh Tiá»n</th>
+                <th class="right">Đơn Giá Mua</th>
+                <th class="right">Giá Gần Nhất</th>
+                <th class="right">% Biến Động</th>
+                <th class="right">Thành Tiền</th>
                 <th>NCC</th>
-                <th>Ghi ChÃº</th>
-                <th>Thao TÃ¡c</th>
+                <th>Ghi Chú</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody id="importBody"></tbody>
           </table>
         </div>
         <div class="table-footer">
-          <span id="importCount">0 dÃ²ng</span>
-          <span id="importTotal">Tá»•ng giÃ¡ trá»‹ nháº­p: 0 â‚«</span>
+          <span id="importCount">0 dòng</span>
+          <span id="importTotal">Tổng giá trị nhập: 0 ₫</span>
         </div>
       </div>
     </div>
 
-    <!-- ===== TAB: XUáº¤T KHO ===== -->
+    <!-- ===== TAB: XUẤT KHO ===== -->
     <div class="tab-panel" id="panel-export">
       <div class="page-header">
         <div class="page-title">
-          Xuáº¥t Kho ChuyÃªn Nghiá»‡p
-          <span>Láº­p phiáº¿u xuáº¥t kho nhiá»u máº·t hÃ ng & kiá»ƒm tra tá»“n kho</span>
+          Xuất Kho Chuyên Nghiệp
+          <span>Lập phiếu xuất kho nhiều mặt hàng & kiểm tra tồn kho</span>
         </div>
       </div>
 
       <div class="form-card open" id="exportFormCard">
         <div class="form-card-header" onclick="toggleFormCard('exportFormCard')">
-          <h3>âž• Láº¬P PHIáº¾U XUáº¤T KHO Má»šI (Nhiá»u dÃ²ng)</h3>
+          <h3>➕ LẬP PHIẾU XUẤT KHO MỚI (Nhiều dòng)</h3>
           <span class="toggle-icon">â–¼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
-            <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;">ðŸ“‹ 1. ThÃ´ng tin chung phiáº¿u</h4>
+            <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;">📋 1. Thông tin chung phiếu</h4>
             <div class="form-grid" style="margin-bottom:20px;">
               <div class="form-group">
-                <label>NgÃ y xuáº¥t <span class="req">*</span></label>
+                <label>Ngày xuất <span class="req">*</span></label>
                 <input type="date" id="ex_ngayXuat">
               </div>
               <div class="form-group">
-                <label>Sá»‘ phiáº¿u xuáº¥t <span class="req">*</span></label>
+                <label>Số phiếu xuất <span class="req">*</span></label>
                 <input type="text" id="ex_soPhieu" placeholder="VD: PX2606-001">
               </div>
               <div class="form-group">
-                <label>NgÆ°á»i nháº­n</label>
-                <input type="text" id="ex_nguoiNhan" placeholder="TÃªn ngÆ°á»i nháº­n">
+                <label>Người nhận</label>
+                <input type="text" id="ex_nguoiNhan" placeholder="Tên người nhận">
               </div>
               <div class="form-group">
-                <label>Bá»™ pháº­n nháº­n</label>
-                <input type="text" id="ex_boPhan" placeholder="Bá»™ pháº­n nháº­n">
+                <label>Bộ phận nhận</label>
+                <input type="text" id="ex_boPhan" placeholder="Bộ phận nhận">
               </div>
               <div class="form-group">
-                <label>Ghi chÃº phiáº¿u</label>
-                <input type="text" id="ex_ghiChu" placeholder="Ghi chÃº chung">
+                <label>Ghi chú phiếu</label>
+                <input type="text" id="ex_ghiChu" placeholder="Ghi chú chung">
               </div>
             </div>
 
             <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;display:flex;justify-content:space-between;align-items:center;">
-              <span>ðŸ“¤ 2. Chi tiáº¿t danh sÃ¡ch váº­t tÆ° xuáº¥t</span>
-              <button class="btn btn-danger btn-sm" onclick="addVoucherItemRow('export')" style="padding:4px 10px;">âž• ThÃªm máº·t hÃ ng</button>
+              <span>📤 2. Chi tiết danh sách vật tư xuất</span>
+              <button class="btn btn-danger btn-sm" onclick="addVoucherItemRow('export')" style="padding:4px 10px;">➕ Thêm mặt hàng</button>
             </h4>
             
             <!-- Multi-row container -->
             <div id="exportVoucherItemsContainer" class="voucher-lines-scroll" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
-              <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">Tá»”NG Cá»˜NG GIÃ Vá»N PHIáº¾U XUáº¤T:</span>
-              <span id="exportVoucherTotal" style="font-weight:800;font-size:18px;color:var(--danger);">0 â‚«</span>
+              <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">TỔNG CỘNG GIÁ VỐN PHIẾU XUẤT:</span>
+              <span id="exportVoucherTotal" style="font-weight:800;font-size:18px;color:var(--danger);">0 â'«</span>
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-outline" onclick="resetExportForm()">XÃ³a phiáº¿u lÃ m láº¡i</button>
-              <button class="btn btn-outline" onclick="printVoucher('export')">ðŸ–¨ï¸ In phiáº¿u xuáº¥t</button>
-              <button class="btn btn-danger" onclick="saveExportVoucher()">ðŸ“¤ LÆ°u Phiáº¿u Xuáº¥t Kho</button>
+              <button class="btn btn-outline" onclick="resetExportForm()">Xóa phiếu làm lại</button>
+              <button class="btn btn-outline" onclick="printVoucher('export')">🖨️ In phiếu xuất</button>
+              <button class="btn btn-danger" onclick="saveExportVoucher()">📤 Lưu Phiếu Xuất Kho</button>
             </div>
           </div>
         </div>
@@ -1500,11 +1456,11 @@ tbody td.number { font-variant-numeric: tabular-nums; }
       <div class="table-card">
         <div class="table-header" style="flex-direction:column;align-items:stretch;gap:16px;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-            <h3>ðŸ“¤ Lá»‹ch sá»­ xuáº¥t kho</h3>
+            <h3>📤 Lịch sử xuất kho</h3>
             <div class="table-controls">
-              <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('export')">ðŸ“ Táº£i File Máº«u Excel</button>
-              <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('export')">ðŸ“¥ Xuáº¥t Excel</button>
-              <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelExport').click()">ðŸ“¤ Nháº­p Excel</button>
+              <button class="btn btn-outline btn-sm" onclick="downloadSampleExcel('export')">📝 Tải File Mẫu Excel</button>
+              <button class="btn btn-outline btn-sm" onclick="exportExcelSheet('export')">📥 Xuất Excel</button>
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelExport').click()">📤 Nhập Excel</button>
               <input type="file" id="importExcelExport" style="display:none;" accept=".xlsx, .xls" onchange="importExcelSheet(event, 'export')">
             </div>
           </div>
@@ -1512,25 +1468,25 @@ tbody td.number { font-variant-numeric: tabular-nums; }
           <!-- Multi-field Filters -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));gap:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div class="form-group" style="margin:0;">
-              <input type="date" id="filterExportFromDate" onchange="renderExports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Tá»« ngÃ y">
+              <input type="date" id="filterExportFromDate" onchange="renderExports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Từ ngày">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="date" id="filterExportToDate" onchange="renderExports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Äáº¿n ngÃ y">
+              <input type="date" id="filterExportToDate" onchange="renderExports()" style="padding:6px 10px;font-size:12px;width:100%;height:32px;" title="Đến ngày">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterExportSoPhieu" oninput="renderExports()" placeholder="Sá»‘ phiáº¿u..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterExportSoPhieu" oninput="renderExports()" placeholder="Số phiếu..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterExportMaTen" oninput="renderExports()" placeholder="MÃ£/TÃªn hÃ ng..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterExportMaTen" oninput="renderExports()" placeholder="Mã/Tên hàng..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterExportNguoiNhan" oninput="renderExports()" placeholder="NgÆ°á»i nháº­n..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterExportNguoiNhan" oninput="renderExports()" placeholder="Người nhận..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div class="form-group" style="margin:0;">
-              <input type="text" id="filterExportBoPhan" oninput="renderExports()" placeholder="Bá»™ pháº­n..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
+              <input type="text" id="filterExportBoPhan" oninput="renderExports()" placeholder="Bộ phận..." style="padding:6px 10px;font-size:12px;width:100%;height:32px;">
             </div>
             <div style="display:flex;align-items:center;">
-              <button class="btn btn-outline btn-sm" onclick="clearExportFilters()" style="height:32px;width:100%;justify-content:center;">ðŸ§¹ XÃ³a bá»™ lá»c</button>
+              <button class="btn btn-outline btn-sm" onclick="clearExportFilters()" style="height:32px;width:100%;justify-content:center;">🧹 Xóa bộ lọc</button>
             </div>
           </div>
         </div>
@@ -1542,86 +1498,86 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>NgÃ y Xuáº¥t</th>
-                <th>Sá»‘ Phiáº¿u</th>
-                <th>MÃ£ HÃ ng</th>
-                <th>TÃªn HÃ ng</th>
-                <th>ÄVT</th>
+                <th>Ngày Xuất</th>
+                <th>Số Phiếu</th>
+                <th>Mã Hàng</th>
+                <th>Tên Hàng</th>
+                <th>ĐVT</th>
                 <th class="right">SL</th>
-                <th class="right">ÄÆ¡n GiÃ¡ Vá»‘n</th>
-                <th class="right">Tá»•ng GiÃ¡ Vá»‘n</th>
-                <th class="right">Tá»“n Sau Xuáº¥t</th>
-                <th>NgÆ°á»i Nháº­n</th>
-                <th>Bá»™ Pháº­n</th>
-                <th>Ghi ChÃº</th>
-                <th>Thao TÃ¡c</th>
+                <th class="right">Đơn Giá Vốn</th>
+                <th class="right">Tổng Giá Vốn</th>
+                <th class="right">Tồn Sau Xuất</th>
+                <th>Người Nhận</th>
+                <th>Bộ Phận</th>
+                <th>Ghi Chú</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody id="exportBody"></tbody>
           </table>
         </div>
         <div class="table-footer">
-          <span id="exportCount">0 dÃ²ng</span>
-          <span id="exportTotal">Tá»•ng giÃ¡ trá»‹ xuáº¥t: 0 â‚«</span>
+          <span id="exportCount">0 dòng</span>
+          <span id="exportTotal">Tổng giá trị xuất: 0 ₫</span>
         </div>
       </div>
     </div>
 
-    <!-- ===== TAB: XUáº¤T CHO MÆ¯á»¢N ===== -->
+    <!-- ===== TAB: XUẤT CHO MƯỢN ===== -->
     <div class="tab-panel" id="panel-lend">
       <div class="page-header">
         <div class="page-title">
-          Quáº£n LÃ½ MÆ°á»£n Tráº£ Váº­t TÆ°
-          <span>Theo dÃµi váº­t tÆ° xuáº¥t cho mÆ°á»£n vÃ  thu há»“i</span>
+          Quản Lý Mượn Trả Vật Tư
+          <span>Theo dõi vật tư xuất cho mượn và thu hồi</span>
         </div>
       </div>
 
       <div class="form-card open" id="lendFormCard">
         <div class="form-card-header" onclick="toggleFormCard('lendFormCard')">
-          <h3>âž• Láº¬P PHIáº¾U XUáº¤T CHO MÆ¯á»¢N (Nhiá»u dÃ²ng)</h3>
+          <h3>➕ LẬP PHIẾU XUẤT CHO MƯỢN (Nhiều dòng)</h3>
           <span class="toggle-icon">â–¼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
-            <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;">ðŸ“‹ 1. ThÃ´ng tin chung phiáº¿u</h4>
+            <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;">📋 1. Thông tin chung phiếu</h4>
             <div class="form-grid" style="margin-bottom:20px;">
               <div class="form-group">
-                <label>NgÃ y xuáº¥t mÆ°á»£n <span class="req">*</span></label>
+                <label>Ngày xuất mượn <span class="req">*</span></label>
                 <input type="date" id="lend_ngayXuat">
               </div>
               <div class="form-group">
-                <label>Sá»‘ phiáº¿u mÆ°á»£n <span class="req">*</span></label>
+                <label>Số phiếu mượn <span class="req">*</span></label>
                 <input type="text" id="lend_soPhieu" placeholder="VD: PM2606-001">
               </div>
               <div class="form-group">
-                <label>NgÆ°á»i mÆ°á»£n</label>
-                <input type="text" id="lend_nguoiNhan" placeholder="TÃªn ngÆ°á»i mÆ°á»£n">
+                <label>Người mượn</label>
+                <input type="text" id="lend_nguoiNhan" placeholder="Tên người mượn">
               </div>
               <div class="form-group">
-                <label>Bá»™ pháº­n mÆ°á»£n</label>
-                <input type="text" id="lend_boPhan" placeholder="Bá»™ pháº­n">
+                <label>Bộ phận mượn</label>
+                <input type="text" id="lend_boPhan" placeholder="Bộ phận">
               </div>
               <div class="form-group">
-                <label>Ghi chÃº</label>
-                <input type="text" id="lend_ghiChu" placeholder="Ghi chÃº">
+                <label>Ghi chú</label>
+                <input type="text" id="lend_ghiChu" placeholder="Ghi chú">
               </div>
             </div>
 
             <h4 style="margin-bottom:12px;font-size:13px;color:var(--primary-hover);text-transform:uppercase;letter-spacing:0.5px;display:flex;justify-content:space-between;align-items:center;">
-              <span>ðŸ“¤ 2. Chi tiáº¿t danh sÃ¡ch váº­t tÆ° cho mÆ°á»£n</span>
-              <button class="btn btn-warning btn-sm" onclick="addVoucherItemRow('lend')" style="padding:4px 10px;">âž• ThÃªm máº·t hÃ ng</button>
+              <span>📤 2. Chi tiết danh sách vật tư cho mượn</span>
+              <button class="btn btn-warning btn-sm" onclick="addVoucherItemRow('lend')" style="padding:4px 10px;">➕ Thêm mặt hàng</button>
             </h4>
             
             <div id="lendVoucherItemsContainer" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
-              <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">Tá»”NG Cá»˜NG GIÃ Vá»N PHIáº¾U MÆ¯á»¢N:</span>
-              <span id="lendVoucherTotal" style="font-weight:800;font-size:18px;color:var(--warning);">0 â‚«</span>
+              <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">TỔNG CỘNG GIÁ VỐN PHIẾU MƯỢN:</span>
+              <span id="lendVoucherTotal" style="font-weight:800;font-size:18px;color:var(--warning);">0 â'«</span>
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-outline" onclick="resetLendForm()">XÃ³a phiáº¿u lÃ m láº¡i</button>
-              <button class="btn btn-warning" onclick="saveLendVoucher()">ðŸ¤ LÆ°u Phiáº¿u Cho MÆ°á»£n</button>
+              <button class="btn btn-outline" onclick="resetLendForm()">Xóa phiếu làm lại</button>
+              <button class="btn btn-warning" onclick="saveLendVoucher()">🤝 Lưu Phiếu Cho Mượn</button>
             </div>
           </div>
         </div>
@@ -1630,10 +1586,10 @@ tbody td.number { font-variant-numeric: tabular-nums; }
       <div class="table-card">
         <div class="table-header" style="flex-direction:column;align-items:stretch;gap:16px;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-            <h3>ðŸ¤ Lá»‹ch sá»­ mÆ°á»£n & tráº£ váº­t tÆ°</h3>
+            <h3>🤝 Lịch sử mượn & trả vật tư</h3>
             <div class="table-controls">
               <div class="table-search">
-                <input type="text" id="searchLend" placeholder="ðŸ” TÃ¬m kiáº¿m..." oninput="renderLends()">
+                <input type="text" id="searchLend" placeholder="🔍 Tìm kiếm..." oninput="renderLends()">
               </div>
             </div>
           </div>
@@ -1643,16 +1599,16 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>NgÃ y MÆ°á»£n</th>
-                <th>Sá»‘ Phiáº¿u</th>
-                <th>MÃ£ HÃ ng</th>
-                <th>TÃªn HÃ ng</th>
-                <th class="right">SL MÆ°á»£n</th>
-                <th class="right">SL ÄÃ£ Tráº£</th>
-                <th>NgÆ°á»i MÆ°á»£n</th>
-                <th>Háº¡n Tráº£</th>
-                <th>Tráº¡ng ThÃ¡i</th>
-                <th>Thao TÃ¡c</th>
+                <th>Ngày Mượn</th>
+                <th>Số Phiếu</th>
+                <th>Mã Hàng</th>
+                <th>Tên Hàng</th>
+                <th class="right">SL Mượn</th>
+                <th class="right">SL Đã Trả</th>
+                <th>Người Mượn</th>
+                <th>Hạn Trả</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody id="lendBody"></tbody>
@@ -1661,51 +1617,51 @@ tbody td.number { font-variant-numeric: tabular-nums; }
       </div>
     </div>
 
-    <!-- ===== TAB: Váº¬T TÆ¯ Gá»¬I Táº M ===== -->
+    <!-- ===== TAB: VẬT TƯ GỬI TẠM ===== -->
     <div class="tab-panel" id="panel-temporary">
       <div class="page-header">
         <div class="page-title">
-          Váº­t TÆ° Gá»­i Táº¡m Táº¡i Kho
-          <span>Theo dÃµi váº­t tÆ° gá»­i táº¡m â€” KhÃ´ng cá»™ng dá»“n vÃ o tá»“n kho</span>
+          Vật Tư Gửi Tạm Tại Kho
+          <span>Theo dõi vật tư gửi tạm — Không cộng dồn vào tồn kho</span>
         </div>
       </div>
 
       <div class="form-card open" id="tempFormCard">
         <div class="form-card-header" onclick="toggleFormCard('tempFormCard')">
-          <h3>âž• ThÃªm váº­t tÆ° gá»­i táº¡m</h3>
+          <h3>➕ Thêm vật tư gửi tạm</h3>
           <span class="toggle-icon">â–¼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
             <div class="form-grid">
               <div class="form-group">
-                <label>MÃ£ váº­t tÆ° <span class="req">*</span></label>
-                <input type="text" id="tmp_maVatTu" placeholder="MÃ£ váº­t tÆ°">
+                <label>Mã vật tư <span class="req">*</span></label>
+                <input type="text" id="tmp_maVatTu" placeholder="Mã vật tư">
               </div>
               <div class="form-group">
-                <label>TÃªn váº­t tÆ° <span class="req">*</span></label>
-                <input type="text" id="tmp_tenVatTu" placeholder="TÃªn váº­t tÆ°">
+                <label>Tên vật tư <span class="req">*</span></label>
+                <input type="text" id="tmp_tenVatTu" placeholder="Tên vật tư">
               </div>
               <div class="form-group">
-                <label>ÄÆ¡n vá»‹ tÃ­nh <span class="req">*</span></label>
-                <input type="text" id="tmp_dvt" placeholder="ÄVT">
+                <label>Đơn vị tính <span class="req">*</span></label>
+                <input type="text" id="tmp_dvt" placeholder="ĐVT">
               </div>
               <div class="form-group">
-                <label>Sá»‘ lÆ°á»£ng <span class="req">*</span></label>
+                <label>Số lượng <span class="req">*</span></label>
                 <input type="number" id="tmp_soLuong" placeholder="0" min="1">
               </div>
               <div class="form-group">
-                <label>NgÃ y gá»­i <span class="req">*</span></label>
+                <label>Ngày gửi <span class="req">*</span></label>
                 <input type="date" id="tmp_ngayGui">
               </div>
               <div class="form-group">
-                <label>Ghi chÃº</label>
-                <input type="text" id="tmp_ghiChu" placeholder="Ghi chÃº">
+                <label>Ghi chú</label>
+                <input type="text" id="tmp_ghiChu" placeholder="Ghi chú">
               </div>
             </div>
             <div class="form-actions">
               <button class="btn btn-outline" onclick="resetTempForm()">Há»§y</button>
-              <button class="btn btn-primary" onclick="addTemp()">ðŸ·ï¸ Ghi nháº­n</button>
+              <button class="btn btn-primary" onclick="addTemp()">🏷️ Ghi nhận</button>
             </div>
           </div>
         </div>
@@ -1713,9 +1669,9 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 
       <div class="table-card">
         <div class="table-header">
-          <h3>ðŸ·ï¸ Danh sÃ¡ch váº­t tÆ° gá»­i táº¡m</h3>
+          <h3>🏷️ Danh sách vật tư gửi tạm</h3>
           <div class="table-search">
-            <input type="text" placeholder="ðŸ” TÃ¬m kiáº¿m..." id="searchTemp" oninput="renderTemp()">
+            <input type="text" placeholder="🔍 Tìm kiếm..." id="searchTemp" oninput="renderTemp()">
           </div>
         </div>
         <div class="table-wrapper">
@@ -1723,56 +1679,56 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>MÃ£ VT</th>
-                <th>TÃªn Váº­t TÆ°</th>
-                <th>ÄVT</th>
-                <th class="right">Sá»‘ LÆ°á»£ng</th>
-                <th>NgÃ y Gá»­i</th>
-                <th>Ghi ChÃº</th>
-                <th>Thao TÃ¡c</th>
+                <th>Mã VT</th>
+                <th>Tên Vật Tư</th>
+                <th>ĐVT</th>
+                <th class="right">Số Lượng</th>
+                <th>Ngày Gửi</th>
+                <th>Ghi Chú</th>
+                <th>Thao Tác</th>
               </tr>
             </thead>
             <tbody id="tempBody"></tbody>
           </table>
         </div>
         <div class="table-footer">
-          <span id="tempCount">0 váº­t tÆ°</span>
+          <span id="tempCount">0 vật tư</span>
           <span></span>
         </div>
       </div>
     </div>
 
-    <!-- ===== TAB: BÃO CÃO LÆ¯U KHO ===== -->
+    <!-- ===== TAB: BÁO CÁO LƯU KHO ===== -->
     <div class="tab-panel" id="panel-aging">
       <div class="page-header">
         <div class="page-title">
-          BÃ¡o CÃ¡o Tá»“n Kho LÆ°u Kho (Aging Inventory)
-          <span>Kiá»ƒm soÃ¡t váº­t tÆ° lÆ°u kho lÃ¢u ngÃ y chÆ°a sá»­ dá»¥ng (Theo phÆ°Æ¡ng phÃ¡p FIFO)</span>
+          Báo Cáo Tồn Kho Lưu Kho (Aging Inventory)
+          <span>Kiểm soát vật tư lưu kho lâu ngày chưa sử dụng (Theo phương pháp FIFO)</span>
         </div>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-outline" onclick="exportAgingExcel()">ðŸ“Š Xuáº¥t Excel</button>
+          <button class="btn btn-outline" onclick="exportAgingExcel()">📊 Xuất Excel</button>
         </div>
       </div>
 
       <div class="table-card">
         <div class="table-header" style="flex-direction:column;align-items:stretch;gap:16px;">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-            <h3>â³ Danh sÃ¡ch váº­t tÆ° lÆ°u kho quÃ¡ háº¡n</h3>
+            <h3>⏳ Danh sách vật tư lưu kho quá hạn</h3>
             <div class="table-controls">
               <div class="table-search">
-                <input type="text" id="searchAging" placeholder="ðŸ” TÃ¬m kiáº¿m mÃ£/tÃªn..." oninput="renderAging()">
+                <input type="text" id="searchAging" placeholder="🔍 Tìm kiếm mã/tên..." oninput="renderAging()">
               </div>
             </div>
           </div>
           <div style="display:flex;gap:15px;background:rgba(255,255,255,0.02);padding:10px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);">
              <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
-               <input type="radio" name="agingFilter" value="6" checked onchange="renderAging()"> &gt; 6 ThÃ¡ng
+               <input type="radio" name="agingFilter" value="6" checked onchange="renderAging()"> &gt; 6 Tháng
              </label>
              <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
-               <input type="radio" name="agingFilter" value="12" onchange="renderAging()"> &gt; 12 ThÃ¡ng
+               <input type="radio" name="agingFilter" value="12" onchange="renderAging()"> &gt; 12 Tháng
              </label>
              <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
-               <input type="radio" name="agingFilter" value="24" onchange="renderAging()"> &gt; 24 ThÃ¡ng
+               <input type="radio" name="agingFilter" value="24" onchange="renderAging()"> &gt; 24 Tháng
              </label>
           </div>
         </div>
@@ -1781,15 +1737,15 @@ tbody td.number { font-variant-numeric: tabular-nums; }
             <thead>
               <tr>
                 <th>STT</th>
-                <th>MÃ£ HÃ ng</th>
-                <th>TÃªn HÃ ng</th>
-                <th>ÄVT</th>
-                <th>Thá»i Gian Nháº­p</th>
-                <th class="right">SL CÃ²n Tá»“n (LÃ´ nÃ y)</th>
-                <th class="right">ÄÆ¡n GiÃ¡ Mua</th>
-                <th class="right">ThÃ nh Tiá»n (Tá»“n)</th>
-                <th>Sá»‘ ThÃ¡ng LÆ°u Kho</th>
-                <th>PhÃ¢n Loáº¡i</th>
+                <th>Mã Hàng</th>
+                <th>Tên Hàng</th>
+                <th>ĐVT</th>
+                <th>Thời Gian Nhập</th>
+                <th class="right">SL Còn Tồn (Lô này)</th>
+                <th class="right">Đơn Giá Mua</th>
+                <th class="right">Thành Tiền (Tồn)</th>
+                <th>Số Tháng Lưu Kho</th>
+                <th>Phân Loại</th>
               </tr>
             </thead>
             <tbody id="agingBody"></tbody>
@@ -1805,15 +1761,15 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 <div class="modal-overlay" id="editModal">
   <div class="modal">
     <div class="modal-header">
-      <h3 id="modalTitle">Chá»‰nh sá»­a</h3>
-      <button class="modal-close" onclick="closeModal()">âœ•</button>
+      <h3 id="modalTitle">Chỉnh sửa</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-grid" id="modalFormGrid"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal()">Há»§y</button>
-      <button class="btn btn-primary" id="modalSaveBtn" onclick="saveEdit()">ðŸ’¾ Cáº­p nháº­t</button>
+      <button class="btn btn-primary" id="modalSaveBtn" onclick="saveEdit()">💾 Cập nhật</button>
     </div>
   </div>
 </div>
@@ -1821,12 +1777,12 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 <!-- Confirm dialog -->
 <div class="confirm-overlay" id="confirmDialog">
   <div class="confirm-box">
-    <div class="confirm-icon">âš ï¸</div>
-    <h4 id="confirmTitle">XÃ¡c nháº­n</h4>
-    <p id="confirmMessage">Báº¡n cÃ³ cháº¯c muá»‘n thá»±c hiá»‡n?</p>
+    <div class="confirm-icon">⚠️</div>
+    <h4 id="confirmTitle">Xác nhận</h4>
+    <p id="confirmMessage">Bạn có chắc muốn thực hiện?</p>
     <div class="confirm-actions">
       <button class="btn btn-outline" onclick="closeConfirm()">Há»§y</button>
-      <button class="btn btn-danger" id="confirmOkBtn">XÃ¡c nháº­n</button>
+      <button class="btn btn-danger" id="confirmOkBtn">Xác nhận</button>
     </div>
   </div>
 </div>
@@ -1835,33 +1791,33 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 <div class="modal-overlay" id="returnModal">
   <div class="modal">
     <div class="modal-header">
-      <h3 id="returnModalTitle">Tráº£ Váº­t TÆ°</h3>
-      <button class="modal-close" onclick="closeReturnModal()">âœ•</button>
+      <h3 id="returnModalTitle">Trả Vật Tư</h3>
+      <button class="modal-close" onclick="closeReturnModal()">✕</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="return_voucherId">
       <input type="hidden" id="return_itemId">
       <div class="form-grid">
         <div class="form-group" style="grid-column: span 2;">
-          <label>Váº­t tÆ°: <strong id="return_itemName" class="primary"></strong></label>
+          <label>Vật tư: <strong id="return_itemName" class="primary"></strong></label>
         </div>
         <div class="form-group">
-          <label>Sá»‘ lÆ°á»£ng cáº§n tráº£</label>
+          <label>Số lượng cần trả</label>
           <input type="number" id="return_slCanTra" disabled>
         </div>
         <div class="form-group">
-          <label>Sá»‘ lÆ°á»£ng tráº£ Ä‘á»£t nÃ y <span class="req">*</span></label>
+          <label>Số lượng trả đợt này <span class="req">*</span></label>
           <input type="number" id="return_slTra" min="1" required>
         </div>
         <div class="form-group">
-          <label>NgÃ y tráº£ <span class="req">*</span></label>
+          <label>Ngày trả <span class="req">*</span></label>
           <input type="date" id="return_ngayTra" required>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeReturnModal()">Há»§y</button>
-      <button class="btn btn-success" onclick="saveReturn()">ðŸ“¥ Ghi nháº­n tráº£</button>
+      <button class="btn btn-success" onclick="saveReturn()">📥 Ghi nhận trả</button>
     </div>
   </div>
 </div>
@@ -1874,14 +1830,14 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 // CATEGORY MAPPING & DB STORE
 // ===========================
 const Categories = {
-  "A": "MÃ¡y Ã©p viÃªn Andritz",
-  "B": "MÃ¡y nghiá»n ANDRITZ VÃ€ SHT",
-  "C": "Kho phá»¥ tÃ¹ng mÃ¡y BÄƒm dÄƒm",
-  "D": "Kho Dáº§u - Nhá»›t - Má»¡",
-  "E": "Kho váº­t tÆ° há»‡ thá»‘ng phá»¥ trá»£",
-  "F": "Kho cÃ´ng cá»¥ dá»¥ng cá»¥",
-  "G": "Váº­t tÆ° phá»¥",
-  "Z": "Kho cho mÆ°á»£n"
+  "A": "Máy ép viên Andritz",
+  "B": "Máy nghiền ANDRITZ VÀ SHT",
+  "C": "Kho phụ tùng máy Băm dăm",
+  "D": "Kho Dầu - Nhớt - Mỡ",
+  "E": "Kho vật tư hệ thống phụ trợ",
+  "F": "Kho công cụ dụng cụ",
+  "G": "Vật tư phụ",
+  "Z": "Kho cho mượn"
 };
 
 let Store = {
@@ -1907,7 +1863,7 @@ function saveData() {
   try {
     localStorage.setItem('tonKhoData_v4', JSON.stringify(Store));
   } catch(e) {
-    toast('Lá»—i lÆ°u dá»¯ liá»‡u: ' + e.message, 'error');
+    toast('Lỗi lưu dữ liệu: ' + e.message, 'error');
   }
 }
 
@@ -2078,12 +2034,12 @@ function formatNumber(n) {
 }
 
 function formatCurrency(n) {
-  if (n === null || n === undefined || isNaN(n)) return '0 â‚«';
-  return Number(n).toLocaleString('vi-VN') + ' â‚«';
+  if (n === null || n === undefined || isNaN(n)) return '0 â'«';
+  return Number(n).toLocaleString('vi-VN') + ' â'«';
 }
 
 function formatDate(dateStr) {
-  if (!dateStr) return 'â€”';
+  if (!dateStr) return '—';
   const d = new Date(dateStr);
   return d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
@@ -2095,7 +2051,7 @@ function parseNum(v) {
 
 function toast(msg, type = 'success') {
   const c = document.getElementById('toastContainer');
-  const icons = { success: 'âœ…', error: 'âŒ', warning: 'âš ï¸', info: 'â„¹ï¸' };
+  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
   const t = document.createElement('div');
   t.className = `toast ${type}`;
   t.innerHTML = `<span>${icons[type] || ''}</span> ${msg}`;
@@ -2134,15 +2090,15 @@ function switchTab(tab) {
   document.getElementById('panel-' + tab).classList.add('active');
   
   const navMap = {
-    summary: 'Tá»•ng Há»£p Nháº­p Xuáº¥t Tá»“n',
-    report: 'BÃ¡o CÃ¡o Tá»•ng Há»£p',
-    category: 'Danh Má»¥c Váº­t TÆ°',
-    opening: 'Sá»‘ DÆ° Äáº§u Ká»³',
-    import: 'Nháº­p Kho',
-    export: 'Xuáº¥t Kho',
-    temporary: 'Váº­t TÆ° Gá»­i Táº¡m',
-    lend: 'Xuáº¥t Cho MÆ°á»£n',
-    aging: 'BÃ¡o CÃ¡o LÆ°u Kho'
+    summary: 'Tổng Hợp Nhập Xuất Tồn',
+    report: 'Báo Cáo Tổng Hợp',
+    category: 'Danh Mục Vật Tư',
+    opening: 'Số Dư Đầu Kỳ',
+    import: 'Nhập Kho',
+    export: 'Xuất Kho',
+    temporary: 'Vật Tư Gửi Tạm',
+    lend: 'Xuất Cho Mượn',
+    aging: 'Báo Cáo Lưu Kho'
   };
   
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => {
@@ -2228,7 +2184,7 @@ function renderVoucherItems(type) {
   if (type === 'import') {
     const container = document.getElementById('importVoucherItemsContainer');
     if (importVoucherItems.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px;background:rgba(255,255,255,0.01);border-radius:var(--radius-sm);border:1px dashed var(--border);">ChÆ°a cÃ³ máº·t hÃ ng nÃ o trong phiáº¿u. Nháº¥p nÃºt "ThÃªm máº·t hÃ ng" phÃ­a trÃªn Ä‘á»ƒ báº¯t Ä‘áº§u thÃªm.</div>`;
+      container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px;background:rgba(255,255,255,0.01);border-radius:var(--radius-sm);border:1px dashed var(--border);">Chưa có mặt hàng nào trong phiếu. Nhấp nút "Thêm mặt hàng" phía trên để bắt đầu thêm.</div>`;
       document.getElementById('importVoucherTotal').textContent = formatCurrency(0);
       return;
     }
@@ -2240,32 +2196,32 @@ function renderVoucherItems(type) {
       return `
         <div id="im_row_${idx}" style="display:grid;grid-template-columns:minmax(180px,1.5fr) minmax(260px,2fr) 70px 100px 120px 130px 36px;gap:8px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;min-width:980px;">
           <div class="form-group has-suggest" style="margin:0;">
-            <label style="font-size:11px;">MÃ£ váº­t tÆ° <span class="req">*</span></label>
-            <input type="text" id="im_item_ma_${idx}" value="${item.maVatTu}" oninput="suggestVoucherItem('import', ${idx})" onfocus="suggestVoucherItem('import', ${idx})" placeholder="MÃ£..." style="padding:6px 8px;font-size:12px;min-width:0;">
+            <label style="font-size:11px;">Mã vật tư <span class="req">*</span></label>
+            <input type="text" id="im_item_ma_${idx}" value="${item.maVatTu}" oninput="suggestVoucherItem('import', ${idx})" onfocus="suggestVoucherItem('import', ${idx})" placeholder="Mã..." style="padding:6px 8px;font-size:12px;min-width:0;">
             <div class="suggest-dropdown" id="im_item_suggest_${idx}"></div>
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">TÃªn váº­t tÆ°</label>
-            <input type="text" id="im_item_ten_${idx}" value="${item.tenVatTu}" oninput="importVoucherItems[${idx}].tenVatTu = this.value" placeholder="TÃªn..." style="padding:6px 8px;font-size:12px;min-width:0;">
+            <label style="font-size:11px;">Tên vật tư</label>
+            <input type="text" id="im_item_ten_${idx}" value="${item.tenVatTu}" oninput="importVoucherItems[${idx}].tenVatTu = this.value" placeholder="Tên..." style="padding:6px 8px;font-size:12px;min-width:0;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ÄVT</label>
-            <input type="text" id="im_item_dvt_${idx}" value="${item.dvt}" oninput="importVoucherItems[${idx}].dvt = this.value" placeholder="ÄVT" style="padding:6px 10px;font-size:12px;">
+            <label style="font-size:11px;">ĐVT</label>
+            <input type="text" id="im_item_dvt_${idx}" value="${item.dvt}" oninput="importVoucherItems[${idx}].dvt = this.value" placeholder="ĐVT" style="padding:6px 10px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">Sá»‘ lÆ°á»£ng <span class="req">*</span></label>
+            <label style="font-size:11px;">Số lượng <span class="req">*</span></label>
             <input type="number" id="im_item_sl_${idx}" value="${item.soLuong}" oninput="updateLineTotal('import', ${idx})" min="1" style="padding:6px 10px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ÄÆ¡n giÃ¡ mua <span class="req">*</span></label>
+            <label style="font-size:11px;">Đơn giá mua <span class="req">*</span></label>
             <input type="number" id="im_item_dg_${idx}" value="${item.donGia}" oninput="updateLineTotal('import', ${idx})" min="0" style="padding:6px 10px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ThÃ nh tiá»n</label>
+            <label style="font-size:11px;">Thành tiền</label>
             <input type="text" value="${formatCurrency(lineTotal)}" readonly style="padding:6px 10px;font-size:12px;color:var(--text-muted);background:rgba(0,0,0,0.25);">
           </div>
           <div>
-            <button class="btn-icon delete" onclick="removeVoucherItemRow('import', ${idx})" style="width:32px;height:32px;border-radius:6px;" title="XÃ³a dÃ²ng">ðŸ—‘ï¸</button>
+            <button class="btn-icon delete" onclick="removeVoucherItemRow('import', ${idx})" style="width:32px;height:32px;border-radius:6px;" title="Xóa dòng">🗑️</button>
           </div>
         </div>
       `;
@@ -2275,7 +2231,7 @@ function renderVoucherItems(type) {
   } else if (type === 'export') {
     const container = document.getElementById('exportVoucherItemsContainer');
     if (exportVoucherItems.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px;background:rgba(255,255,255,0.01);border-radius:var(--radius-sm);border:1px dashed var(--border);">ChÆ°a cÃ³ máº·t hÃ ng nÃ o trong phiáº¿u. Nháº¥p nÃºt "ThÃªm máº·t hÃ ng" phÃ­a trÃªn Ä‘á»ƒ báº¯t Ä‘áº§u thÃªm.</div>`;
+      container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px;background:rgba(255,255,255,0.01);border-radius:var(--radius-sm);border:1px dashed var(--border);">Chưa có mặt hàng nào trong phiếu. Nhấp nút "Thêm mặt hàng" phía trên để bắt đầu thêm.</div>`;
       document.getElementById('exportVoucherTotal').textContent = formatCurrency(0);
       return;
     }
@@ -2287,36 +2243,36 @@ function renderVoucherItems(type) {
       return `
         <div id="ex_row_${idx}" style="display:grid;grid-template-columns:minmax(160px,1.2fr) minmax(240px,1.5fr) 60px 90px 90px 110px 120px 36px;gap:6px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;min-width:1080px;">
           <div class="form-group has-suggest" style="margin:0;">
-            <label style="font-size:11px;">MÃ£ hÃ ng <span class="req">*</span></label>
-            <input type="text" id="ex_item_ma_${idx}" value="${item.maHang}" oninput="suggestVoucherItem('export', ${idx})" onfocus="suggestVoucherItem('export', ${idx})" placeholder="MÃ£..." style="padding:6px 8px;font-size:12px;">
+            <label style="font-size:11px;">Mã hàng <span class="req">*</span></label>
+            <input type="text" id="ex_item_ma_${idx}" value="${item.maHang}" oninput="suggestVoucherItem('export', ${idx})" onfocus="suggestVoucherItem('export', ${idx})" placeholder="Mã..." style="padding:6px 8px;font-size:12px;">
             <div class="suggest-dropdown" id="ex_item_suggest_${idx}"></div>
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">TÃªn hÃ ng</label>
-            <input type="text" id="ex_item_ten_${idx}" value="${item.tenHang}" oninput="exportVoucherItems[${idx}].tenHang = this.value" placeholder="TÃªn..." style="padding:6px 8px;font-size:12px;">
+            <label style="font-size:11px;">Tên hàng</label>
+            <input type="text" id="ex_item_ten_${idx}" value="${item.tenHang}" oninput="exportVoucherItems[${idx}].tenHang = this.value" placeholder="Tên..." style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ÄVT</label>
-            <input type="text" id="ex_item_dvt_${idx}" value="${item.dvt}" oninput="exportVoucherItems[${idx}].dvt = this.value" placeholder="ÄVT" style="padding:6px 8px;font-size:12px;">
+            <label style="font-size:11px;">ĐVT</label>
+            <input type="text" id="ex_item_dvt_${idx}" value="${item.dvt}" oninput="exportVoucherItems[${idx}].dvt = this.value" placeholder="ĐVT" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">Tá»“n hiá»‡n táº¡i</label>
+            <label style="font-size:11px;">Tồn hiện tại</label>
             <input type="text" value="${formatNumber(item.tonHienTai)}" readonly style="padding:6px 8px;font-size:12px;color:var(--success);font-weight:600;background:rgba(0,0,0,0.25);">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">SL xuáº¥t <span class="req">*</span></label>
+            <label style="font-size:11px;">SL xuất <span class="req">*</span></label>
             <input type="number" id="ex_item_sl_${idx}" value="${item.soLuong}" oninput="updateLineTotal('export', ${idx})" min="1" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ÄÆ¡n giÃ¡ vá»‘n <span class="req">*</span></label>
+            <label style="font-size:11px;">Đơn giá vốn <span class="req">*</span></label>
             <input type="number" id="ex_item_dg_${idx}" value="${item.donGiaVon}" oninput="updateLineTotal('export', ${idx})" min="0" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">Tá»•ng vá»‘n</label>
+            <label style="font-size:11px;">Tổng vốn</label>
             <input type="text" value="${formatCurrency(lineTotal)}" readonly style="padding:6px 8px;font-size:12px;color:var(--text-muted);background:rgba(0,0,0,0.25);min-width:0;">
           </div>
           <div>
-            <button class="btn-icon delete" onclick="removeVoucherItemRow('export', ${idx})" style="width:32px;height:32px;border-radius:6px;" title="XÃ³a dÃ²ng">ðŸ—‘ï¸</button>
+            <button class="btn-icon delete" onclick="removeVoucherItemRow('export', ${idx})" style="width:32px;height:32px;border-radius:6px;" title="Xóa dòng">🗑️</button>
           </div>
         </div>
       `;
@@ -2326,7 +2282,7 @@ function renderVoucherItems(type) {
   } else if (type === 'lend') {
     const container = document.getElementById('lendVoucherItemsContainer');
     if (lendVoucherItems.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px;background:rgba(255,255,255,0.01);border-radius:var(--radius-sm);border:1px dashed var(--border);">ChÆ°a cÃ³ máº·t hÃ ng nÃ o. Nháº¥p "ThÃªm máº·t hÃ ng" Ä‘á»ƒ thÃªm.</div>`;
+      container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px;background:rgba(255,255,255,0.01);border-radius:var(--radius-sm);border:1px dashed var(--border);">Chưa có mặt hàng nào. Nhấp "Thêm mặt hàng" để thêm.</div>`;
       document.getElementById('lendVoucherTotal').textContent = formatCurrency(0);
       return;
     }
@@ -2338,40 +2294,40 @@ function renderVoucherItems(type) {
       return `
         <div id="lend_row_${idx}" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr) 55px 80px 80px 100px 110px 110px 36px;gap:6px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;">
           <div class="form-group has-suggest" style="margin:0;">
-            <label style="font-size:11px;">MÃ£ hÃ ng <span class="req">*</span></label>
-            <input type="text" id="lend_item_ma_${idx}" value="${item.maHang}" oninput="suggestVoucherItem('lend', ${idx})" onfocus="suggestVoucherItem('lend', ${idx})" placeholder="MÃ£..." style="padding:6px 8px;font-size:12px;">
+            <label style="font-size:11px;">Mã hàng <span class="req">*</span></label>
+            <input type="text" id="lend_item_ma_${idx}" value="${item.maHang}" oninput="suggestVoucherItem('lend', ${idx})" onfocus="suggestVoucherItem('lend', ${idx})" placeholder="Mã..." style="padding:6px 8px;font-size:12px;">
             <div class="suggest-dropdown" id="lend_item_suggest_${idx}"></div>
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">TÃªn hÃ ng</label>
-            <input type="text" id="lend_item_ten_${idx}" value="${item.tenHang}" oninput="lendVoucherItems[${idx}].tenHang = this.value" placeholder="TÃªn..." style="padding:6px 8px;font-size:12px;">
+            <label style="font-size:11px;">Tên hàng</label>
+            <input type="text" id="lend_item_ten_${idx}" value="${item.tenHang}" oninput="lendVoucherItems[${idx}].tenHang = this.value" placeholder="Tên..." style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ÄVT</label>
-            <input type="text" id="lend_item_dvt_${idx}" value="${item.dvt}" oninput="lendVoucherItems[${idx}].dvt = this.value" placeholder="ÄVT" style="padding:6px 8px;font-size:12px;">
+            <label style="font-size:11px;">ĐVT</label>
+            <input type="text" id="lend_item_dvt_${idx}" value="${item.dvt}" oninput="lendVoucherItems[${idx}].dvt = this.value" placeholder="ĐVT" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">Tá»“n kho</label>
+            <label style="font-size:11px;">Tồn kho</label>
             <input type="text" value="${formatNumber(item.tonHienTai)}" readonly style="padding:6px 8px;font-size:12px;color:var(--success);font-weight:600;background:rgba(0,0,0,0.25);">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">SL mÆ°á»£n <span class="req">*</span></label>
+            <label style="font-size:11px;">SL mượn <span class="req">*</span></label>
             <input type="number" id="lend_item_sl_${idx}" value="${item.soLuong}" oninput="updateLineTotal('lend', ${idx})" min="1" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">ÄÆ¡n giÃ¡ vá»‘n <span class="req">*</span></label>
+            <label style="font-size:11px;">Đơn giá vốn <span class="req">*</span></label>
             <input type="number" id="lend_item_dg_${idx}" value="${item.donGiaVon}" oninput="updateLineTotal('lend', ${idx})" min="0" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">Háº¡n tráº£ (ngÃ y)</label>
+            <label style="font-size:11px;">Hạn trả (ngày)</label>
             <input type="date" id="lend_item_hanTra_${idx}" value="${item.hanTra}" onchange="lendVoucherItems[${idx}].hanTra = this.value" style="padding:6px 8px;font-size:12px;">
           </div>
           <div class="form-group" style="margin:0;">
-            <label style="font-size:11px;">Tá»•ng vá»‘n</label>
+            <label style="font-size:11px;">Tổng vốn</label>
             <input type="text" value="${formatCurrency(lineTotal)}" readonly style="padding:6px 8px;font-size:12px;color:var(--text-muted);background:rgba(0,0,0,0.25);">
           </div>
           <div>
-            <button class="btn-icon delete" onclick="removeVoucherItemRow('lend', ${idx})" style="width:32px;height:32px;border-radius:6px;" title="XÃ³a dÃ²ng">ðŸ—‘ï¸</button>
+            <button class="btn-icon delete" onclick="removeVoucherItemRow('lend', ${idx})" style="width:32px;height:32px;border-radius:6px;" title="Xóa dòng">🗑️</button>
           </div>
         </div>
       `;
@@ -2563,8 +2519,8 @@ function suggestVoucherItem(type, idx) {
   dropdown.innerHTML = filtered.slice(0, 8).map(k => {
     const m = materials[k];
     const stock = getStock(k);
-    const stockStr = (type === 'export' || type === 'lend') ? ` (Tá»“n: ${formatNumber(stock)} ${m.dvt})` : '';
-    return `<div class="suggest-item" onclick="selectVoucherItem('${type}', ${idx}, '${k}')">${m.ma} â€” ${m.ten}${stockStr}</div>`;
+    const stockStr = (type === 'export' || type === 'lend') ? ` (Tồn: ${formatNumber(stock)} ${m.dvt})` : '';
+    return `<div class="suggest-item" onclick="selectVoucherItem('${type}', ${idx}, '${k}')">${m.ma} — ${m.ten}${stockStr}</div>`;
   }).join('');
   dropdown.classList.add('show');
 }
@@ -2618,12 +2574,12 @@ function saveImportVoucher() {
   const gc = document.getElementById('im_ghiChu').value.trim();
 
   if (!ngay || !phieu) {
-    toast('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ NgÃ y nháº­p vÃ  Sá»‘ phiáº¿u!', 'warning');
+    toast('Vui lòng nhập đầy đủ Ngày nhập và Số phiếu!', 'warning');
     return;
   }
 
   if (importVoucherItems.length === 0) {
-    toast('Vui lÃ²ng thÃªm Ã­t nháº¥t má»™t váº­t tÆ° Ä‘á»ƒ lÆ°u phiáº¿u nháº­p!', 'warning');
+    toast('Vui lòng thêm ít nhất một vật tư để lưu phiếu nhập!', 'warning');
     return;
   }
 
@@ -2631,11 +2587,11 @@ function saveImportVoucher() {
   for (let i = 0; i < importVoucherItems.length; i++) {
     const item = importVoucherItems[i];
     if (!item.maVatTu || !item.tenVatTu || !item.dvt) {
-      toast(`DÃ²ng ${i+1}: Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ thÃ´ng tin báº¯t buá»™c (MÃ£, TÃªn, ÄVT)!`, 'warning');
+      toast(`Dòng ${i+1}: Vui lòng nhập đầy đủ thông tin bắt buộc (Mã, Tên, ĐVT)!`, 'warning');
       return;
     }
     if (parseNum(item.soLuong) <= 0) {
-      toast(`DÃ²ng ${i+1}: Sá»‘ lÆ°á»£ng pháº£i lá»›n hÆ¡n 0!`, 'warning');
+      toast(`Dòng ${i+1}: Số lượng phải lớn hơn 0!`, 'warning');
       return;
     }
   }
@@ -2668,7 +2624,7 @@ function saveImportVoucher() {
   saveData();
   renderImports();
   resetImportForm();
-  toast('ÄÃ£ ghi nháº­n phiáº¿u nháº­p kho nhiá»u dÃ²ng thÃ nh cÃ´ng!');
+  toast('Đã ghi nhận phiếu nhập kho nhiều dòng thành công!');
 }
 
 function saveExportVoucher() {
@@ -2679,12 +2635,12 @@ function saveExportVoucher() {
   const gc = document.getElementById('ex_ghiChu').value.trim();
 
   if (!ngay || !phieu) {
-    toast('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ NgÃ y xuáº¥t vÃ  Sá»‘ phiáº¿u!', 'warning');
+    toast('Vui lòng nhập đầy đủ Ngày xuất và Số phiếu!', 'warning');
     return;
   }
 
   if (exportVoucherItems.length === 0) {
-    toast('Vui lÃ²ng thÃªm Ã­t nháº¥t má»™t máº·t hÃ ng Ä‘á»ƒ xuáº¥t!', 'warning');
+    toast('Vui lòng thêm ít nhất một mặt hàng để xuất!', 'warning');
     return;
   }
 
@@ -2692,17 +2648,17 @@ function saveExportVoucher() {
   for (let i = 0; i < exportVoucherItems.length; i++) {
     const item = exportVoucherItems[i];
     if (!item.maHang || !item.tenHang || !item.dvt) {
-      toast(`DÃ²ng ${i+1}: Vui lÃ²ng Ä‘iá»n Ä‘áº§y Ä‘á»§ MÃ£ váº­t tÆ° xuáº¥t!`, 'warning');
+      toast(`Dòng ${i+1}: Vui lòng điền đầy đủ Mã vật tư xuất!`, 'warning');
       return;
     }
     const qty = parseNum(item.soLuong);
     if (qty <= 0) {
-      toast(`DÃ²ng ${i+1}: Sá»‘ lÆ°á»£ng xuáº¥t pháº£i lá»›n hÆ¡n 0!`, 'warning');
+      toast(`Dòng ${i+1}: Số lượng xuất phải lớn hơn 0!`, 'warning');
       return;
     }
     const stock = getStock(item.maHang);
     if (stock < qty) {
-      toast(`DÃ²ng ${i+1} (${item.maHang}): Kho khÃ´ng Ä‘á»§ hÃ ng! Cáº§n xuáº¥t ${formatNumber(qty)} ${item.dvt}, hiá»‡n chá»‰ cÃ²n ${formatNumber(stock)} ${item.dvt}!`, 'error');
+      toast(`Dòng ${i+1} (${item.maHang}): Kho không đủ hàng! Cần xuất ${formatNumber(qty)} ${item.dvt}, hiện chỉ còn ${formatNumber(stock)} ${item.dvt}!`, 'error');
       return;
     }
   }
@@ -2730,11 +2686,11 @@ function saveExportVoucher() {
   saveData();
   renderExports();
   resetExportForm();
-  toast('ÄÃ£ ghi nháº­n phiáº¿u xuáº¥t kho nhiá»u dÃ²ng thÃ nh cÃ´ng!');
+  toast('Đã ghi nhận phiếu xuất kho nhiều dòng thành công!');
 }
 
 // ===========================
-// DANH Má»¤C Váº¬T TÆ¯ (CATALOG)
+// DANH MỤC VẬT TƯ (CATALOG)
 // ===========================
 function addCategoryMaterial() {
   const ma = document.getElementById('cat_maHang').value.trim();
@@ -2744,13 +2700,13 @@ function addCategoryMaterial() {
   const minStock = parseNum(document.getElementById('cat_tonKhoToiThieu').value);
 
   if (!ma || !ten || !dvt || !cl) {
-    toast('Vui lÃ²ng Ä‘iá»n Ä‘áº§y Ä‘á»§ cÃ¡c má»¥c Ä‘Ã¡nh dáº¥u (*)!', 'warning');
+    toast('Vui lòng điền đầy đủ các mục đánh dấu (*)!', 'warning');
     return;
   }
 
   const exists = Store.materials.find(i => i.maHang.toUpperCase() === ma.toUpperCase());
   if (exists) {
-    toast('MÃ£ hÃ ng nÃ y Ä‘Ã£ tá»“n táº¡i trong danh má»¥c váº­t tÆ°!', 'error');
+    toast('Mã hàng này đã tồn tại trong danh mục vật tư!', 'error');
     return;
   }
 
@@ -2766,7 +2722,7 @@ function addCategoryMaterial() {
   saveData();
   renderCategory();
   resetCategoryForm();
-  toast('ÄÄƒng kÃ½ váº­t tÆ° vÃ o danh má»¥c thÃ nh cÃ´ng!');
+  toast('Đăng ký vật tư vào danh mục thành công!');
 }
 
 function resetCategoryForm() {
@@ -2789,8 +2745,8 @@ function renderCategory() {
 
   if (data.length === 0) {
     body.innerHTML = `<tr><td colspan="7"><div class="empty-state">
-      <div class="empty-icon">ðŸ—‚ï¸</div><p>Danh má»¥c chÆ°a cÃ³ máº·t hÃ ng nÃ o</p>
-      <p class="sub">ThÃªm máº·t hÃ ng hoáº·c nháº­p báº±ng file Excel</p>
+      <div class="empty-icon">🗂️</div><p>Danh mục chưa có mặt hàng nào</p>
+      <p class="sub">Thêm mặt hàng hoặc nhập bằng file Excel</p>
     </div></td></tr>`;
   } else {
     body.innerHTML = data.map((item, idx) => {
@@ -2802,22 +2758,22 @@ function renderCategory() {
         <td><span class="stock-badge in-stock">${item.chungLoai} - ${Categories[item.chungLoai]}</span></td>
         <td class="right number">${formatNumber(item.tonKhoToiThieu || 0)}</td>
         <td><div class="td-actions">
-          <button class="btn-icon edit" onclick="editCategoryMaterial('${item.id}')" title="Sá»­a">âœï¸</button>
-          <button class="btn-icon delete" onclick="deleteCategoryMaterial('${item.id}')" title="XÃ³a">ðŸ—‘ï¸</button>
+          <button class="btn-icon edit" onclick="editCategoryMaterial('${item.id}')" title="Sửa">✏️</button>
+          <button class="btn-icon delete" onclick="deleteCategoryMaterial('${item.id}')" title="Xóa">🗑️</button>
         </div></td>
       </tr>`;
     }).join('');
   }
 
-  document.getElementById('categoryCount').textContent = Store.materials.length + ' váº­t tÆ°';
+  document.getElementById('categoryCount').textContent = Store.materials.length + ' vật tư';
 }
 
 function deleteCategoryMaterial(id) {
-  showConfirm('XÃ³a khá»i Danh má»¥c váº­t tÆ°', 'LÆ°u Ã½: XÃ³a váº­t tÆ° khá»i danh má»¥c sáº½ khÃ´ng lÃ m máº¥t dá»¯ liá»‡u lá»‹ch sá»­ nháº­p/xuáº¥t cÅ©. Váº«n tiáº¿p tá»¥c?', () => {
+  showConfirm('Xóa khỏi Danh mục vật tư', 'Lưu ý: Xóa vật tư khỏi danh mục sẽ không làm mất dữ liệu lịch sử nhập/xuất cũ. Vẫn tiếp tục?', () => {
     Store.materials = Store.materials.filter(i => i.id !== id);
     saveData();
     renderCategory();
-    toast('ÄÃ£ xÃ³a thÃ nh cÃ´ng khá»i danh má»¥c!');
+    toast('Đã xóa thành công khỏi danh mục!');
   });
 }
 
@@ -2829,19 +2785,19 @@ function editCategoryMaterial(id) {
   const grid = document.getElementById('modalFormGrid');
   grid.innerHTML = `
     <div class="form-group">
-      <label>MÃ£ hÃ ng <span class="req">*</span></label>
+      <label>Mã hàng <span class="req">*</span></label>
       <input type="text" id="modal_maHang" value="${item.maHang}" required>
     </div>
     <div class="form-group">
-      <label>TÃªn hÃ ng <span class="req">*</span></label>
+      <label>Tên hàng <span class="req">*</span></label>
       <input type="text" id="modal_tenHang" value="${item.tenHang}" required>
     </div>
     <div class="form-group">
-      <label>ÄÆ¡n vá»‹ tÃ­nh <span class="req">*</span></label>
+      <label>Đơn vị tính <span class="req">*</span></label>
       <input type="text" id="modal_dvt" value="${item.dvt}" required>
     </div>
     <div class="form-group">
-      <label>Chá»§ng loáº¡i <span class="req">*</span></label>
+      <label>Chủng loại <span class="req">*</span></label>
       <select id="modal_chungLoai">
         ${Object.keys(Categories).map(key => `
           <option value="${key}" ${item.chungLoai === key ? 'selected' : ''}>${key} - ${Categories[key]}</option>
@@ -2849,11 +2805,11 @@ function editCategoryMaterial(id) {
       </select>
     </div>
     <div class="form-group">
-      <label>Tá»“n kho tá»‘i thiá»ƒu</label>
+      <label>Tồn kho tối thiểu</label>
       <input type="number" id="modal_tonKhoToiThieu" value="${item.tonKhoToiThieu || 0}">
     </div>
   `;
-  document.getElementById('modalTitle').textContent = "Sá»­a danh má»¥c váº­t tÆ°";
+  document.getElementById('modalTitle').textContent = "Sửa danh mục vật tư";
   document.getElementById('editModal').classList.add('active');
 }
 
@@ -3168,7 +3124,7 @@ function suggestMaterial(prefix) {
 
   dropdown.innerHTML = filtered.slice(0, 8).map(k => {
     const m = materials[k];
-    return `<div class="suggest-item" onclick="selectMaterial('${prefix}','${k}')">${m.ma} â€” ${m.ten} (${m.dvt})</div>`;
+    return `<div class="suggest-item" onclick="selectMaterial('${prefix}','${k}')">${m.ma} — ${m.ten} (${m.dvt})</div>`;
   }).join('');
   dropdown.classList.add('show');
 }
@@ -3194,7 +3150,7 @@ function addOpening() {
   const dg = parseNum(document.getElementById('op_donGia').value);
 
   if (!ma || !ten || !dvt) {
-    toast('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ thÃ´ng tin báº¯t buá»™c!', 'warning');
+    toast('Vui lòng nhập đầy đủ thông tin bắt buộc!', 'warning');
     return;
   }
   
@@ -3213,7 +3169,7 @@ function addOpening() {
   saveData();
   renderOpening();
   resetOpeningForm();
-  toast('ÄÃ£ thÃªm váº­t tÆ° Ä‘áº§u ká»³ thÃ nh cÃ´ng!');
+  toast('Đã thêm vật tư đầu kỳ thành công!');
 }
 
 function resetOpeningForm() {
@@ -3236,7 +3192,7 @@ function renderOpening() {
 
   if (data.length === 0) {
     body.innerHTML = `<tr><td colspan="8"><div class="empty-state">
-      <div class="empty-icon">ðŸ“‹</div><p>ChÆ°a cÃ³ sá»‘ dÆ° Ä‘áº§u ká»³</p>
+      <div class="empty-icon">📋</div><p>Chưa có số dư đầu kỳ</p>
     </div></td></tr>`;
   } else {
     body.innerHTML = data.map((item, idx) => {
@@ -3250,25 +3206,25 @@ function renderOpening() {
         <td class="right number">${formatCurrency(item.donGia)}</td>
         <td class="right number success">${formatCurrency(tt)}</td>
         <td><div class="td-actions">
-          <button class="btn-icon edit" onclick="editOpening('${item.id}')" title="Sá»­a">âœï¸</button>
-          <button class="btn-icon delete" onclick="deleteOpening('${item.id}')" title="XÃ³a">ðŸ—‘ï¸</button>
+          <button class="btn-icon edit" onclick="editOpening('${item.id}')" title="Sửa">✏️</button>
+          <button class="btn-icon delete" onclick="deleteOpening('${item.id}')" title="Xóa">🗑️</button>
         </div></td>
       </tr>`;
     }).join('');
   }
 
   const total = Store.openingBalance.reduce((s, i) => s + parseNum(i.soLuong) * parseNum(i.donGia), 0);
-  document.getElementById('openingCount').textContent = Store.openingBalance.length + ' váº­t tÆ°';
-  document.getElementById('openingTotal').textContent = 'Tá»•ng giÃ¡ trá»‹: ' + formatCurrency(total);
+  document.getElementById('openingCount').textContent = Store.openingBalance.length + ' vật tư';
+  document.getElementById('openingTotal').textContent = 'Tổng giá trị: ' + formatCurrency(total);
   updateBadges();
 }
 
 function deleteOpening(id) {
-  showConfirm('XÃ³a sá»‘ dÆ° Ä‘áº§u ká»³', 'Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n xÃ³a khÃ´ng?', () => {
+  showConfirm('Xóa số dư đầu kỳ', 'Bạn có chắc chắn muốn xóa không?', () => {
     Store.openingBalance = Store.openingBalance.filter(i => i.id !== id);
     saveData();
     renderOpening();
-    toast('ÄÃ£ xÃ³a thÃ nh cÃ´ng!');
+    toast('Đã xóa thành công!');
   });
 }
 
@@ -3276,12 +3232,12 @@ function editOpening(id) {
   const item = Store.openingBalance.find(i => i.id === id);
   if (!item) return;
   editContext = { type: 'opening', id };
-  showEditModal('Chá»‰nh sá»­a sá»‘ dÆ° Ä‘áº§u ká»³', [
-    { key: 'maVatTu', label: 'MÃ£ váº­t tÆ°', value: item.maVatTu, required: true },
-    { key: 'tenVatTu', label: 'TÃªn váº­t tÆ°', value: item.tenVatTu, required: true },
-    { key: 'dvt', label: 'ÄÆ¡n vá»‹ tÃ­nh', value: item.dvt, required: true },
-    { key: 'soLuong', label: 'Sá»‘ lÆ°á»£ng', value: item.soLuong, type: 'number', required: true },
-    { key: 'donGia', label: 'ÄÆ¡n giÃ¡', value: item.donGia, type: 'number' }
+  showEditModal('Chỉnh sửa số dư đầu kỳ', [
+    { key: 'maVatTu', label: 'Mã vật tư', value: item.maVatTu, required: true },
+    { key: 'tenVatTu', label: 'Tên vật tư', value: item.tenVatTu, required: true },
+    { key: 'dvt', label: 'Đơn vị tính', value: item.dvt, required: true },
+    { key: 'soLuong', label: 'Số lượng', value: item.soLuong, type: 'number', required: true },
+    { key: 'donGia', label: 'Đơn giá', value: item.donGia, type: 'number' }
   ]);
 }
 
@@ -3339,13 +3295,13 @@ function renderImports() {
 
   if (data.length === 0) {
     body.innerHTML = `<tr><td colspan="14"><div class="empty-state">
-      <div class="empty-icon">ðŸ“¥</div><p>KhÃ´ng tÃ¬m tháº¥y lá»‹ch sá»­ nháº­p kho phÃ¹ há»£p.</p>
+      <div class="empty-icon">📥</div><p>Không tìm thấy lịch sử nhập kho phù hợp.</p>
     </div></td></tr>`;
   } else {
     body.innerHTML = data.map((item, idx) => {
       const prevImport = getLatestPurchasePriceBeforeId(item.maVatTu, item.id, item.ngayNhap);
-      let prevPriceStr = "â€”";
-      let percentChangeStr = "â€”";
+      let prevPriceStr = "—";
+      let percentChangeStr = "—";
       let priceClass = "equal";
       
       if (prevImport) {
@@ -3372,20 +3328,20 @@ function renderImports() {
         <td class="right number text-muted">${prevPriceStr}</td>
         <td class="right"><span class="price-indicator ${priceClass}">${percentChangeStr}</span></td>
         <td class="right number success">${formatCurrency(item.thanhTien)}</td>
-        <td>${item.nhaCungCap || 'â€”'}</td>
-        <td>${item.ghiChu || 'â€”'}</td>
+        <td>${item.nhaCungCap || '—'}</td>
+        <td>${item.ghiChu || '—'}</td>
         <td><div class="td-actions">
-          <button class="btn-icon print" onclick="printSavedVoucher('import', '${item.soPhieu}')" title="In phiáº¿u">ðŸ–¨ï¸</button>
-          <button class="btn-icon edit" onclick="editImport('${item.id}')" title="Sá»­a">âœï¸</button>
-          <button class="btn-icon delete" onclick="deleteImport('${item.id}')" title="XÃ³a">ðŸ—‘ï¸</button>
+          <button class="btn-icon print" onclick="printSavedVoucher('import', '${item.soPhieu}')" title="In phiếu">🖨️</button>
+          <button class="btn-icon edit" onclick="editImport('${item.id}')" title="Sửa">✏️</button>
+          <button class="btn-icon delete" onclick="deleteImport('${item.id}')" title="Xóa">🗑️</button>
         </div></td>
       </tr>`;
     }).join('');
   }
 
   const total = data.reduce((s, i) => s + parseNum(i.thanhTien), 0);
-  document.getElementById('importCount').textContent = data.length + ' dÃ²ng';
-  document.getElementById('importTotal').textContent = 'Tá»•ng giÃ¡ trá»‹ nháº­p lá»c Ä‘Æ°á»£c: ' + formatCurrency(total);
+  document.getElementById('importCount').textContent = data.length + ' dòng';
+  document.getElementById('importTotal').textContent = 'Tổng giá trị nhập lọc được: ' + formatCurrency(total);
   updateBadges();
 }
 
@@ -3399,11 +3355,11 @@ function clearImportFilters() {
 }
 
 function deleteImport(id) {
-  showConfirm('XÃ³a dÃ²ng nháº­p kho', 'HÃ nh Ä‘á»™ng nÃ y sáº½ lÃ m biáº¿n Ä‘á»™ng sá»‘ lÆ°á»£ng tá»“n kho. Tiáº¿p tá»¥c?', () => {
+  showConfirm('Xóa dòng nhập kho', 'Hành động này sẽ làm biến động số lượng tồn kho. Tiếp tục?', () => {
     Store.imports = Store.imports.filter(i => i.id !== id);
     saveData();
     renderImports();
-    toast('ÄÃ£ xÃ³a thÃ nh cÃ´ng!');
+    toast('Đã xóa thành công!');
   });
 }
 
@@ -3411,16 +3367,16 @@ function editImport(id) {
   const item = Store.imports.find(i => i.id === id);
   if (!item) return;
   editContext = { type: 'import', id };
-  showEditModal('Chá»‰nh sá»­a dÃ²ng nháº­p kho', [
-    { key: 'ngayNhap', label: 'NgÃ y nháº­p', value: item.ngayNhap, type: 'date', required: true },
-    { key: 'soPhieu', label: 'Sá»‘ phiáº¿u', value: item.soPhieu, required: true },
-    { key: 'maVatTu', label: 'MÃ£ váº­t tÆ°', value: item.maVatTu, required: true },
-    { key: 'tenVatTu', label: 'TÃªn váº­t tÆ°', value: item.tenVatTu, required: true },
-    { key: 'dvt', label: 'ÄVT', value: item.dvt, required: true },
-    { key: 'soLuong', label: 'Sá»‘ lÆ°á»£ng', value: item.soLuong, type: 'number', required: true },
-    { key: 'donGia', label: 'ÄÆ¡n giÃ¡ (sau thuáº¿)', value: item.donGia, type: 'number' },
-    { key: 'nhaCungCap', label: 'NhÃ  cung cáº¥p', value: item.nhaCungCap || '' },
-    { key: 'ghiChu', label: 'Ghi chÃº', value: item.ghiChu || '' }
+  showEditModal('Chỉnh sửa dòng nhập kho', [
+    { key: 'ngayNhap', label: 'Ngày nhập', value: item.ngayNhap, type: 'date', required: true },
+    { key: 'soPhieu', label: 'Số phiếu', value: item.soPhieu, required: true },
+    { key: 'maVatTu', label: 'Mã vật tư', value: item.maVatTu, required: true },
+    { key: 'tenVatTu', label: 'Tên vật tư', value: item.tenVatTu, required: true },
+    { key: 'dvt', label: 'ĐVT', value: item.dvt, required: true },
+    { key: 'soLuong', label: 'Số lượng', value: item.soLuong, type: 'number', required: true },
+    { key: 'donGia', label: 'Đơn giá (sau thuế)', value: item.donGia, type: 'number' },
+    { key: 'nhaCungCap', label: 'Nhà cung cấp', value: item.nhaCungCap || '' },
+    { key: 'ghiChu', label: 'Ghi chú', value: item.ghiChu || '' }
   ]);
 }
 
@@ -3449,29 +3405,29 @@ function saveLendVoucher() {
   const gc = document.getElementById('lend_ghiChu').value.trim();
 
   if (!ngay || !phieu) {
-    toast('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ NgÃ y xuáº¥t mÆ°á»£n vÃ  Sá»‘ phiáº¿u!', 'warning');
+    toast('Vui lòng nhập đầy đủ Ngày xuất mượn và Số phiếu!', 'warning');
     return;
   }
 
   if (lendVoucherItems.length === 0) {
-    toast('Vui lÃ²ng thÃªm Ã­t nháº¥t má»™t máº·t hÃ ng Ä‘á»ƒ cho mÆ°á»£n!', 'warning');
+    toast('Vui lòng thêm ít nhất một mặt hàng để cho mượn!', 'warning');
     return;
   }
 
   for (let i = 0; i < lendVoucherItems.length; i++) {
     const item = lendVoucherItems[i];
     if (!item.maHang || !item.tenHang || !item.dvt) {
-      toast(`DÃ²ng ${i+1}: Vui lÃ²ng Ä‘iá»n Ä‘áº§y Ä‘á»§ MÃ£ váº­t tÆ° cho mÆ°á»£n!`, 'warning');
+      toast(`Dòng ${i+1}: Vui lòng điền đầy đủ Mã vật tư cho mượn!`, 'warning');
       return;
     }
     const qty = parseNum(item.soLuong);
     if (qty <= 0) {
-      toast(`DÃ²ng ${i+1}: Sá»‘ lÆ°á»£ng mÆ°á»£n pháº£i lá»›n hÆ¡n 0!`, 'warning');
+      toast(`Dòng ${i+1}: Số lượng mượn phải lớn hơn 0!`, 'warning');
       return;
     }
     const stock = getStock(item.maHang);
     if (stock < qty) {
-      toast(`DÃ²ng ${i+1} (${item.maHang}): Kho khÃ´ng Ä‘á»§ hÃ ng! Cáº§n cho mÆ°á»£n ${formatNumber(qty)} ${item.dvt}, hiá»‡n chá»‰ cÃ²n ${formatNumber(stock)} ${item.dvt}!`, 'error');
+      toast(`Dòng ${i+1} (${item.maHang}): Kho không đủ hàng! Cần cho mượn ${formatNumber(qty)} ${item.dvt}, hiện chỉ còn ${formatNumber(stock)} ${item.dvt}!`, 'error');
       return;
     }
   }
@@ -3496,13 +3452,13 @@ function saveLendVoucher() {
     boPhanNhan: bp,
     ghiChu: gc,
     items: items,
-    trangThai: 'Äang mÆ°á»£n'
+    trangThai: 'Đang mượn'
   });
 
   saveData();
   renderLends();
   resetLendForm();
-  toast('ÄÃ£ ghi nháº­n phiáº¿u cho mÆ°á»£n thÃ nh cÃ´ng!');
+  toast('Đã ghi nhận phiếu cho mượn thành công!');
 }
 
 function resetLendForm() {
@@ -3533,13 +3489,13 @@ function renderLends() {
         }
       }
       
-      const trangThai = (item.soLuongTra >= item.soLuong) ? '<span style="color:var(--success);font-weight:600;font-size:12px;">ÄÃ£ tráº£ háº¿t</span>' : '<span style="color:var(--warning);font-weight:600;font-size:12px;">Äang mÆ°á»£n</span>';
+      const trangThai = (item.soLuongTra >= item.soLuong) ? '<span style="color:var(--success);font-weight:600;font-size:12px;">Đã trả hết</span>' : '<span style="color:var(--warning);font-weight:600;font-size:12px;">Đang mượn</span>';
       
-      let actions = `<button class="btn-icon print" onclick="printSavedVoucher('lend', '${voucher.soPhieu}')" title="In phiáº¿u" style="width:28px;height:28px;">ðŸ–¨ï¸</button>`;
+      let actions = `<button class="btn-icon print" onclick="printSavedVoucher('lend', '${voucher.soPhieu}')" title="In phiếu" style="width:28px;height:28px;">🖨️</button>`;
       if (item.soLuongTra < item.soLuong) {
-        actions += `<button class="btn-icon success" onclick="openReturnModal('${voucher.id}', '${item.id}')" title="Ghi nháº­n tráº£ hÃ ng" style="width:28px;height:28px;">ðŸ“¥</button>`;
+        actions += `<button class="btn-icon success" onclick="openReturnModal('${voucher.id}', '${item.id}')" title="Ghi nhận trả hàng" style="width:28px;height:28px;">📥</button>`;
       }
-      actions += `<button class="btn-icon delete" onclick="deleteLendItem('${voucher.id}', '${item.id}')" title="XÃ³a" style="width:28px;height:28px;">ðŸ—‘ï¸</button>`;
+      actions += `<button class="btn-icon delete" onclick="deleteLendItem('${voucher.id}', '${item.id}')" title="Xóa" style="width:28px;height:28px;">🗑️</button>`;
 
       html += `<tr>
         <td>${stt++}</td>
@@ -3558,7 +3514,7 @@ function renderLends() {
   });
 
   if (!html) {
-    body.innerHTML = `<tr><td colspan="11"><div class="empty-state"><div class="empty-icon">ðŸ¤</div><p>KhÃ´ng cÃ³ dá»¯ liá»‡u cho mÆ°á»£n.</p></div></td></tr>`;
+    body.innerHTML = `<tr><td colspan="11"><div class="empty-state"><div class="empty-icon">🤝</div><p>Không có dữ liệu cho mượn.</p></div></td></tr>`;
   } else {
     body.innerHTML = html;
   }
@@ -3635,7 +3591,7 @@ function renderAging() {
   agingItems.sort((a, b) => b.ageMonths - a.ageMonths);
   
   if (agingItems.length === 0) {
-    body.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">ðŸŽ‰</div><p>KhÃ´ng cÃ³ váº­t tÆ° nÃ o lÆ°u kho quÃ¡ háº¡n ${filterVal} thÃ¡ng.</p></div></td></tr>`;
+    body.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">🎉</div><p>Không có vật tư nào lưu kho quá hạn ${filterVal} tháng.</p></div></td></tr>`;
     return;
   }
   
@@ -3643,11 +3599,11 @@ function renderAging() {
   let stt = 1;
   agingItems.forEach(i => {
     let tag = '';
-    if (i.ageMonths > 24) tag = '<span class="badge danger" style="background:var(--danger);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;">> 24 ThÃ¡ng</span>';
-    else if (i.ageMonths > 12) tag = '<span class="badge warning" style="background:var(--warning);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;">> 12 ThÃ¡ng</span>';
-    else tag = '<span class="badge warning" style="background:var(--warning);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;">> 6 ThÃ¡ng</span>';
+    if (i.ageMonths > 24) tag = '<span class="badge danger" style="background:var(--danger);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;">> 24 Tháng</span>';
+    else if (i.ageMonths > 12) tag = '<span class="badge warning" style="background:var(--warning);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;">> 12 Tháng</span>';
+    else tag = '<span class="badge warning" style="background:var(--warning);color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;">> 6 Tháng</span>';
     
-    const dateStr = isNaN(i.ngayNhap.getTime()) || i.ngayNhap.getFullYear() === 2020 ? 'Sá»‘ dÆ° Ä‘áº§u ká»³' : formatDate(i.ngayNhap.toISOString().split('T')[0]);
+    const dateStr = isNaN(i.ngayNhap.getTime()) || i.ngayNhap.getFullYear() === 2020 ? 'Số dư đầu kỳ' : formatDate(i.ngayNhap.toISOString().split('T')[0]);
     
     html += `<tr>
       <td>${stt++}</td>
@@ -3658,7 +3614,7 @@ function renderAging() {
       <td class="right number warning" style="font-weight:700">${formatNumber(i.soLuongTon)}</td>
       <td class="right number">${formatCurrency(i.donGia)}</td>
       <td class="right number danger">${formatCurrency(i.thanhTien)}</td>
-      <td>${i.ageMonths.toFixed(1)} thÃ¡ng</td>
+      <td>${i.ageMonths.toFixed(1)} tháng</td>
       <td>${tag}</td>
     </tr>`;
   });
@@ -3667,7 +3623,7 @@ function renderAging() {
 }
 
 function deleteLendItem(voucherId, itemId) {
-  showConfirm('XÃ³a dÃ²ng cho mÆ°á»£n', 'Báº¡n cÃ³ cháº¯c muá»‘n xÃ³a?', () => {
+  showConfirm('Xóa dòng cho mượn', 'Bạn có chắc muốn xóa?', () => {
     const voucher = Store.lends.find(v => v.id === voucherId);
     if (voucher) {
       voucher.items = voucher.items.filter(i => i.id !== itemId);
@@ -3676,7 +3632,7 @@ function deleteLendItem(voucherId, itemId) {
       }
       saveData();
       renderLends();
-      toast('ÄÃ£ xÃ³a thÃ nh cÃ´ng!');
+      toast('Đã xóa thành công!');
     }
   });
 }
@@ -3711,11 +3667,11 @@ function saveReturn() {
   const ngayTra = document.getElementById('return_ngayTra').value;
 
   if (slTra <= 0) {
-    toast('Sá»‘ lÆ°á»£ng tráº£ pháº£i lá»›n hÆ¡n 0!', 'warning');
+    toast('Số lượng trả phải lớn hơn 0!', 'warning');
     return;
   }
   if (!ngayTra) {
-    toast('Vui lÃ²ng chá»n ngÃ y tráº£!', 'warning');
+    toast('Vui lòng chọn ngày trả!', 'warning');
     return;
   }
 
@@ -3726,17 +3682,17 @@ function saveReturn() {
 
   const canTra = item.soLuong - (item.soLuongTra || 0);
   if (slTra > canTra) {
-    toast('Sá»‘ lÆ°á»£ng tráº£ Ä‘á»£t nÃ y khÃ´ng Ä‘Æ°á»£c lá»›n hÆ¡n sá»‘ lÆ°á»£ng cáº§n tráº£!', 'warning');
+    toast('Số lượng trả đợt này không được lớn hơn số lượng cần trả!', 'warning');
     return;
   }
 
   item.soLuongTra = (item.soLuongTra || 0) + slTra;
-  item.ngayTra = ngayTra; // Cáº­p nháº­t ngÃ y tráº£ cuá»‘i
+  item.ngayTra = ngayTra; // Cập nhật ngày trả cuối
 
   saveData();
   closeReturnModal();
   renderLends();
-  toast('Ghi nháº­n tráº£ váº­t tÆ° thÃ nh cÃ´ng!');
+  toast('Ghi nhận trả vật tư thành công!');
 }
 
 function renderExports() {
@@ -3772,7 +3728,7 @@ function renderExports() {
 
   if (data.length === 0) {
     body.innerHTML = `<tr><td colspan="14"><div class="empty-state">
-      <div class="empty-icon">ðŸ“¤</div><p>KhÃ´ng tÃ¬m tháº¥y lá»‹ch sá»­ xuáº¥t kho phÃ¹ há»£p.</p>
+      <div class="empty-icon">📤</div><p>Không tìm thấy lịch sử xuất kho phù hợp.</p>
     </div></td></tr>`;
   } else {
     body.innerHTML = data.map((item, idx) => {
@@ -3787,21 +3743,21 @@ function renderExports() {
         <td class="right number">${formatCurrency(item.donGiaVon)}</td>
         <td class="right number danger">${formatCurrency(item.tongGiaVon)}</td>
         <td class="right number">${formatNumber(item.tonSauXuat)}</td>
-        <td>${item.nguoiNhan || 'â€”'}</td>
-        <td>${item.boPhanNhan || 'â€”'}</td>
-        <td>${item.ghiChu || 'â€”'}</td>
+        <td>${item.nguoiNhan || '—'}</td>
+        <td>${item.boPhanNhan || '—'}</td>
+        <td>${item.ghiChu || '—'}</td>
         <td><div class="td-actions">
-          <button class="btn-icon print" onclick="printSavedVoucher('export', '${item.soPhieu}')" title="In phiáº¿u">ðŸ–¨ï¸</button>
-          <button class="btn-icon edit" onclick="editExport('${item.id}')" title="Sá»­a">âœï¸</button>
-          <button class="btn-icon delete" onclick="deleteExport('${item.id}')" title="XÃ³a">ðŸ—‘ï¸</button>
+          <button class="btn-icon print" onclick="printSavedVoucher('export', '${item.soPhieu}')" title="In phiếu">🖨️</button>
+          <button class="btn-icon edit" onclick="editExport('${item.id}')" title="Sửa">✏️</button>
+          <button class="btn-icon delete" onclick="deleteExport('${item.id}')" title="Xóa">🗑️</button>
         </div></td>
       </tr>`;
     }).join('');
   }
 
   const total = data.reduce((s, i) => s + parseNum(i.tongGiaVon), 0);
-  document.getElementById('exportCount').textContent = data.length + ' dÃ²ng';
-  document.getElementById('exportTotal').textContent = 'Tá»•ng giÃ¡ trá»‹ xuáº¥t lá»c Ä‘Æ°á»£c: ' + formatCurrency(total);
+  document.getElementById('exportCount').textContent = data.length + ' dòng';
+  document.getElementById('exportTotal').textContent = 'Tổng giá trị xuất lọc được: ' + formatCurrency(total);
   updateBadges();
 }
 
@@ -3816,11 +3772,11 @@ function clearExportFilters() {
 }
 
 function deleteExport(id) {
-  showConfirm('XÃ³a dÃ²ng xuáº¥t kho', 'Thao tÃ¡c nÃ y sáº½ tá»± Ä‘á»™ng khÃ´i phá»¥c sá»‘ lÆ°á»£ng tá»“n kho. Tiáº¿p tá»¥c?', () => {
+  showConfirm('Xóa dòng xuất kho', 'Thao tác này sẽ tự động khôi phục số lượng tồn kho. Tiếp tục?', () => {
     Store.exports = Store.exports.filter(i => i.id !== id);
     saveData();
     renderExports();
-    toast('ÄÃ£ xÃ³a thÃ nh cÃ´ng!');
+    toast('Đã xóa thành công!');
   });
 }
 
@@ -3828,17 +3784,17 @@ function editExport(id) {
   const item = Store.exports.find(i => i.id === id);
   if (!item) return;
   editContext = { type: 'export', id };
-  showEditModal('Chá»‰nh sá»­a dÃ²ng xuáº¥t kho', [
-    { key: 'ngayXuat', label: 'NgÃ y xuáº¥t', value: item.ngayXuat, type: 'date', required: true },
-    { key: 'soPhieu', label: 'Sá»‘ phiáº¿u', value: item.soPhieu, required: true },
-    { key: 'maHang', label: 'MÃ£ hÃ ng', value: item.maHang, required: true },
-    { key: 'tenHang', label: 'TÃªn hÃ ng', value: item.tenHang, required: true },
-    { key: 'dvt', label: 'ÄVT', value: item.dvt, required: true },
-    { key: 'soLuong', label: 'Sá»‘ lÆ°á»£ng', value: item.soLuong, type: 'number', required: true },
-    { key: 'donGiaVon', label: 'ÄÆ¡n giÃ¡ vá»‘n', value: item.donGiaVon, type: 'number' },
-    { key: 'nguoiNhan', label: 'NgÆ°á»i nháº­n', value: item.nguoiNhan || '' },
-    { key: 'boPhanNhan', label: 'Bá»™ pháº­n nháº­n', value: item.boPhanNhan || '' },
-    { key: 'ghiChu', label: 'Ghi chÃº', value: item.ghiChu || '' }
+  showEditModal('Chỉnh sửa dòng xuất kho', [
+    { key: 'ngayXuat', label: 'Ngày xuất', value: item.ngayXuat, type: 'date', required: true },
+    { key: 'soPhieu', label: 'Số phiếu', value: item.soPhieu, required: true },
+    { key: 'maHang', label: 'Mã hàng', value: item.maHang, required: true },
+    { key: 'tenHang', label: 'Tên hàng', value: item.tenHang, required: true },
+    { key: 'dvt', label: 'ĐVT', value: item.dvt, required: true },
+    { key: 'soLuong', label: 'Số lượng', value: item.soLuong, type: 'number', required: true },
+    { key: 'donGiaVon', label: 'Đơn giá vốn', value: item.donGiaVon, type: 'number' },
+    { key: 'nguoiNhan', label: 'Người nhận', value: item.nguoiNhan || '' },
+    { key: 'boPhanNhan', label: 'Bộ phận nhận', value: item.boPhanNhan || '' },
+    { key: 'ghiChu', label: 'Ghi chú', value: item.ghiChu || '' }
   ]);
 }
 
@@ -3858,11 +3814,11 @@ function addTemp() {
   const gc = document.getElementById('tmp_ghiChu').value.trim();
 
   if (!ma || !ten || !dvt || !ngay) {
-    toast('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ thÃ´ng tin báº¯t buá»™c!', 'warning');
+    toast('Vui lòng nhập đầy đủ thông tin bắt buộc!', 'warning');
     return;
   }
   if (sl <= 0) {
-    toast('Sá»‘ lÆ°á»£ng pháº£i lá»›n hÆ¡n 0!', 'warning');
+    toast('Số lượng phải lớn hơn 0!', 'warning');
     return;
   }
 
@@ -3874,7 +3830,7 @@ function addTemp() {
   saveData();
   renderTemp();
   resetTempForm();
-  toast('ÄÃ£ ghi nháº­n váº­t tÆ° gá»­i táº¡m!');
+  toast('Đã ghi nhận vật tư gửi tạm!');
 }
 
 function resetTempForm() {
@@ -3897,7 +3853,7 @@ function renderTemp() {
 
   if (data.length === 0) {
     body.innerHTML = `<tr><td colspan="8"><div class="empty-state">
-      <div class="empty-icon">ðŸ·ï¸</div><p>ChÆ°a cÃ³ váº­t tÆ° gá»­i táº¡m</p>
+      <div class="empty-icon">🏷️</div><p>Chưa có vật tư gửi tạm</p>
     </div></td></tr>`;
   } else {
     body.innerHTML = data.map((item, idx) => {
@@ -3908,24 +3864,24 @@ function renderTemp() {
         <td>${item.dvt}</td>
         <td class="right number">${formatNumber(item.soLuong)}</td>
         <td>${formatDate(item.ngayGui)}</td>
-        <td>${item.ghiChu || 'â€”'}</td>
+        <td>${item.ghiChu || '—'}</td>
         <td><div class="td-actions">
-          <button class="btn-icon edit" onclick="editTemp('${item.id}')" title="Sá»­a">âœï¸</button>
-          <button class="btn-icon delete" onclick="deleteTemp('${item.id}')" title="XÃ³a">ðŸ—‘ï¸</button>
+          <button class="btn-icon edit" onclick="editTemp('${item.id}')" title="Sửa">✏️</button>
+          <button class="btn-icon delete" onclick="deleteTemp('${item.id}')" title="Xóa">🗑️</button>
         </div></td>
       </tr>`;
     }).join('');
   }
 
-  document.getElementById('tempCount').textContent = Store.temporary.length + ' váº­t tÆ°';
+  document.getElementById('tempCount').textContent = Store.temporary.length + ' vật tư';
 }
 
 function deleteTemp(id) {
-  showConfirm('XÃ³a váº­t tÆ° gá»­i táº¡m', 'Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n xÃ³a?', () => {
+  showConfirm('Xóa vật tư gửi tạm', 'Bạn có chắc chắn muốn xóa?', () => {
     Store.temporary = Store.temporary.filter(i => i.id !== id);
     saveData();
     renderTemp();
-    toast('ÄÃ£ xÃ³a!');
+    toast('Đã xóa!');
   });
 }
 
@@ -3933,13 +3889,13 @@ function editTemp(id) {
   const item = Store.temporary.find(i => i.id === id);
   if (!item) return;
   editContext = { type: 'temporary', id };
-  showEditModal('Chá»‰nh sá»­a váº­t tÆ° gá»­i táº¡m', [
-    { key: 'maVatTu', label: 'MÃ£ váº­t tÆ°', value: item.maVatTu, required: true },
-    { key: 'tenVatTu', label: 'TÃªn váº­t tÆ°', value: item.tenVatTu, required: true },
-    { key: 'dvt', label: 'ÄVT', value: item.dvt, required: true },
-    { key: 'soLuong', label: 'Sá»‘ lÆ°á»£ng', value: item.soLuong, type: 'number', required: true },
-    { key: 'ngayGui', label: 'NgÃ y gá»­i', value: item.ngayGui, type: 'date', required: true },
-    { key: 'ghiChu', label: 'Ghi chÃº', value: item.ghiChu || '' }
+  showEditModal('Chỉnh sửa vật tư gửi tạm', [
+    { key: 'maVatTu', label: 'Mã vật tư', value: item.maVatTu, required: true },
+    { key: 'tenVatTu', label: 'Tên vật tư', value: item.tenVatTu, required: true },
+    { key: 'dvt', label: 'ĐVT', value: item.dvt, required: true },
+    { key: 'soLuong', label: 'Số lượng', value: item.soLuong, type: 'number', required: true },
+    { key: 'ngayGui', label: 'Ngày gửi', value: item.ngayGui, type: 'date', required: true },
+    { key: 'ghiChu', label: 'Ghi chú', value: item.ghiChu || '' }
   ]);
 }
 
@@ -3980,36 +3936,36 @@ function renderSummary() {
 
   document.getElementById('summaryStats').innerHTML = `
     <div class="stat-card primary">
-      <div class="stat-label">Tá»•ng máº·t hÃ ng</div>
+      <div class="stat-label">Tổng mặt hàng</div>
       <div class="stat-value">${totalMaterials}</div>
-      <div class="stat-sub">Loáº¡i váº­t tÆ° Ä‘ang quáº£n lÃ½</div>
+      <div class="stat-sub">Loại vật tư đang quản lý</div>
     </div>
     <div class="stat-card success">
-      <div class="stat-label">GiÃ¡ trá»‹ tá»“n kho</div>
+      <div class="stat-label">Giá trị tồn kho</div>
       <div class="stat-value">${formatCurrency(totalStockValue)}</div>
-      <div class="stat-sub">Tá»•ng giÃ¡ trá»‹ hiá»‡n táº¡i</div>
+      <div class="stat-sub">Tổng giá trị hiện tại</div>
     </div>
     <div class="stat-card info">
-      <div class="stat-label">Nháº­p trong thÃ¡ng</div>
+      <div class="stat-label">Nhập trong tháng</div>
       <div class="stat-value">${formatCurrency(totalImportMonth)}</div>
-      <div class="stat-sub">ThÃ¡ng ${month}/${year}</div>
+      <div class="stat-sub">Tháng ${month}/${year}</div>
     </div>
     <div class="stat-card warning">
-      <div class="stat-label">Xuáº¥t trong thÃ¡ng</div>
+      <div class="stat-label">Xuất trong tháng</div>
       <div class="stat-value">${formatCurrency(totalExportMonth)}</div>
-      <div class="stat-sub">ThÃ¡ng ${month}/${year}</div>
+      <div class="stat-sub">Tháng ${month}/${year}</div>
     </div>
     <div class="stat-card danger">
-      <div class="stat-label">Háº¿t hÃ ng</div>
+      <div class="stat-label">Hết hàng</div>
       <div class="stat-value">${outOfStock}</div>
-      <div class="stat-sub">Máº·t hÃ ng tá»“n = 0</div>
+      <div class="stat-sub">Mặt hàng tồn = 0</div>
     </div>
   `;
 
   const body = document.getElementById('summaryBody');
   if (keys.length === 0) {
     body.innerHTML = `<tr><td colspan="12"><div class="empty-state">
-      <div class="empty-icon">ðŸ“Š</div><p>ChÆ°a cÃ³ dá»¯ liá»‡u tá»“n kho Ä‘á»ƒ láº­p bÃ¡o cÃ¡o.</p>
+      <div class="empty-icon">📊</div><p>Chưa có dữ liệu tồn kho để lập báo cáo.</p>
     </div></td></tr>`;
     return;
   }
@@ -4030,7 +3986,7 @@ function renderSummary() {
 
     htmlRows.push(`
       <tr class="group-header-row">
-        <td colspan="13">CHá»¦NG LOáº I: ${catKey} - ${Categories[catKey].toUpperCase()}</td>
+        <td colspan="13">CHỦNG LOẠI: ${catKey} - ${Categories[catKey].toUpperCase()}</td>
       </tr>
     `);
 
@@ -4073,10 +4029,10 @@ function renderSummary() {
           <td class="right number" style="color:var(--warning)">${formatNumber(m.tonKhoToiThieu || 0)}</td>
           <td class="right number">${formatNumber(slDK)}</td>
           <td class="right number">${formatCurrency(gtDK)}</td>
-          <td class="right number success">${slN > 0 ? formatNumber(slN) : 'â€”'}</td>
-          <td class="right number success">${gtN > 0 ? formatCurrency(gtN) : 'â€”'}</td>
-          <td class="right number danger">${slX > 0 ? formatNumber(slX) : 'â€”'}</td>
-          <td class="right number danger">${gtX > 0 ? formatCurrency(gtX) : 'â€”'}</td>
+          <td class="right number success">${slN > 0 ? formatNumber(slN) : '—'}</td>
+          <td class="right number success">${gtN > 0 ? formatCurrency(gtN) : '—'}</td>
+          <td class="right number danger">${slX > 0 ? formatNumber(slX) : '—'}</td>
+          <td class="right number danger">${gtX > 0 ? formatCurrency(gtX) : '—'}</td>
           <td class="right number ${stockClass}" style="font-weight:700">${formatNumber(slCK)}</td>
           <td class="right number" style="font-weight:700">${formatCurrency(gtCK)}</td>
         </tr>
@@ -4085,7 +4041,7 @@ function renderSummary() {
 
     htmlRows.push(`
       <tr class="group-subtotal-row">
-        <td colspan="5" style="text-align:right;">Cá»™ng nhÃ³m ${catKey}:</td>
+        <td colspan="5" style="text-align:right;">Cộng nhóm ${catKey}:</td>
         <td class="right number">${formatNumber(catTotals.slDK)}</td>
         <td class="right number">${formatCurrency(catTotals.gtDK)}</td>
         <td class="right number">${formatNumber(catTotals.slN)}</td>
@@ -4100,7 +4056,7 @@ function renderSummary() {
 
   htmlRows.push(`
     <tr class="summary-total-row">
-      <td colspan="5" style="text-align:right;font-weight:700;">Tá»”NG Cá»˜NG Há»† THá»NG</td>
+      <td colspan="5" style="text-align:right;font-weight:700;">TỔNG CỘNG HỆ THỐNG</td>
       <td class="right number">${formatNumber(grandTotals.slDK)}</td>
       <td class="right number">${formatCurrency(grandTotals.gtDK)}</td>
       <td class="right number">${formatNumber(grandTotals.slN)}</td>
@@ -4187,7 +4143,7 @@ function saveEdit() {
         const currentStock = getStock(item.maHang) + parseNum(item.soLuong);
         const newQty = parseNum(vals.soLuong);
         if (newQty > currentStock) {
-          toast(`KhÃ´ng Ä‘á»§ tá»“n kho! Tá»“n: ${formatNumber(currentStock)}, yÃªu cáº§u: ${formatNumber(newQty)}`, 'error');
+          toast(`Không đủ tồn kho! Tồn: ${formatNumber(currentStock)}, yêu cầu: ${formatNumber(newQty)}`, 'error');
           return;
         }
         Object.assign(item, vals);
@@ -4205,7 +4161,7 @@ function saveEdit() {
   }
 
   closeModal();
-  toast('Cáº­p nháº­t thay Ä‘á»•i thÃ nh cÃ´ng!');
+  toast('Cập nhật thay đổi thành công!');
 }
 
 // ===========================
@@ -4242,7 +4198,7 @@ function exportData() {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
-  toast('ÄÃ£ xuáº¥t file sao lÆ°u JSON thÃ nh cÃ´ng!', 'info');
+  toast('Đã xuất file sao lưu JSON thành công!', 'info');
 }
 
 function importData(event) {
@@ -4254,7 +4210,7 @@ function importData(event) {
     try {
       const data = JSON.parse(e.target.result);
       if (data.openingBalance || data.imports || data.exports || data.materials || data.lends) {
-        showConfirm('KhÃ´i phá»¥c dá»¯ liá»‡u', 'ToÃ n bá»™ dá»¯ liá»‡u hiá»‡n táº¡i trÃªn trÃ¬nh duyá»‡t sáº½ Ä‘Æ°á»£c thay tháº¿ báº±ng file sao lÆ°u. Váº«n tiáº¿p tá»¥c?', () => {
+        showConfirm('Khôi phục dữ liệu', 'Toàn bộ dữ liệu hiện tại trên trình duyệt sẽ được thay thế bằng file sao lưu. Vẫn tiếp tục?', () => {
           Store = {
             materials: data.materials || [],
             openingBalance: data.openingBalance || [],
@@ -4265,13 +4221,13 @@ function importData(event) {
           };
           saveData();
           renderAll();
-          toast('KhÃ´i phá»¥c dá»¯ liá»‡u thÃ nh cÃ´ng!', 'success');
+          toast('Khôi phục dữ liệu thành công!', 'success');
         });
       } else {
-        toast('File sao lÆ°u JSON khÃ´ng há»£p lá»‡!', 'error');
+        toast('File sao lưu JSON không hợp lệ!', 'error');
       }
     } catch(err) {
-      toast('Lá»—i Ä‘á»c file: ' + err.message, 'error');
+      toast('Lỗi đọc file: ' + err.message, 'error');
     }
   };
   reader.readAsText(file);
@@ -4279,18 +4235,18 @@ function importData(event) {
 }
 
 function confirmClearAll() {
-  const password = prompt("Nháº­p máº­t kháº©u Ä‘á»ƒ thá»±c hiá»‡n xÃ³a toÃ n bá»™ dá»¯ liá»‡u:");
+  const password = prompt("Nhập mật khẩu để thực hiện xóa toàn bộ dữ liệu:");
   if (password === null) return;
   if (password !== "tuanpv") {
-    toast("Máº­t kháº©u khÃ´ng chÃ­nh xÃ¡c!", "error");
+    toast("Mật khẩu không chính xác!", "error");
     return;
   }
   
-  showConfirm('âš ï¸ XÃ³a toÃ n bá»™ dá»¯ liá»‡u', 'Cáº¢NH BÃO: Táº¥t cáº£ dá»¯ liá»‡u sáº½ bá»‹ xÃ³a vÄ©nh viá»…n! HÃ£y cháº¯c cháº¯n báº¡n Ä‘Ã£ sao lÆ°u dá»¯ liá»‡u trÆ°á»›c Ä‘Ã³.', () => {
+  showConfirm('⚠️ Xóa toàn bộ dữ liệu', 'CẢNH BÁO: Tất cả dữ liệu sẽ bị xóa vĩnh viễn! Hãy chắc chắn bạn đã sao lưu dữ liệu trước đó.', () => {
     Store = { materials: [], openingBalance: [], imports: [], exports: [], temporary: [], lends: [] };
     saveData();
     renderAll();
-    toast('ÄÃ£ xÃ³a toÃ n bá»™ dá»¯ liá»‡u há»‡ thá»‘ng!', 'warning');
+    toast('Đã xóa toàn bộ dữ liệu hệ thống!', 'warning');
   });
 }
 
@@ -4304,8 +4260,8 @@ function exportExcel() {
   const keys = Object.keys(materials);
 
   let csv = '\uFEFF';
-  csv += `BÃO CÃO Tá»”NG Há»¢P NHáº¬P XUáº¤T Tá»’N PHÃ‚N NHÃ“M - THÃNG ${month}/${year}\n\n`;
-  csv += 'STT,MÃ£ VT,TÃªn Váº­t TÆ°,ÄVT,SL Äáº§u Ká»³,GT Äáº§u Ká»³,SL Nháº­p,GT Nháº­p,SL Xuáº¥t,GT Xuáº¥t,SL Cuá»‘i Ká»³,GT Cuá»‘i Ká»³\n';
+  csv += `BÁO CÁO TỔNG HỢP NHẬP XUẤT TỒN PHÂN NHÓM - THÁNG ${month}/${year}\n\n`;
+  csv += 'STT,Mã VT,Tên Vật Tư,ĐVT,SL Đầu Kỳ,GT Đầu Kỳ,SL Nhập,GT Nhập,SL Xuất,GT Xuất,SL Cuối Kỳ,GT Cuối Kỳ\n';
 
   const grouped = { A: [], B: [], C: [], D: [], E: [], F: [], G: [], Z: [] };
   keys.forEach(k => {
@@ -4317,7 +4273,7 @@ function exportExcel() {
     const list = grouped[catKey] || [];
     if (list.length === 0) return;
 
-    csv += `\n* CHá»¦NG LOáº I: ${catKey} - ${Categories[catKey].toUpperCase()}\n`;
+    csv += `\n* CHỦNG LOẠI: ${catKey} - ${Categories[catKey].toUpperCase()}\n`;
     list.forEach((key, idx) => {
       const m = materials[key];
       const slDK = getStockBeforeDate(key, year, month);
@@ -4340,7 +4296,7 @@ function exportExcel() {
   a.download = `BaoCaoTonKhoPhanNhom_T${month}_${year}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  toast('ÄÃ£ xuáº¥t bÃ¡o cÃ¡o phÃ¢n nhÃ³m CSV!', 'info');
+  toast('Đã xuất báo cáo phân nhóm CSV!', 'info');
 }
 
 // ===========================
@@ -4353,30 +4309,30 @@ function downloadSampleExcel(type) {
 
   if (type === 'category') {
     filename = "Mau_DanhMuc_VatTu.xlsx";
-    headers = ["MÃ£ HÃ ng", "TÃªn HÃ ng", "ÄÆ¡n Vá»‹ TÃ­nh", "Chá»§ng Loáº¡i"];
+    headers = ["Mã Hàng", "Tên Hàng", "Đơn Vị Tính", "Chủng Loại"];
     sampleData = [
-      { "MÃ£ HÃ ng": "VT001", "TÃªn HÃ ng": "Báº¡c Ä‘áº¡n MÃ¡y Ã©p viÃªn Andritz 320", "ÄÆ¡n Vá»‹ TÃ­nh": "CÃ¡i", "Chá»§ng Loáº¡i": "A" },
-      { "MÃ£ HÃ ng": "VT002", "TÃªn HÃ ng": "BÃºa nghiá»n ANDRITZ", "ÄÆ¡n Vá»‹ TÃ­nh": "Bá»™", "Chá»§ng Loáº¡i": "B" },
-      { "MÃ£ HÃ ng": "VT003", "TÃªn HÃ ng": "Dáº§u nhá»›t Castrol 10W40", "ÄÆ¡n Vá»‹ TÃ­nh": "LÃ­t", "Chá»§ng Loáº¡i": "D" }
+      { "Mã Hàng": "VT001", "Tên Hàng": "Bạc đạn Máy ép viên Andritz 320", "Đơn Vị Tính": "Cái", "Chủng Loại": "A" },
+      { "Mã Hàng": "VT002", "Tên Hàng": "Búa nghiền ANDRITZ", "Đơn Vị Tính": "Bộ", "Chủng Loại": "B" },
+      { "Mã Hàng": "VT003", "Tên Hàng": "Dầu nhớt Castrol 10W40", "Đơn Vị Tính": "Lít", "Chủng Loại": "D" }
     ];
   } else if (type === 'opening') {
     filename = "Mau_SoDu_DauKy.xlsx";
-    headers = ["MÃ£ Váº­t TÆ°", "TÃªn Váº­t TÆ°", "ÄÆ¡n Vá»‹ TÃ­nh", "Sá»‘ LÆ°á»£ng", "ÄÆ¡n GiÃ¡"];
+    headers = ["Mã Vật Tư", "Tên Vật Tư", "Đơn Vị Tính", "Số Lượng", "Đơn Giá"];
     sampleData = [
-      { "MÃ£ Váº­t TÆ°": "VT001", "TÃªn Váº­t TÆ°": "Báº¡c Ä‘áº¡n MÃ¡y Ã©p viÃªn Andritz 320", "ÄÆ¡n Vá»‹ TÃ­nh": "CÃ¡i", "Sá»‘ LÆ°á»£ng": 10, "ÄÆ¡n GiÃ¡": 1500000 },
-      { "MÃ£ Váº­t TÆ°": "VT002", "TÃªn Váº­t TÆ°": "BÃºa nghiá»n ANDRITZ", "ÄÆ¡n Vá»‹ TÃ­nh": "Bá»™", "Sá»‘ LÆ°á»£ng": 5, "ÄÆ¡n GiÃ¡": 8500000 }
+      { "Mã Vật Tư": "VT001", "Tên Vật Tư": "Bạc đạn Máy ép viên Andritz 320", "Đơn Vị Tính": "Cái", "Số Lượng": 10, "Đơn Giá": 1500000 },
+      { "Mã Vật Tư": "VT002", "Tên Vật Tư": "Búa nghiền ANDRITZ", "Đơn Vị Tính": "Bộ", "Số Lượng": 5, "Đơn Giá": 8500000 }
     ];
   } else if (type === 'import') {
     filename = "Mau_NhapKho.xlsx";
-    headers = ["NgÃ y Nháº­p", "Sá»‘ Phiáº¿u", "MÃ£ Váº­t TÆ°", "TÃªn Váº­t TÆ°", "ÄÆ¡n Vá»‹ TÃ­nh", "Sá»‘ LÆ°á»£ng", "ÄÆ¡n GiÃ¡ Mua Sau Thuáº¿", "NhÃ  Cung Cáº¥p", "Ghi ChÃº"];
+    headers = ["Ngày Nhập", "Số Phiếu", "Mã Vật Tư", "Tên Vật Tư", "Đơn Vị Tính", "Số Lượng", "Đơn Giá Mua Sau Thuế", "Nhà Cung Cấp", "Ghi Chú"];
     sampleData = [
-      { "NgÃ y Nháº­p": "2026-06-02", "Sá»‘ Phiáº¿u": "PN2606-001", "MÃ£ Váº­t TÆ°": "VT001", "TÃªn Váº­t TÆ°": "Báº¡c Ä‘áº¡n MÃ¡y Ã©p viÃªn Andritz 320", "ÄÆ¡n Vá»‹ TÃ­nh": "CÃ¡i", "Sá»‘ LÆ°á»£ng": 5, "ÄÆ¡n GiÃ¡ Mua Sau Thuáº¿": 1450000, "NhÃ  Cung Cáº¥p": "Cty TNHH CÆ¡ KhÃ­ TrÆ°á»ng PhÃ¡t", "Ghi ChÃº": "HÃ ng nháº­p chÃ­nh hÃ£ng" }
+      { "Ngày Nhập": "2026-06-02", "Số Phiếu": "PN2606-001", "Mã Vật Tư": "VT001", "Tên Vật Tư": "Bạc đạn Máy ép viên Andritz 320", "Đơn Vị Tính": "Cái", "Số Lượng": 5, "Đơn Giá Mua Sau Thuế": 1450000, "Nhà Cung Cấp": "Cty TNHH Cơ Khí Trường Phát", "Ghi Chú": "Hàng nhập chính hãng" }
     ];
   } else if (type === 'export') {
     filename = "Mau_XuatKho.xlsx";
-    headers = ["NgÃ y Xuáº¥t", "Sá»‘ Phiáº¿u", "MÃ£ HÃ ng", "TÃªn HÃ ng", "ÄÆ¡n Vá»‹ TÃ­nh", "Sá»‘ LÆ°á»£ng", "ÄÆ¡n GiÃ¡ Vá»‘n", "NgÆ°á»i Nháº­n", "Bá»™ Pháº­n Nháº­n", "Ghi ChÃº"];
+    headers = ["Ngày Xuất", "Số Phiếu", "Mã Hàng", "Tên Hàng", "Đơn Vị Tính", "Số Lượng", "Đơn Giá Vốn", "Người Nhận", "Bộ Phận Nhận", "Ghi Chú"];
     sampleData = [
-      { "NgÃ y Xuáº¥t": "2026-06-02", "Sá»‘ Phiáº¿u": "PX2606-001", "MÃ£ HÃ ng": "VT001", "TÃªn HÃ ng": "Báº¡c Ä‘áº¡n MÃ¡y Ã©p viÃªn Andritz 320", "ÄÆ¡n Vá»‹ TÃ­nh": "CÃ¡i", "Sá»‘ LÆ°á»£ng": 2, "ÄÆ¡n GiÃ¡ Vá»‘n": 1500000, "NgÆ°á»i Nháº­n": "Nguyá»…n VÄƒn HÃ¹ng", "Bá»™ Pháº­n Nháº­n": "XÆ°á»Ÿng sáº£n xuáº¥t viÃªn", "Ghi ChÃº": "Thay tháº¿ Ä‘á»‹nh ká»³" }
+      { "Ngày Xuất": "2026-06-02", "Số Phiếu": "PX2606-001", "Mã Hàng": "VT001", "Tên Hàng": "Bạc đạn Máy ép viên Andritz 320", "Đơn Vị Tính": "Cái", "Số Lượng": 2, "Đơn Giá Vốn": 1500000, "Người Nhận": "Nguyễn Văn Hùng", "Bộ Phận Nhận": "Xưởng sản xuất viên", "Ghi Chú": "Thay thế định kỳ" }
     ];
   }
 
@@ -4387,7 +4343,7 @@ function downloadSampleExcel(type) {
   worksheet['!cols'] = headers.map(h => ({ wch: h.length + 10 }));
 
   XLSX.writeFile(workbook, filename);
-  toast(`ÄÃ£ táº£i máº«u file Excel: ${filename}`, 'success');
+  toast(`Đã tải mẫu file Excel: ${filename}`, 'success');
 }
 
 // ===========================
@@ -4400,7 +4356,7 @@ function exportSummaryExcel() {
   const keys = Object.keys(materials);
   
   if (keys.length === 0) {
-    toast('ChÆ°a cÃ³ dá»¯ liá»‡u Ä‘á»ƒ xuáº¥t!', 'warning');
+    toast('Chưa có dữ liệu để xuất!', 'warning');
     return;
   }
   
@@ -4417,19 +4373,19 @@ function exportSummaryExcel() {
     const gtCK = gtDK + gtN - gtX;
     
     data.push({
-      "MÃ£ VT": m.ma,
-      "TÃªn Váº­t TÆ°": m.ten,
-      "ÄVT": m.dvt,
-      "Chá»§ng Loáº¡i": (m.cl || 'G') + ' - ' + (Categories[m.cl || 'G'] || ''),
-      "Tá»“n Tá»‘i Thiá»ƒu": m.tonKhoToiThieu || 0,
-      "SL Äáº§u Ká»³": slDK,
-      "GT Äáº§u Ká»³": gtDK,
-      "SL Nháº­p": slN,
-      "GT Nháº­p": gtN,
-      "SL Xuáº¥t": slX,
-      "GT Xuáº¥t": gtX,
-      "SL Cuá»‘i Ká»³": slCK,
-      "GT Cuá»‘i Ká»³": gtCK
+      "Mã VT": m.ma,
+      "Tên Vật Tư": m.ten,
+      "ĐVT": m.dvt,
+      "Chủng Loại": (m.cl || 'G') + ' - ' + (Categories[m.cl || 'G'] || ''),
+      "Tồn Tối Thiểu": m.tonKhoToiThieu || 0,
+      "SL Đầu Kỳ": slDK,
+      "GT Đầu Kỳ": gtDK,
+      "SL Nhập": slN,
+      "GT Nhập": gtN,
+      "SL Xuất": slX,
+      "GT Xuất": gtX,
+      "SL Cuối Kỳ": slCK,
+      "GT Cuối Kỳ": gtCK
     });
   });
   
@@ -4441,7 +4397,7 @@ function exportSummaryExcel() {
   worksheet['!cols'] = cols.map(c => ({ wch: Math.max(c.length, 12) + 2 }));
   
   XLSX.writeFile(workbook, `TongHop_NhapXuatTon_T${month}_${year}.xlsx`);
-  toast('ÄÃ£ xuáº¥t Excel tá»•ng há»£p nháº­p xuáº¥t tá»“n!', 'success');
+  toast('Đã xuất Excel tổng hợp nhập xuất tồn!', 'success');
 }
 
 // ===========================
@@ -4488,24 +4444,24 @@ function exportAgingExcel() {
       
       const ageMonths = (today - add.date) / MS_PER_MONTH;
       if (ageMonths >= filterVal) {
-        const dateStr = isNaN(add.date.getTime()) || add.date.getFullYear() === 2020 ? 'Sá»‘ dÆ° Ä‘áº§u ká»³' : add.date.toLocaleDateString('vi-VN');
+        const dateStr = isNaN(add.date.getTime()) || add.date.getFullYear() === 2020 ? 'Số dư đầu kỳ' : add.date.toLocaleDateString('vi-VN');
         data.push({
-          "MÃ£ HÃ ng": k,
-          "TÃªn HÃ ng": materials[k].ten,
-          "ÄVT": materials[k].dvt,
-          "Thá»i Gian Nháº­p": dateStr,
-          "SL CÃ²n Tá»“n": qtyToTake,
-          "ÄÆ¡n GiÃ¡ Mua": add.price,
-          "ThÃ nh Tiá»n": qtyToTake * add.price,
-          "Sá»‘ ThÃ¡ng LÆ°u Kho": parseFloat(ageMonths.toFixed(1)),
-          "PhÃ¢n Loáº¡i": ageMonths > 24 ? '> 24 ThÃ¡ng' : (ageMonths > 12 ? '> 12 ThÃ¡ng' : '> 6 ThÃ¡ng')
+          "Mã Hàng": k,
+          "Tên Hàng": materials[k].ten,
+          "ĐVT": materials[k].dvt,
+          "Thời Gian Nhập": dateStr,
+          "SL Còn Tồn": qtyToTake,
+          "Đơn Giá Mua": add.price,
+          "Thành Tiền": qtyToTake * add.price,
+          "Số Tháng Lưu Kho": parseFloat(ageMonths.toFixed(1)),
+          "Phân Loại": ageMonths > 24 ? '> 24 Tháng' : (ageMonths > 12 ? '> 12 Tháng' : '> 6 Tháng')
         });
       }
     }
   });
   
   if (data.length === 0) {
-    toast('KhÃ´ng cÃ³ dá»¯ liá»‡u lÆ°u kho quÃ¡ háº¡n Ä‘á»ƒ xuáº¥t!', 'warning');
+    toast('Không có dữ liệu lưu kho quá hạn để xuất!', 'warning');
     return;
   }
   
@@ -4517,7 +4473,7 @@ function exportAgingExcel() {
   worksheet['!cols'] = cols.map(c => ({ wch: Math.max(c.length, 12) + 2 }));
   
   XLSX.writeFile(workbook, `BaoCao_LuuKho_Qua${filterVal}Thang.xlsx`);
-  toast('ÄÃ£ xuáº¥t Excel bÃ¡o cÃ¡o lÆ°u kho!', 'success');
+  toast('Đã xuất Excel báo cáo lưu kho!', 'success');
 }
 
 // ===========================
@@ -4529,21 +4485,21 @@ function printVoucher(type) {
   if (type === 'import') {
     ngay = document.getElementById('im_ngayNhap').value;
     soPhieu = document.getElementById('im_soPhieu').value;
-    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">NhÃ  cung cáº¥p:</td><td style="padding:4px 8px;">${document.getElementById('im_ncc').value || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chÃº:</td><td style="padding:4px 8px;">${document.getElementById('im_ghiChu').value || 'â€”'}</td></tr>`;
-    title = 'PHIáº¾U NHáº¬P KHO';
+    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">Nhà cung cấp:</td><td style="padding:4px 8px;">${document.getElementById('im_ncc').value || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chú:</td><td style="padding:4px 8px;">${document.getElementById('im_ghiChu').value || '—'}</td></tr>`;
+    title = 'PHIẾU NHẬP KHO';
     items = importVoucherItems.filter(i => i.maVatTu);
-    if (items.length === 0) { toast('ChÆ°a cÃ³ máº·t hÃ ng trong phiáº¿u!', 'warning'); return; }
+    if (items.length === 0) { toast('Chưa có mặt hàng trong phiếu!', 'warning'); return; }
     totalAmount = items.reduce((s, i) => s + parseNum(i.soLuong) * parseNum(i.donGia), 0);
   } else {
     ngay = document.getElementById('ex_ngayXuat').value;
     soPhieu = document.getElementById('ex_soPhieu').value;
-    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">NgÆ°á»i nháº­n:</td><td style="padding:4px 8px;">${document.getElementById('ex_nguoiNhan').value || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Bá»™ pháº­n:</td><td style="padding:4px 8px;">${document.getElementById('ex_boPhan').value || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chÃº:</td><td style="padding:4px 8px;">${document.getElementById('ex_ghiChu').value || 'â€”'}</td></tr>`;
-    title = 'PHIáº¾U XUáº¤T KHO';
+    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">Người nhận:</td><td style="padding:4px 8px;">${document.getElementById('ex_nguoiNhan').value || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Bộ phận:</td><td style="padding:4px 8px;">${document.getElementById('ex_boPhan').value || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chú:</td><td style="padding:4px 8px;">${document.getElementById('ex_ghiChu').value || '—'}</td></tr>`;
+    title = 'PHIẾU XUẤT KHO';
     items = exportVoucherItems.filter(i => i.maHang);
-    if (items.length === 0) { toast('ChÆ°a cÃ³ máº·t hÃ ng trong phiáº¿u!', 'warning'); return; }
+    if (items.length === 0) { toast('Chưa có mặt hàng trong phiếu!', 'warning'); return; }
     totalAmount = items.reduce((s, i) => s + parseNum(i.soLuong) * parseNum(i.donGiaVon), 0);
   }
   
@@ -4555,8 +4511,8 @@ function printVoucher(type) {
     const price = type === 'import' ? parseNum(item.donGia) : parseNum(item.donGiaVon);
     
     if (type === 'import') {
-      let prevPriceStr = "â€”";
-      let percentChangeStr = "â€”";
+      let prevPriceStr = "—";
+      let percentChangeStr = "—";
       const prevImport = getLatestPurchasePrice(item.maVatTu);
       if (prevImport) {
         const prevPrice = prevImport.donGia;
@@ -4595,10 +4551,10 @@ function printVoucher(type) {
   let headersHtml = '';
   let footerColspan = 6;
   if (type === 'import') {
-    headersHtml = `<th>STT</th><th>MÃ£ VT</th><th>TÃªn Váº­t TÆ°</th><th>ÄVT</th><th style="text-align:right;">Sá»‘ LÆ°á»£ng</th><th style="text-align:right;">GiÃ¡ Nháº­p Gáº§n Nháº¥t</th><th>% Biáº¿n Äá»™ng</th><th style="text-align:right;">ÄÆ¡n GiÃ¡</th><th style="text-align:right;">ThÃ nh Tiá»n</th>`;
+    headersHtml = `<th>STT</th><th>Mã VT</th><th>Tên Vật Tư</th><th>ĐVT</th><th style="text-align:right;">Số Lượng</th><th style="text-align:right;">Giá Nhập Gần Nhất</th><th>% Biến Động</th><th style="text-align:right;">Đơn Giá</th><th style="text-align:right;">Thành Tiền</th>`;
     footerColspan = 8;
   } else {
-    headersHtml = `<th>STT</th><th>MÃ£ HÃ ng</th><th>TÃªn HÃ ng</th><th>ÄVT</th><th style="text-align:right;">Sá»‘ LÆ°á»£ng</th><th style="text-align:right;">ÄÆ¡n GiÃ¡</th><th style="text-align:right;">ThÃ nh Tiá»n</th>`;
+    headersHtml = `<th>STT</th><th>Mã Hàng</th><th>Tên Hàng</th><th>ĐVT</th><th style="text-align:right;">Số Lượng</th><th style="text-align:right;">Đơn Giá</th><th style="text-align:right;">Thành Tiền</th>`;
     footerColspan = 6;
   }
 
@@ -4621,7 +4577,7 @@ function printVoucher(type) {
 </style>
 </head><body>
   <h1>${title}</h1>
-  <div class="sub">NgÃ y: ${formatDate(ngay)} &nbsp;|&nbsp; Sá»‘ phiáº¿u: <strong>${soPhieu}</strong></div>
+  <div class="sub">Ngày: ${formatDate(ngay)} &nbsp;|&nbsp; Số phiếu: <strong>${soPhieu}</strong></div>
   <table class="info">${extraInfo}</table>
   <table class="items">
     <thead><tr>
@@ -4629,14 +4585,14 @@ function printVoucher(type) {
     </tr></thead>
     <tbody>${rowsHtml}</tbody>
     <tfoot><tr class="total-row">
-      <td colspan="${footerColspan}" style="padding:8px;border:1px solid #ccc;text-align:right;">Tá»”NG Cá»˜NG:</td>
+      <td colspan="${footerColspan}" style="padding:8px;border:1px solid #ccc;text-align:right;">TỔNG CỘNG:</td>
       <td style="padding:8px;border:1px solid #ccc;text-align:right;">${formatCurrency(totalAmount)}</td>
     </tr></tfoot>
   </table>
   <div class="signatures">
-    <div><div class="label">NgÆ°á»i láº­p phiáº¿u</div><div class="note">(KÃ½, ghi rÃµ há» tÃªn)</div></div>
-    <div><div class="label">Thá»§ kho</div><div class="note">(KÃ½, ghi rÃµ há» tÃªn)</div></div>
-    <div><div class="label">Káº¿ toÃ¡n trÆ°á»Ÿng</div><div class="note">(KÃ½, ghi rÃµ há» tÃªn)</div></div>
+    <div><div class="label">Người lập phiếu</div><div class="note">(Ký, ghi rõ họ tên)</div></div>
+    <div><div class="label">Thủ kho</div><div class="note">(Ký, ghi rõ họ tên)</div></div>
+    <div><div class="label">Kế toán trưởng</div><div class="note">(Ký, ghi rõ họ tên)</div></div>
   </div>
 </body></html>`);
   printWindow.document.close();
@@ -4650,14 +4606,14 @@ function printSavedVoucher(type, soPhieu) {
   if (type === 'import') {
     const voucherItems = Store.imports.filter(i => i.soPhieu === soPhieu);
     if (voucherItems.length === 0) {
-      toast('KhÃ´ng tÃ¬m tháº¥y dá»¯ liá»‡u phiáº¿u nháº­p nÃ y!', 'warning');
+      toast('Không tìm thấy dữ liệu phiếu nhập này!', 'warning');
       return;
     }
     const firstItem = voucherItems[0];
     ngay = firstItem.ngayNhap;
-    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">NhÃ  cung cáº¥p:</td><td style="padding:4px 8px;">${firstItem.nhaCungCap || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chÃº:</td><td style="padding:4px 8px;">${firstItem.ghiChu || 'â€”'}</td></tr>`;
-    title = 'PHIáº¾U NHáº¬P KHO';
+    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">Nhà cung cấp:</td><td style="padding:4px 8px;">${firstItem.nhaCungCap || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chú:</td><td style="padding:4px 8px;">${firstItem.ghiChu || '—'}</td></tr>`;
+    title = 'PHIẾU NHẬP KHO';
     items = voucherItems.map(item => ({
       id: item.id,
       ngayNhap: item.ngayNhap,
@@ -4671,15 +4627,15 @@ function printSavedVoucher(type, soPhieu) {
   } else if (type === 'export') {
     const voucherItems = Store.exports.filter(i => i.soPhieu === soPhieu);
     if (voucherItems.length === 0) {
-      toast('KhÃ´ng tÃ¬m tháº¥y dá»¯ liá»‡u phiáº¿u xuáº¥t nÃ y!', 'warning');
+      toast('Không tìm thấy dữ liệu phiếu xuất này!', 'warning');
       return;
     }
     const firstItem = voucherItems[0];
     ngay = firstItem.ngayXuat;
-    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">NgÆ°á»i nháº­n:</td><td style="padding:4px 8px;">${firstItem.nguoiNhan || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Bá»™ pháº­n:</td><td style="padding:4px 8px;">${firstItem.boPhanNhan || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chÃº:</td><td style="padding:4px 8px;">${firstItem.ghiChu || 'â€”'}</td></tr>`;
-    title = 'PHIáº¾U XUáº¤T KHO';
+    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">Người nhận:</td><td style="padding:4px 8px;">${firstItem.nguoiNhan || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Bộ phận:</td><td style="padding:4px 8px;">${firstItem.boPhanNhan || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chú:</td><td style="padding:4px 8px;">${firstItem.ghiChu || '—'}</td></tr>`;
+    title = 'PHIẾU XUẤT KHO';
     items = voucherItems.map(item => ({
       ma: item.maHang,
       ten: item.tenHang,
@@ -4691,36 +4647,36 @@ function printSavedVoucher(type, soPhieu) {
   } else if (type === 'lend') {
     const voucher = Store.lends.find(v => v.soPhieu === soPhieu);
     if (!voucher) {
-      toast('KhÃ´ng tÃ¬m tháº¥y dá»¯ liá»‡u phiáº¿u cho mÆ°á»£n nÃ y!', 'warning');
+      toast('Không tìm thấy dữ liệu phiếu cho mượn này!', 'warning');
       return;
     }
     ngay = voucher.ngayXuat;
-    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">NgÆ°á»i nháº­n mÆ°á»£n:</td><td style="padding:4px 8px;">${voucher.nguoiNhan || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Bá»™ pháº­n mÆ°á»£n:</td><td style="padding:4px 8px;">${voucher.boPhanNhan || 'â€”'}</td></tr>
-                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chÃº:</td><td style="padding:4px 8px;">${voucher.ghiChu || 'â€”'}</td></tr>`;
-    title = 'PHIáº¾U XUáº¤T CHO MÆ¯á»¢N';
+    extraInfo = `<tr><td style="padding:4px 8px;font-weight:600;">Người nhận mượn:</td><td style="padding:4px 8px;">${voucher.nguoiNhan || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Bộ phận mượn:</td><td style="padding:4px 8px;">${voucher.boPhanNhan || '—'}</td></tr>
+                 <tr><td style="padding:4px 8px;font-weight:600;">Ghi chú:</td><td style="padding:4px 8px;">${voucher.ghiChu || '—'}</td></tr>`;
+    title = 'PHIẾU XUẤT CHO MƯỢN';
     items = voucher.items.map(item => ({
       ma: item.maHang,
       ten: item.tenHang,
       dvt: item.dvt,
       soLuong: parseNum(item.soLuong),
       donGia: parseNum(item.donGiaVon),
-      extraCol: ` <br/><small style="color:#666;">(Háº¡n tráº£: ${formatDate(item.hanTra)})</small>`
+      extraCol: ` <br/><small style="color:#666;">(Hạn trả: ${formatDate(item.hanTra)})</small>`
     }));
     totalAmount = voucher.items.reduce((s, i) => s + parseNum(i.soLuong) * parseNum(i.donGiaVon), 0);
   }
 
-  const colMa = type === 'import' ? 'MÃ£ VT' : 'MÃ£ HÃ ng';
-  const colTen = type === 'import' ? 'TÃªn Váº­t TÆ°' : 'TÃªn HÃ ng';
-  const colGia = type === 'import' ? 'ÄÆ¡n GiÃ¡' : 'ÄÆ¡n GiÃ¡ Vá»‘n';
-  const colThanhTien = type === 'import' ? 'ThÃ nh Tiá»n' : 'Tá»•ng GiÃ¡ Vá»‘n';
+  const colMa = type === 'import' ? 'Mã VT' : 'Mã Hàng';
+  const colTen = type === 'import' ? 'Tên Vật Tư' : 'Tên Hàng';
+  const colGia = type === 'import' ? 'Đơn Giá' : 'Đơn Giá Vốn';
+  const colThanhTien = type === 'import' ? 'Thành Tiền' : 'Tổng Giá Vốn';
 
   let rowsHtml = '';
   items.forEach((item, idx) => {
     const extraStr = item.extraCol || '';
     if (type === 'import') {
-      let prevPriceStr = "â€”";
-      let percentChangeStr = "â€”";
+      let prevPriceStr = "—";
+      let percentChangeStr = "—";
       const prevImport = getLatestPurchasePriceBeforeId(item.ma, item.id, item.ngayNhap);
       if (prevImport) {
         const prevPrice = prevImport.donGia;
@@ -4759,10 +4715,10 @@ function printSavedVoucher(type, soPhieu) {
   let headersHtml = '';
   let footerColspan = 6;
   if (type === 'import') {
-    headersHtml = `<th>STT</th><th>${colMa}</th><th>${colTen}</th><th>ÄVT</th><th style="text-align:right;">Sá»‘ LÆ°á»£ng</th><th style="text-align:right;">GiÃ¡ Nháº­p Gáº§n Nháº¥t</th><th>% Biáº¿n Äá»™ng</th><th style="text-align:right;">${colGia}</th><th style="text-align:right;">${colThanhTien}</th>`;
+    headersHtml = `<th>STT</th><th>${colMa}</th><th>${colTen}</th><th>ĐVT</th><th style="text-align:right;">Số Lượng</th><th style="text-align:right;">Giá Nhập Gần Nhất</th><th>% Biến Động</th><th style="text-align:right;">${colGia}</th><th style="text-align:right;">${colThanhTien}</th>`;
     footerColspan = 8;
   } else {
-    headersHtml = `<th>STT</th><th>${colMa}</th><th>${colTen}</th><th>ÄVT</th><th style="text-align:right;">Sá»‘ LÆ°á»£ng</th><th style="text-align:right;">${colGia}</th><th style="text-align:right;">${colThanhTien}</th>`;
+    headersHtml = `<th>STT</th><th>${colMa}</th><th>${colTen}</th><th>ĐVT</th><th style="text-align:right;">Số Lượng</th><th style="text-align:right;">${colGia}</th><th style="text-align:right;">${colThanhTien}</th>`;
     footerColspan = 6;
   }
 
@@ -4785,7 +4741,7 @@ function printSavedVoucher(type, soPhieu) {
 </style>
 </head><body>
   <h1>${title}</h1>
-  <div class="sub">NgÃ y: ${formatDate(ngay)} &nbsp;|&nbsp; Sá»‘ phiáº¿u: <strong>${soPhieu}</strong></div>
+  <div class="sub">Ngày: ${formatDate(ngay)} &nbsp;|&nbsp; Số phiếu: <strong>${soPhieu}</strong></div>
   <table class="info">${extraInfo}</table>
   <table class="items">
     <thead><tr>
@@ -4793,14 +4749,14 @@ function printSavedVoucher(type, soPhieu) {
     </tr></thead>
     <tbody>${rowsHtml}</tbody>
     <tfoot><tr class="total-row">
-      <td colspan="${footerColspan}" style="padding:8px;border:1px solid #ccc;text-align:right;">Tá»”NG Cá»˜NG:</td>
+      <td colspan="${footerColspan}" style="padding:8px;border:1px solid #ccc;text-align:right;">TỔNG CỘNG:</td>
       <td style="padding:8px;border:1px solid #ccc;text-align:right;">${formatCurrency(totalAmount)}</td>
     </tr></tfoot>
   </table>
   <div class="signatures">
-    <div><div class="label">NgÆ°á»i láº­p phiáº¿u</div><div class="note">(KÃ½, ghi rÃµ há» tÃªn)</div></div>
-    <div><div class="label">Thá»§ kho</div><div class="note">(KÃ½, ghi rÃµ há» tÃªn)</div></div>
-    <div><div class="label">Káº¿ toÃ¡n trÆ°á»Ÿng</div><div class="note">(KÃ½, ghi rÃµ há» tÃªn)</div></div>
+    <div><div class="label">Người lập phiếu</div><div class="note">(Ký, ghi rõ họ tên)</div></div>
+    <div><div class="label">Thủ kho</div><div class="note">(Ký, ghi rõ họ tên)</div></div>
+    <div><div class="label">Kế toán trưởng</div><div class="note">(Ký, ghi rõ họ tên)</div></div>
   </div>
 </body></html>`);
   printWindow.document.close();
@@ -4820,59 +4776,59 @@ function exportExcelSheet(type) {
     filename = "DanhMuc_VatTu_ChiTiet.xlsx";
     data = Store.materials.map((item, idx) => ({
       "STT": idx + 1,
-      "MÃ£ HÃ ng": item.maHang,
-      "TÃªn HÃ ng": item.tenHang,
-      "ÄÆ¡n Vá»‹ TÃ­nh": item.dvt,
-      "Chá»§ng Loáº¡i": item.chungLoai,
-      "TÃªn Chá»§ng Loáº¡i": Categories[item.chungLoai] || ""
+      "Mã Hàng": item.maHang,
+      "Tên Hàng": item.tenHang,
+      "Đơn Vị Tính": item.dvt,
+      "Chủng Loại": item.chungLoai,
+      "Tên Chủng Loại": Categories[item.chungLoai] || ""
     }));
   } else if (type === 'opening') {
     filename = "SoDuDauKy_Xuat.xlsx";
     data = Store.openingBalance.map((item, idx) => ({
       "STT": idx + 1,
-      "MÃ£ Váº­t TÆ°": item.maVatTu,
-      "TÃªn Váº­t TÆ°": item.tenVatTu,
-      "ÄÆ¡n Vá»‹ TÃ­nh": item.dvt,
-      "Sá»‘ LÆ°á»£ng": item.soLuong,
-      "ÄÆ¡n GiÃ¡": item.donGia,
-      "ThÃ nh Tiá»n": parseNum(item.soLuong) * parseNum(item.donGia)
+      "Mã Vật Tư": item.maVatTu,
+      "Tên Vật Tư": item.tenVatTu,
+      "Đơn Vị Tính": item.dvt,
+      "Số Lượng": item.soLuong,
+      "Đơn Giá": item.donGia,
+      "Thành Tiền": parseNum(item.soLuong) * parseNum(item.donGia)
     }));
   } else if (type === 'import') {
     filename = "LichSu_NhapKho_Xuat.xlsx";
     data = Store.imports.map((item, idx) => ({
       "STT": idx + 1,
-      "NgÃ y Nháº­p": item.ngayNhap,
-      "Sá»‘ Phiáº¿u": item.soPhieu,
-      "MÃ£ Váº­t TÆ°": item.maVatTu,
-      "TÃªn Váº­t TÆ°": item.tenVatTu,
-      "ÄÆ¡n Vá»‹ TÃ­nh": item.dvt,
-      "Sá»‘ LÆ°á»£ng": item.soLuong,
-      "ÄÆ¡n GiÃ¡ Mua": item.donGia,
-      "ThÃ nh Tiá»n": item.thanhTien,
-      "NhÃ  Cung Cáº¥p": item.nhaCungCap || "",
-      "Ghi ChÃº": item.ghiChu || ""
+      "Ngày Nhập": item.ngayNhap,
+      "Số Phiếu": item.soPhieu,
+      "Mã Vật Tư": item.maVatTu,
+      "Tên Vật Tư": item.tenVatTu,
+      "Đơn Vị Tính": item.dvt,
+      "Số Lượng": item.soLuong,
+      "Đơn Giá Mua": item.donGia,
+      "Thành Tiền": item.thanhTien,
+      "Nhà Cung Cấp": item.nhaCungCap || "",
+      "Ghi Chú": item.ghiChu || ""
     }));
   } else if (type === 'export') {
     filename = "LichSu_XuatKho_Xuat.xlsx";
     data = Store.exports.map((item, idx) => ({
       "STT": idx + 1,
-      "NgÃ y Xuáº¥t": item.ngayXuat,
-      "Sá»‘ Phiáº¿u": item.soPhieu,
-      "MÃ£ HÃ ng": item.maHang,
-      "TÃªn HÃ ng": item.tenHang,
-      "ÄÆ¡n Vá»‹ TÃ­nh": item.dvt,
-      "Sá»‘ LÆ°á»£ng": item.soLuong,
-      "ÄÆ¡n GiÃ¡ Vá»‘n": item.donGiaVon,
-      "Tá»•ng GiÃ¡ Vá»‘n": item.tongGiaVon,
-      "Tá»“n Sau Xuáº¥t": item.tonSauXuat,
-      "NgÆ°á»i Nháº­n": item.nguoiNhan || "",
-      "Bá»™ Pháº­n Nháº­n": item.boPhanNhan || "",
-      "Ghi ChÃº": item.ghiChu || ""
+      "Ngày Xuất": item.ngayXuat,
+      "Số Phiếu": item.soPhieu,
+      "Mã Hàng": item.maHang,
+      "Tên Hàng": item.tenHang,
+      "Đơn Vị Tính": item.dvt,
+      "Số Lượng": item.soLuong,
+      "Đơn Giá Vốn": item.donGiaVon,
+      "Tổng Giá Vốn": item.tongGiaVon,
+      "Tồn Sau Xuất": item.tonSauXuat,
+      "Người Nhận": item.nguoiNhan || "",
+      "Bộ Phận Nhận": item.boPhanNhan || "",
+      "Ghi Chú": item.ghiChu || ""
     }));
   }
   
   if (data.length === 0) {
-    toast("ChÆ°a cÃ³ dá»¯ liá»‡u Ä‘á»ƒ xuáº¥t!", "warning");
+    toast("Chưa có dữ liệu để xuất!", "warning");
     return;
   }
   
@@ -4886,7 +4842,7 @@ function exportExcelSheet(type) {
   }));
   
   XLSX.writeFile(workbook, filename);
-  toast("ÄÃ£ xuáº¥t dá»¯ liá»‡u Excel thÃ nh cÃ´ng!", "success");
+  toast("Đã xuất dữ liệu Excel thành công!", "success");
 }
 
 // ===========================
@@ -4906,7 +4862,7 @@ function importExcelSheet(event, type) {
       const jsonData = XLSX.utils.sheet_to_json(worksheet);
       
       if (jsonData.length === 0) {
-        toast("File excel khÃ´ng cÃ³ dá»¯ liá»‡u á»Ÿ Sheet Ä‘áº§u tiÃªn!", "warning");
+        toast("File excel không có dữ liệu ở Sheet đầu tiên!", "warning");
         return;
       }
       
@@ -4915,10 +4871,10 @@ function importExcelSheet(event, type) {
       
       if (type === 'category') {
         jsonData.forEach(row => {
-          const ma = (row["MÃ£ HÃ ng"] || row["maHang"] || "").toString().trim();
-          const ten = (row["TÃªn HÃ ng"] || row["tenHang"] || "").toString().trim();
-          const dvt = (row["ÄÆ¡n Vá»‹ TÃ­nh"] || row["dvt"] || "").toString().trim();
-          let cl = (row["Chá»§ng Loáº¡i"] || row["chungLoai"] || "G").toString().trim().toUpperCase();
+          const ma = (row["Mã Hàng"] || row["maHang"] || "").toString().trim();
+          const ten = (row["Tên Hàng"] || row["tenHang"] || "").toString().trim();
+          const dvt = (row["Đơn Vị Tính"] || row["dvt"] || "").toString().trim();
+          let cl = (row["Chủng Loại"] || row["chungLoai"] || "G").toString().trim().toUpperCase();
           
           if (!Categories[cl]) cl = 'G'; 
 
@@ -4943,11 +4899,11 @@ function importExcelSheet(event, type) {
         
       } else if (type === 'opening') {
         jsonData.forEach(row => {
-          const ma = (row["MÃ£ Váº­t TÆ°"] || row["maVatTu"] || row["MÃ£ HÃ ng"] || "").toString().trim();
-          const ten = (row["TÃªn Váº­t TÆ°"] || row["tenVatTu"] || row["TÃªn HÃ ng"] || "").toString().trim();
-          const dvt = (row["ÄÆ¡n Vá»‹ TÃ­nh"] || row["dvt"] || "").toString().trim();
-          const sl = parseNum(row["Sá»‘ LÆ°á»£ng"] || row["soLuong"]);
-          const dg = parseNum(row["ÄÆ¡n GiÃ¡"] || row["donGia"]);
+          const ma = (row["Mã Vật Tư"] || row["maVatTu"] || row["Mã Hàng"] || "").toString().trim();
+          const ten = (row["Tên Vật Tư"] || row["tenVatTu"] || row["Tên Hàng"] || "").toString().trim();
+          const dvt = (row["Đơn Vị Tính"] || row["dvt"] || "").toString().trim();
+          const sl = parseNum(row["Số Lượng"] || row["soLuong"]);
+          const dg = parseNum(row["Đơn Giá"] || row["donGia"]);
           
           if (ma && ten && dvt) {
             const existsInCatalog = Store.materials.find(i => i.maHang.toUpperCase() === ma.toUpperCase());
@@ -4976,7 +4932,7 @@ function importExcelSheet(event, type) {
         
       } else if (type === 'import') {
         jsonData.forEach(row => {
-          let rawDate = row["NgÃ y Nháº­p"] || row["ngayNhap"] || new Date().toISOString().split('T')[0];
+          let rawDate = row["Ngày Nhập"] || row["ngayNhap"] || new Date().toISOString().split('T')[0];
           if (typeof rawDate === 'number') {
             const utc_days  = Math.floor(rawDate - 25569);
             const utc_value = utc_days * 86400;
@@ -4990,14 +4946,14 @@ function importExcelSheet(event, type) {
             }
           }
           
-          const phieu = (row["Sá»‘ Phiáº¿u"] || row["soPhieu"] || generateVoucherNumber('import', rawDate)).toString().trim();
-          const ma = (row["MÃ£ Váº­t TÆ°"] || row["maVatTu"] || "").toString().trim();
-          const ten = (row["TÃªn Váº­t TÆ°"] || row["tenVatTu"] || "").toString().trim();
-          const dvt = (row["ÄÆ¡n Vá»‹ TÃ­nh"] || row["dvt"] || "").toString().trim();
-          const sl = parseNum(row["Sá»‘ LÆ°á»£ng"] || row["soLuong"]);
-          const dg = parseNum(row["ÄÆ¡n GiÃ¡ Mua Sau Thuáº¿"] || row["ÄÆ¡n GiÃ¡ Mua"] || row["ÄÆ¡n GiÃ¡"] || row["donGia"]);
-          const ncc = (row["NhÃ  Cung Cáº¥p"] || row["nhaCungCap"] || "").toString().trim();
-          const gc = (row["Ghi ChÃº"] || row["ghiChu"] || "").toString().trim();
+          const phieu = (row["Số Phiếu"] || row["soPhieu"] || generateVoucherNumber('import', rawDate)).toString().trim();
+          const ma = (row["Mã Vật Tư"] || row["maVatTu"] || "").toString().trim();
+          const ten = (row["Tên Vật Tư"] || row["tenVatTu"] || "").toString().trim();
+          const dvt = (row["Đơn Vị Tính"] || row["dvt"] || "").toString().trim();
+          const sl = parseNum(row["Số Lượng"] || row["soLuong"]);
+          const dg = parseNum(row["Đơn Giá Mua Sau Thuế"] || row["Đơn Giá Mua"] || row["Đơn Giá"] || row["donGia"]);
+          const ncc = (row["Nhà Cung Cấp"] || row["nhaCungCap"] || "").toString().trim();
+          const gc = (row["Ghi Chú"] || row["ghiChu"] || "").toString().trim();
           
           if (rawDate && phieu && ma && ten && dvt && sl > 0) {
             const existsInCatalog = Store.materials.find(i => i.maHang.toUpperCase() === ma.toUpperCase());
@@ -5021,7 +4977,7 @@ function importExcelSheet(event, type) {
         
       } else if (type === 'export') {
         jsonData.forEach(row => {
-          let rawDate = row["NgÃ y Xuáº¥t"] || row["ngayXuat"] || new Date().toISOString().split('T')[0];
+          let rawDate = row["Ngày Xuất"] || row["ngayXuat"] || new Date().toISOString().split('T')[0];
           if (typeof rawDate === 'number') {
             const utc_days  = Math.floor(rawDate - 25569);
             const utc_value = utc_days * 86400;
@@ -5035,21 +4991,21 @@ function importExcelSheet(event, type) {
             }
           }
           
-          const phieu = (row["Sá»‘ Phiáº¿u"] || row["soPhieu"] || generateVoucherNumber('export', rawDate)).toString().trim();
-          const ma = (row["MÃ£ HÃ ng"] || row["maHang"] || "").toString().trim();
-          const ten = (row["TÃªn HÃ ng"] || row["tenHang"] || "").toString().trim();
-          const dvt = (row["ÄÆ¡n Vá»‹ TÃ­nh"] || row["dvt"] || "").toString().trim();
-          const sl = parseNum(row["Sá»‘ LÆ°á»£ng"] || row["soLuong"]);
-          const dg = parseNum(row["ÄÆ¡n GiÃ¡ Vá»‘n"] || row["donGiaVon"] || row["donGia"]);
-          const nguoi = (row["NgÆ°á»i Nháº­n"] || row["nguoiNhan"] || "").toString().trim();
-          const bp = (row["Bá»™ Pháº­n Nháº­n"] || row["boPhanNhan"] || "").toString().trim();
-          const gc = (row["Ghi ChÃº"] || row["ghiChu"] || "").toString().trim();
+          const phieu = (row["Số Phiếu"] || row["soPhieu"] || generateVoucherNumber('export', rawDate)).toString().trim();
+          const ma = (row["Mã Hàng"] || row["maHang"] || "").toString().trim();
+          const ten = (row["Tên Hàng"] || row["tenHang"] || "").toString().trim();
+          const dvt = (row["Đơn Vị Tính"] || row["dvt"] || "").toString().trim();
+          const sl = parseNum(row["Số Lượng"] || row["soLuong"]);
+          const dg = parseNum(row["Đơn Giá Vốn"] || row["donGiaVon"] || row["donGia"]);
+          const nguoi = (row["Người Nhận"] || row["nguoiNhan"] || "").toString().trim();
+          const bp = (row["Bộ Phận Nhận"] || row["boPhanNhan"] || "").toString().trim();
+          const gc = (row["Ghi Chú"] || row["ghiChu"] || "").toString().trim();
           
           if (rawDate && phieu && ma && ten && dvt && sl > 0) {
             const currentStock = getStock(ma);
             if (currentStock < sl) {
               skipped++;
-              console.warn(`KhÃ´ng Ä‘á»§ tá»“n kho cho ${ma}: YÃªu cáº§u xuáº¥t ${sl}, trong kho chá»‰ cÃ²n ${currentStock}`);
+              console.warn(`Không đủ tồn kho cho ${ma}: Yêu cầu xuất ${sl}, trong kho chỉ còn ${currentStock}`);
             } else {
               Store.exports.push({
                 id: genId(), ngayXuat: rawDate, soPhieu: phieu, maHang: ma, tenHang: ten, dvt: dvt,
@@ -5066,9 +5022,9 @@ function importExcelSheet(event, type) {
         renderExports();
       }
       
-      toast(`ÄÃ£ hoÃ n táº¥t nháº­p thÃ nh cÃ´ng ${count} dÃ²ng!${skipped > 0 ? ` (Bá» qua/Bá»‹ lá»—i ${skipped} dÃ²ng)` : ''}`, "success");
+      toast(`Đã hoàn tất nhập thành công ${count} dòng!${skipped > 0 ? ` (Bỏ qua/Bị lỗi ${skipped} dòng)` : ''}`, "success");
     } catch (err) {
-      toast("Lá»—i Ä‘á»c file Excel: " + err.message, "error");
+      toast("Lỗi đọc file Excel: " + err.message, "error");
       console.error(err);
     }
   };
@@ -5132,7 +5088,7 @@ function renderReport() {
 
   htmlRows.push(`
     <tr class="summary-total-row">
-      <td colspan="2" style="text-align:right;">Tá»”NG Cá»˜NG Há»† THá»NG:</td>
+      <td colspan="2" style="text-align:right;">TỔNG CỘNG HỆ THỐNG:</td>
       <td class="right number">${formatCurrency(totalDK)}</td>
       <td class="right number success">${formatCurrency(totalN)}</td>
       <td class="right number danger">${formatCurrency(totalX)}</td>
@@ -5286,3 +5242,4 @@ init();
 </script>
 </body>
 </html>
+
