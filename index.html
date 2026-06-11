@@ -47,7 +47,6 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -213,10 +212,10 @@ body {
 .main-content {
   margin-left: var(--sidebar-w);
   flex: 1;
-  min-width: 0;
   min-height: 100vh;
   padding: 32px;
   background: var(--bg-primary);
+  overflow-x: auto;
 }
 
 .tab-panel { display: none; animation: fadeIn 0.3s ease; }
@@ -446,7 +445,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .table-header {
@@ -480,91 +479,7 @@ body {
 }
 .table-search input:focus { border-color: var(--border-focus); width: 220px; }
 
-.table-wrapper { overflow-x: auto; max-width: 100%; }
-#panel-import,
-#panel-export {
-  min-width: 0;
-  max-width: calc(100vw - var(--sidebar-w) - 64px);
-}
-#panel-import .table-wrapper,
-#panel-export .table-wrapper {
-  display: block;
-  width: 100%;
-  max-width: calc(100vw - var(--sidebar-w) - 64px);
-  overflow-x: auto;
-  overflow-y: visible;
-  padding-bottom: 12px;
-  scrollbar-gutter: stable both-edges;
-  -webkit-overflow-scrolling: touch;
-}
-#panel-import .table-wrapper table,
-#panel-export .table-wrapper table {
-  width: max-content;
-  min-width: 1560px;
-}
-#panel-import .table-wrapper::-webkit-scrollbar,
-#panel-export .table-wrapper::-webkit-scrollbar,
-.voucher-lines-scroll::-webkit-scrollbar {
-  height: 12px;
-}
-#panel-import .table-wrapper::-webkit-scrollbar-track,
-#panel-export .table-wrapper::-webkit-scrollbar-track,
-.voucher-lines-scroll::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.04);
-  border-radius: 999px;
-}
-#panel-import .table-wrapper::-webkit-scrollbar-thumb,
-#panel-export .table-wrapper::-webkit-scrollbar-thumb,
-.voucher-lines-scroll::-webkit-scrollbar-thumb {
-  background: rgba(148,163,184,0.55);
-  border-radius: 999px;
-  border: 2px solid rgba(15,23,42,0.85);
-}
-#panel-import .table-wrapper::-webkit-scrollbar-thumb:hover,
-#panel-export .table-wrapper::-webkit-scrollbar-thumb:hover,
-.voucher-lines-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(203,213,225,0.8);
-}
-.voucher-lines-scroll {
-  width: 100%;
-  max-width: calc(100vw - var(--sidebar-w) - 96px);
-  overflow-x: auto;
-  overflow-y: visible;
-  padding-bottom: 10px;
-  scrollbar-gutter: stable both-edges;
-  -webkit-overflow-scrolling: touch;
-}
-.table-scroll-proxy {
-  width: 100%;
-  max-width: calc(100vw - var(--sidebar-w) - 64px);
-  height: 18px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  margin: 0 0 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: rgba(255,255,255,0.035);
-  scrollbar-gutter: stable both-edges;
-  -webkit-overflow-scrolling: touch;
-}
-.table-scroll-proxy-inner {
-  height: 1px;
-}
-.table-scroll-proxy::-webkit-scrollbar {
-  height: 14px;
-}
-.table-scroll-proxy::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.06);
-  border-radius: 999px;
-}
-.table-scroll-proxy::-webkit-scrollbar-thumb {
-  background: rgba(34,211,238,0.7);
-  border-radius: 999px;
-  border: 2px solid rgba(15,23,42,0.9);
-}
-.table-scroll-proxy::-webkit-scrollbar-thumb:hover {
-  background: rgba(125,211,252,0.95);
-}
+.table-wrapper { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
 thead th {
@@ -795,14 +710,6 @@ tbody td.number { font-variant-numeric: tabular-nums; }
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-left: 0; padding: 16px; padding-top: 72px; }
-  #panel-import,
-  #panel-export,
-  #panel-import .table-wrapper,
-  #panel-export .table-wrapper,
-  .table-scroll-proxy,
-  .voucher-lines-scroll {
-    max-width: calc(100vw - 32px);
-  }
   .form-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -837,93 +744,236 @@ tbody td.number { font-variant-numeric: tabular-nums; }
 .suggest-item:hover { background: var(--bg-card-hover); color: var(--text-primary); }
 .form-group.has-suggest { position: relative; overflow: visible !important; }
 
-
-body.auth-locked {
-  overflow: hidden;
+/* ===== LOGIN OVERLAY ===== */
+.login-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-primary);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
-
-body.auth-locked .app-layout {
-  display: none;
+.login-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
-
-body:not(.auth-locked) .auth-screen {
-  display: none;
+.login-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(99,102,241,0.08);
+  animation: loginSlideUp 0.6s ease;
 }
-
-.auth-screen {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: radial-gradient(circle at 18% 20%, rgba(34,211,238,0.18), transparent 28%),
-              radial-gradient(circle at 80% 12%, rgba(99,102,241,0.18), transparent 25%),
-              linear-gradient(135deg, #06060e, #101827 58%, #0f172a);
+@keyframes loginSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.auth-card {
-  width: min(420px, 100%);
-  border: 1px solid var(--border);
+.login-box .login-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.login-box .login-logo .logo-icon {
+  width: 64px; height: 64px;
+  background: linear-gradient(135deg, var(--primary), var(--violet));
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 8px 30px rgba(99,102,241,0.35);
+  margin-bottom: 16px;
+}
+.login-box .login-logo h2 {
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+.login-box .login-logo p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.login-box .login-field {
+  margin-bottom: 18px;
+}
+.login-box .login-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+.login-box .login-field input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.login-box .login-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+.login-box .login-field input::placeholder {
+  color: var(--text-muted);
+}
+.login-box .login-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--primary), var(--violet));
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+.login-box .login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(99,102,241,0.4);
+}
+.login-box .login-btn:active {
+  transform: translateY(0);
+}
+.login-error {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
   border-radius: 8px;
-  padding: 28px;
-  background: rgba(12,12,29,0.96);
-  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+  padding: 10px 14px;
+  color: #f87171;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 14px;
+  display: none;
+  animation: shake 0.3s ease;
 }
-
-.auth-card h1 { font-size: 24px; margin-bottom: 6px; }
-.auth-card p { color: var(--text-secondary); font-size: 13px; margin-bottom: 22px; }
-.auth-card label { display: block; margin: 14px 0 8px; color: var(--text-secondary); font-size: 12px; font-weight: 700; text-transform: uppercase; }
-.auth-card input { width: 100%; height: 46px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.06); color: var(--text-primary); padding: 0 14px; outline: none; }
-.auth-card input:focus { border-color: var(--info); box-shadow: 0 0 0 3px rgba(6,182,212,0.15); }
-.auth-card button { width: 100%; height: 46px; margin-top: 22px; border: 0; border-radius: 8px; color: #03111f; background: linear-gradient(135deg, var(--info), var(--primary-hover)); font-weight: 800; cursor: pointer; }
-.auth-error { min-height: 20px; margin-top: 12px; color: #fca5a5; font-size: 13px; }
-
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+/* ===== PAGINATION ===== */
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.pagination-bar .page-info {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-right: auto;
+  white-space: nowrap;
+}
+.pagination-bar .page-btns {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.pagination-bar .page-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pagination-bar .page-btn:hover:not(.active):not(:disabled) {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  color: var(--text-primary);
+}
+.pagination-bar .page-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--violet));
+  border-color: transparent;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(99,102,241,0.35);
+}
+.pagination-bar .page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.pagination-bar .page-ellipsis {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 0 4px;
+  user-select: none;
+}
+.pagination-bar .page-size-select {
+  padding: 6px 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  margin-left: 12px;
+}
+.pagination-bar .page-size-select:focus {
+  border-color: var(--primary);
+}
 </style>
 </head>
-<body class="auth-locked">
-<form class="auth-screen" id="authForm" autocomplete="off">
-  <div class="auth-card">
-    <h1>??ng nh?p BVN</h1>
-    <p>Nh?p t?i kho?n ???c c?p ?? truy c?p h? th?ng t?n kho.</p>
-    <label for="authUser">T?n ??ng nh?p</label>
-    <input id="authUser" type="text" autocomplete="username" required autofocus>
-    <label for="authPass">M?t kh?u</label>
-    <input id="authPass" type="password" autocomplete="current-password" required>
-    <button type="submit">??ng nh?p</button>
-    <div class="auth-error" id="authError" aria-live="polite"></div>
-  </div>
-</form>
-<script>
-(function(){
-  const AUTH_USERNAME = 'phantuanbvn';
-  const AUTH_PASSWORD = 'bvn@1234';
-  const KEY = 'bvn-auth-ok';
-  function unlock(){ document.body.classList.remove('auth-locked'); }
-  document.addEventListener('DOMContentLoaded', function(){
-    if (sessionStorage.getItem(KEY) === '1') unlock();
-    const form = document.getElementById('authForm');
-    const user = document.getElementById('authUser');
-    const pass = document.getElementById('authPass');
-    const error = document.getElementById('authError');
-    form.addEventListener('submit', function(event){
-      event.preventDefault();
-      if (user.value.trim() === AUTH_USERNAME && pass.value === AUTH_PASSWORD) {
-        sessionStorage.setItem(KEY, '1');
-        error.textContent = '';
-        unlock();
-      } else {
-        error.textContent = 'Sai t?n ??ng nh?p ho?c m?t kh?u.';
-        pass.value = '';
-        pass.focus();
-      }
-    });
-  });
-})();
-</script>
+<body>
 
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="logo-icon">📦</div>
+      <h2>Quản Lý Tồn Kho</h2>
+      <p>Vui lòng đăng nhập để tiếp tục</p>
+    </div>
+    <div class="login-error" id="loginError">Sai tài khoản hoặc mật khẩu!</div>
+    <div class="login-field">
+      <label>Tài khoản (ID)</label>
+      <input type="text" id="loginId" placeholder="Nhập tài khoản..." autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>Mật khẩu</label>
+      <input type="password" id="loginPass" placeholder="Nhập mật khẩu..." autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">🔓 Đăng Nhập</button>
+  </div>
+</div>
 
 <button class="mobile-toggle" onclick="toggleSidebar()" id="mobileToggle">☰</button>
 
-<div class="app-layout">
+<div class="app-layout" id="appLayout" style="display:none;">
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -963,6 +1013,9 @@ body:not(.auth-locked) .auth-screen {
       <div class="nav-item" onclick="switchTab('aging')" id="nav-aging">
         <span class="nav-icon">⏳</span> Báo Cáo Lưu Kho
       </div>
+      <div class="nav-item" onclick="switchTab('detail')" id="nav-detail">
+        <span class="nav-icon">🔎</span> Chi Tiết Vật Tư
+      </div>
     </nav>
 
     <div class="sidebar-footer">
@@ -999,23 +1052,16 @@ body:not(.auth-locked) .auth-screen {
       </div>
 
       <div class="stats-grid" id="summaryStats"></div>
-
       <div class="summary-filters">
-        <label style="font-size:13px;color:var(--text-secondary);">Kỳ báo cáo:</label>
-        <select id="summaryMonth" onchange="renderSummary()">
-          <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option>
-          <option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option>
-          <option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option>
-          <option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
-        </select>
-        <select id="summaryYear" onchange="renderSummary()"></select>
+        <label style="font-size:13px;color:var(--text-secondary);">Từ ngày:</label>
+        <input type="date" id="summaryFromDate" onchange="renderSummary()" style="padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;height:35px;">
+        <label style="font-size:13px;color:var(--text-secondary);margin-left:12px;">Đến ngày:</label>
+        <input type="date" id="summaryToDate" onchange="renderSummary()" style="padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;height:35px;">
         <label style="margin-left:12px;font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
           <input type="checkbox" id="summaryWarningOnly" onchange="renderSummary()"> Chỉ hiện cảnh báo tồn tối thiểu
         </label>
         <input type="text" id="summarySearch" placeholder="🔍 Tìm kiếm mã/tên vật tư..." oninput="renderSummary()" style="padding:8px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;width:250px;margin-left:auto;">
-      </div>
-
-      <div class="table-card">
+      </div>      <div class="table-card">
         <div class="table-header">
           <h3>📊 Bảng tổng hợp tồn kho phân nhóm chủng loại</h3>
         </div>
@@ -1041,6 +1087,7 @@ body:not(.auth-locked) .auth-screen {
             <tbody id="summaryBody"></tbody>
           </table>
         </div>
+        <div class="pagination-bar" id="paginationSummary"></div>
       </div>
     </div>
 
@@ -1099,7 +1146,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-card open" id="categoryFormCard">
         <div class="form-card-header" onclick="toggleFormCard('categoryFormCard')">
           <h3>➕ Thêm vật tư mới vào danh mục</h3>
-          <span class="toggle-icon">â–¼</span>
+          <span class="toggle-icon">▼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
@@ -1135,7 +1182,7 @@ body:not(.auth-locked) .auth-screen {
               </div>
             </div>
             <div class="form-actions">
-              <button class="btn btn-outline" onclick="resetCategoryForm()">Há»§y</button>
+              <button class="btn btn-outline" onclick="resetCategoryForm()">Hủy</button>
               <button class="btn btn-primary" onclick="addCategoryMaterial()">💾 Lưu danh mục</button>
             </div>
           </div>
@@ -1175,6 +1222,7 @@ body:not(.auth-locked) .auth-screen {
           <span id="categoryCount">0 vật tư</span>
           <span></span>
         </div>
+        <div class="pagination-bar" id="paginationCategory"></div>
       </div>
     </div>
 
@@ -1190,7 +1238,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-card open" id="openingFormCard">
         <div class="form-card-header" onclick="toggleFormCard('openingFormCard')">
           <h3>➕ Thêm vật tư đầu kỳ</h3>
-          <span class="toggle-icon">â–¼</span>
+          <span class="toggle-icon">▼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
@@ -1222,7 +1270,7 @@ body:not(.auth-locked) .auth-screen {
               </div>
             </div>
             <div class="form-actions">
-              <button class="btn btn-outline" onclick="resetOpeningForm()">Há»§y</button>
+              <button class="btn btn-outline" onclick="resetOpeningForm()">Hủy</button>
               <button class="btn btn-primary" onclick="addOpening()">💾 Lưu</button>
             </div>
           </div>
@@ -1278,7 +1326,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-card open" id="importFormCard">
         <div class="form-card-header" onclick="toggleFormCard('importFormCard')">
           <h3>➕ LẬP PHIẾU NHẬP KHO MỚI (Nhiều dòng)</h3>
-          <span class="toggle-icon">â–¼</span>
+          <span class="toggle-icon">▼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
@@ -1308,11 +1356,11 @@ body:not(.auth-locked) .auth-screen {
             </h4>
             
             <!-- Multi-row container -->
-            <div id="importVoucherItemsContainer" class="voucher-lines-scroll" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
+            <div id="importVoucherItemsContainer" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
               <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">TỔNG CỘNG GIÁ TRỊ PHIẾU:</span>
-              <span id="importVoucherTotal" style="font-weight:800;font-size:18px;color:var(--success);">0 ?</span>
+              <span id="importVoucherTotal" style="font-weight:800;font-size:18px;color:var(--success);">0 ₫</span>
             </div>
 
             <div class="form-actions">
@@ -1358,13 +1406,11 @@ body:not(.auth-locked) .auth-screen {
             </div>
           </div>
         </div>
-        <div class="table-scroll-proxy" data-scroll-target="importHistoryTable" aria-label="Kéo ngang bảng lịch sử nhập kho">
-          <div class="table-scroll-proxy-inner"></div>
-        </div>
-        <div class="table-wrapper" id="importHistoryTable">
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
+                <th style="width:36px;"><input type="checkbox" id="selectAllImport" onchange="toggleSelectAll('import')" title="Chọn tất cả"></th>
                 <th>STT</th>
                 <th>Ngày Nhập</th>
                 <th>Số Phiếu</th>
@@ -1386,8 +1432,10 @@ body:not(.auth-locked) .auth-screen {
         </div>
         <div class="table-footer">
           <span id="importCount">0 dòng</span>
+          <button class="btn btn-danger btn-sm" id="btnBulkDeleteImport" style="display:none;" onclick="bulkDeleteImports()">🗑️ Xóa đã chọn (<span id="bulkCountImport">0</span>)</button>
           <span id="importTotal">Tổng giá trị nhập: 0 ₫</span>
         </div>
+        <div class="pagination-bar" id="paginationImport"></div>
       </div>
     </div>
 
@@ -1403,7 +1451,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-card open" id="exportFormCard">
         <div class="form-card-header" onclick="toggleFormCard('exportFormCard')">
           <h3>➕ LẬP PHIẾU XUẤT KHO MỚI (Nhiều dòng)</h3>
-          <span class="toggle-icon">â–¼</span>
+          <span class="toggle-icon">▼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
@@ -1437,11 +1485,11 @@ body:not(.auth-locked) .auth-screen {
             </h4>
             
             <!-- Multi-row container -->
-            <div id="exportVoucherItemsContainer" class="voucher-lines-scroll" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
+            <div id="exportVoucherItemsContainer" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
               <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">TỔNG CỘNG GIÁ VỐN PHIẾU XUẤT:</span>
-              <span id="exportVoucherTotal" style="font-weight:800;font-size:18px;color:var(--danger);">0 ?</span>
+              <span id="exportVoucherTotal" style="font-weight:800;font-size:18px;color:var(--danger);">0 ₫</span>
             </div>
 
             <div class="form-actions">
@@ -1489,14 +1537,21 @@ body:not(.auth-locked) .auth-screen {
               <button class="btn btn-outline btn-sm" onclick="clearExportFilters()" style="height:32px;width:100%;justify-content:center;">🧹 Xóa bộ lọc</button>
             </div>
           </div>
+
+          <!-- Recalculate Cost Price -->
+          <div style="display:flex;align-items:center;gap:10px;padding:12px;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);border-radius:var(--radius-sm);flex-wrap:wrap;">
+            <span style="font-size:13px;font-weight:600;color:var(--warning);white-space:nowrap;">🔄 Tính lại giá vốn:</span>
+            <input type="date" id="recalcFromDate" style="padding:6px 10px;font-size:12px;height:32px;" title="Từ ngày">
+            <span style="color:var(--text-muted);font-size:12px;">→</span>
+            <input type="date" id="recalcToDate" style="padding:6px 10px;font-size:12px;height:32px;" title="Đến ngày">
+            <button class="btn btn-warning btn-sm" onclick="recalcCostPrice()" style="height:32px;white-space:nowrap;">⚡ Tính lại giá vốn BQ</button>
+          </div>
         </div>
-        <div class="table-scroll-proxy" data-scroll-target="exportHistoryTable" aria-label="Kéo ngang bảng lịch sử xuất kho">
-          <div class="table-scroll-proxy-inner"></div>
-        </div>
-        <div class="table-wrapper" id="exportHistoryTable">
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
+                <th style="width:36px;"><input type="checkbox" id="selectAllExport" onchange="toggleSelectAll('export')" title="Chọn tất cả"></th>
                 <th>STT</th>
                 <th>Ngày Xuất</th>
                 <th>Số Phiếu</th>
@@ -1518,8 +1573,10 @@ body:not(.auth-locked) .auth-screen {
         </div>
         <div class="table-footer">
           <span id="exportCount">0 dòng</span>
+          <button class="btn btn-danger btn-sm" id="btnBulkDeleteExport" style="display:none;" onclick="bulkDeleteExports()">🗑️ Xóa đã chọn (<span id="bulkCountExport">0</span>)</button>
           <span id="exportTotal">Tổng giá trị xuất: 0 ₫</span>
         </div>
+        <div class="pagination-bar" id="paginationExport"></div>
       </div>
     </div>
 
@@ -1535,7 +1592,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-card open" id="lendFormCard">
         <div class="form-card-header" onclick="toggleFormCard('lendFormCard')">
           <h3>➕ LẬP PHIẾU XUẤT CHO MƯỢN (Nhiều dòng)</h3>
-          <span class="toggle-icon">â–¼</span>
+          <span class="toggle-icon">▼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
@@ -1572,7 +1629,7 @@ body:not(.auth-locked) .auth-screen {
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:16px;">
               <span style="font-weight:600;font-size:13px;color:var(--text-secondary);">TỔNG CỘNG GIÁ VỐN PHIẾU MƯỢN:</span>
-              <span id="lendVoucherTotal" style="font-weight:800;font-size:18px;color:var(--warning);">0 ?</span>
+              <span id="lendVoucherTotal" style="font-weight:800;font-size:18px;color:var(--warning);">0 ₫</span>
             </div>
 
             <div class="form-actions">
@@ -1629,7 +1686,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-card open" id="tempFormCard">
         <div class="form-card-header" onclick="toggleFormCard('tempFormCard')">
           <h3>➕ Thêm vật tư gửi tạm</h3>
-          <span class="toggle-icon">â–¼</span>
+          <span class="toggle-icon">▼</span>
         </div>
         <div class="form-card-body">
           <div class="form-inner">
@@ -1660,7 +1717,7 @@ body:not(.auth-locked) .auth-screen {
               </div>
             </div>
             <div class="form-actions">
-              <button class="btn btn-outline" onclick="resetTempForm()">Há»§y</button>
+              <button class="btn btn-outline" onclick="resetTempForm()">Hủy</button>
               <button class="btn btn-primary" onclick="addTemp()">🏷️ Ghi nhận</button>
             </div>
           </div>
@@ -1754,6 +1811,71 @@ body:not(.auth-locked) .auth-screen {
       </div>
     </div>
 
+    <!-- ===== TAB: CHI TIẾT VẬT TƯ ===== -->
+    <div class="tab-panel" id="panel-detail">
+      <div class="page-header">
+        <div class="page-title">
+          Chi Tiết Vật Tư
+          <span>Xem chi tiết lịch sử giao dịch nhập/xuất/mượn của từng mã vật tư</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header" style="flex-direction:column;align-items:stretch;gap:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <h3>🔎 Tra cứu chi tiết vật tư</h3>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(180px,1fr) 140px 140px auto;gap:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius-sm);align-items:end;">
+            <div class="form-group has-suggest" style="margin:0;">
+              <label style="font-size:11px;">Mã vật tư <span class="req">*</span></label>
+              <input type="text" id="detailMaVatTu" placeholder="Nhập mã hoặc tên vật tư..." oninput="suggestDetailMaterial()" onfocus="suggestDetailMaterial()" style="padding:6px 10px;font-size:12px;height:32px;">
+              <div class="suggest-dropdown" id="detailSuggest"></div>
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label style="font-size:11px;">Từ ngày</label>
+              <input type="date" id="detailFromDate" style="padding:6px 10px;font-size:12px;height:32px;">
+            </div>
+            <div class="form-group" style="margin:0;">
+              <label style="font-size:11px;">Đến ngày</label>
+              <input type="date" id="detailToDate" style="padding:6px 10px;font-size:12px;height:32px;">
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-primary btn-sm" onclick="renderMaterialDetail()" style="height:32px;">📋 Xem chi tiết</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div id="detailStats" style="display:none;padding:16px 20px;">
+        </div>
+
+        <!-- Transaction Table -->
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Ngày</th>
+                <th>Loại</th>
+                <th>Số Phiếu</th>
+                <th>Đối tác / NCC</th>
+                <th class="right">SL Nhập</th>
+                <th class="right">SL Xuất</th>
+                <th class="right">Đơn Giá</th>
+                <th class="right">Thành Tiền</th>
+                <th class="right">Tồn Lũy Kế</th>
+              </tr>
+            </thead>
+            <tbody id="detailBody"></tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span id="detailCount">Chọn mã vật tư để xem chi tiết</span>
+          <span id="detailTotal"></span>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -1768,7 +1890,7 @@ body:not(.auth-locked) .auth-screen {
       <div class="form-grid" id="modalFormGrid"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal()">Há»§y</button>
+      <button class="btn btn-outline" onclick="closeModal()">Hủy</button>
       <button class="btn btn-primary" id="modalSaveBtn" onclick="saveEdit()">💾 Cập nhật</button>
     </div>
   </div>
@@ -1781,7 +1903,7 @@ body:not(.auth-locked) .auth-screen {
     <h4 id="confirmTitle">Xác nhận</h4>
     <p id="confirmMessage">Bạn có chắc muốn thực hiện?</p>
     <div class="confirm-actions">
-      <button class="btn btn-outline" onclick="closeConfirm()">Há»§y</button>
+      <button class="btn btn-outline" onclick="closeConfirm()">Hủy</button>
       <button class="btn btn-danger" id="confirmOkBtn">Xác nhận</button>
     </div>
   </div>
@@ -1816,7 +1938,7 @@ body:not(.auth-locked) .auth-screen {
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeReturnModal()">Há»§y</button>
+      <button class="btn btn-outline" onclick="closeReturnModal()">Hủy</button>
       <button class="btn btn-success" onclick="saveReturn()">📥 Ghi nhận trả</button>
     </div>
   </div>
@@ -1857,6 +1979,114 @@ let lendVoucherItems = [];
 let editContext = { type: null, id: null };
 
 // ===========================
+// PAGINATION STATE & HELPERS
+// ===========================
+const PaginationState = {
+  summary: { currentPage: 1, pageSize: 100, lastFilter: '' },
+  category: { currentPage: 1, pageSize: 100, lastFilter: '' },
+  import: { currentPage: 1, pageSize: 100, lastFilter: '' },
+  export: { currentPage: 1, pageSize: 100, lastFilter: '' }
+};
+
+const PaginationCallbacks = {
+  summary: () => renderSummary(),
+  category: () => renderCategory(),
+  import: () => renderImports(),
+  export: () => renderExports()
+};
+
+function renderPagination(containerId, totalItems, stateKey) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const state = PaginationState[stateKey];
+  const totalPages = Math.ceil(totalItems / state.pageSize);
+
+  if (state.currentPage > totalPages) {
+    state.currentPage = Math.max(1, totalPages);
+  }
+
+  if (totalPages <= 1) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'flex';
+
+  const startIdx = (state.currentPage - 1) * state.pageSize + 1;
+  const endIdx = Math.min(state.currentPage * state.pageSize, totalItems);
+
+  let html = `
+    <div class="page-info">
+      Hiển thị <strong>${formatNumber(startIdx)}</strong> - <strong>${formatNumber(endIdx)}</strong> trên <strong>${formatNumber(totalItems)}</strong> dòng
+    </div>
+    <div class="page-btns">
+      <button class="page-btn" ${state.currentPage === 1 ? 'disabled' : ''} onclick="changePage('${stateKey}', 1)" title="Trang đầu">«</button>
+      <button class="page-btn" ${state.currentPage === 1 ? 'disabled' : ''} onclick="changePage('${stateKey}', ${state.currentPage - 1})" title="Trang trước">‹</button>
+  `;
+
+  const maxButtons = 5;
+  let startPage = Math.max(1, state.currentPage - 2);
+  let endPage = Math.min(totalPages, state.currentPage + 2);
+
+  if (state.currentPage <= 3) {
+    endPage = Math.min(totalPages, maxButtons);
+  }
+  if (state.currentPage > totalPages - 2) {
+    startPage = Math.max(1, totalPages - maxButtons + 1);
+  }
+
+  if (startPage > 1) {
+    html += `<button class="page-btn" onclick="changePage('${stateKey}', 1)">1</button>`;
+    if (startPage > 2) {
+      html += `<span class="page-ellipsis">...</span>`;
+    }
+  }
+
+  for (let p = startPage; p <= endPage; p++) {
+    html += `
+      <button class="page-btn ${p === state.currentPage ? 'active' : ''}" onclick="changePage('${stateKey}', ${p})">
+        ${p}
+      </button>
+    `;
+  }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      html += `<span class="page-ellipsis">...</span>`;
+    }
+    html += `<button class="page-btn" onclick="changePage('${stateKey}', ${totalPages})">${totalPages}</button>`;
+  }
+
+  html += `
+      <button class="page-btn" ${state.currentPage === totalPages ? 'disabled' : ''} onclick="changePage('${stateKey}', ${state.currentPage + 1})" title="Trang sau">›</button>
+      <button class="page-btn" ${state.currentPage === totalPages ? 'disabled' : ''} onclick="changePage('${stateKey}', ${totalPages})" title="Trang cuối">»</button>
+    </div>
+    <select class="page-size-select" onchange="changePageSize('${stateKey}', this.value)">
+      <option value="50" ${state.pageSize === 50 ? 'selected' : ''}>50 / trang</option>
+      <option value="100" ${state.pageSize === 100 ? 'selected' : ''}>100 / trang</option>
+      <option value="200" ${state.pageSize === 200 ? 'selected' : ''}>200 / trang</option>
+      <option value="500" ${state.pageSize === 500 ? 'selected' : ''}>500 / trang</option>
+    </select>
+  `;
+
+  container.innerHTML = html;
+}
+
+function changePage(stateKey, page) {
+  PaginationState[stateKey].currentPage = page;
+  const callback = PaginationCallbacks[stateKey];
+  if (callback) callback();
+}
+
+function changePageSize(stateKey, size) {
+  PaginationState[stateKey].pageSize = parseInt(size, 10);
+  PaginationState[stateKey].currentPage = 1;
+  const callback = PaginationCallbacks[stateKey];
+  if (callback) callback();
+}
+
+// ===========================
 // PERSISTENCE
 // ===========================
 function saveData() {
@@ -1885,145 +2115,6 @@ function loadData() {
 }
 
 // ===========================
-// GOOGLE SHEETS SHARED DATABASE
-// ===========================
-const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxn1tLkOBaNdZQSqFXD2VfHpUwptcsapdo6xvgSk1F13XEm3kcAN2NPMUB7rt-btz8/exec';
-const GOOGLE_SHEETS_TOKEN = 'bvn-sync-2026-phantuanbvn';
-const LOCAL_STORAGE_KEY = 'tonKhoData_v4';
-let googleSheetLoaded = false;
-let googleSheetSaveTimer = null;
-let googleSheetSaveInFlight = false;
-let googleSheetPendingSave = false;
-
-function normalizeStoreShape(data) {
-  const base = data && typeof data === 'object' ? data : {};
-  return {
-    materials: Array.isArray(base.materials) ? base.materials : [],
-    openingBalance: Array.isArray(base.openingBalance) ? base.openingBalance : [],
-    imports: Array.isArray(base.imports) ? base.imports : [],
-    exports: Array.isArray(base.exports) ? base.exports : [],
-    temporary: Array.isArray(base.temporary) ? base.temporary : [],
-    lends: Array.isArray(base.lends) ? base.lends : []
-  };
-}
-
-function hasStoreData(data) {
-  const s = normalizeStoreShape(data);
-  return ['materials', 'openingBalance', 'imports', 'exports', 'temporary', 'lends']
-    .some(key => s[key].length > 0);
-}
-
-function saveLocalDataOnly() {
-  try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Store));
-  } catch(e) {
-    toast('Loi luu du lieu cuc bo: ' + e.message, 'error');
-  }
-}
-
-function saveData() {
-  saveLocalDataOnly();
-  queueGoogleSheetSave();
-}
-
-function loadData() {
-  try {
-    const d = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (d) Store = normalizeStoreShape(JSON.parse(d));
-  } catch(e) {
-    console.error('Load error:', e);
-  }
-}
-
-function queueGoogleSheetSave() {
-  if (!googleSheetLoaded) return;
-  googleSheetPendingSave = true;
-  clearTimeout(googleSheetSaveTimer);
-  googleSheetSaveTimer = setTimeout(saveGoogleSheetNow, 800);
-}
-
-async function saveGoogleSheetNow() {
-  if (!googleSheetLoaded || googleSheetSaveInFlight || !googleSheetPendingSave) return;
-  googleSheetSaveInFlight = true;
-  googleSheetPendingSave = false;
-  try {
-    await fetch(GOOGLE_SHEETS_ENDPOINT, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({
-        token: GOOGLE_SHEETS_TOKEN,
-        action: 'save',
-        store: normalizeStoreShape(Store)
-      })
-    });
-  } catch(e) {
-    googleSheetPendingSave = true;
-    console.error('Google Sheets save error:', e);
-    toast('Chua dong bo duoc Google Sheets. Du lieu van duoc luu tam tren may nay.', 'warning');
-  } finally {
-    googleSheetSaveInFlight = false;
-    if (googleSheetPendingSave) {
-      clearTimeout(googleSheetSaveTimer);
-      googleSheetSaveTimer = setTimeout(saveGoogleSheetNow, 3000);
-    }
-  }
-}
-
-function loadGoogleSheetData() {
-  return new Promise((resolve, reject) => {
-    const callbackName = 'bvnSheetCallback_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const script = document.createElement('script');
-    const cleanup = () => {
-      delete window[callbackName];
-      script.remove();
-    };
-    const timeout = setTimeout(() => {
-      cleanup();
-      reject(new Error('Google Sheets timeout'));
-    }, 15000);
-
-    window[callbackName] = (data) => {
-      clearTimeout(timeout);
-      cleanup();
-      resolve(data);
-    };
-
-    script.onerror = () => {
-      clearTimeout(timeout);
-      cleanup();
-      reject(new Error('Google Sheets script error'));
-    };
-    script.src = GOOGLE_SHEETS_ENDPOINT + '?action=load&token=' + encodeURIComponent(GOOGLE_SHEETS_TOKEN) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
-    document.head.appendChild(script);
-  });
-}
-
-async function initGoogleSheetSync() {
-  try {
-    const data = await loadGoogleSheetData();
-    const cloudStore = normalizeStoreShape(data && data.store);
-    googleSheetLoaded = true;
-    if (hasStoreData(cloudStore)) {
-      Store = cloudStore;
-      saveLocalDataOnly();
-      renderAll();
-      toast('Da tai du lieu tu Google Sheets', 'success');
-      return;
-    }
-    if (hasStoreData(Store)) {
-      toast('Google Sheets dang trong. Du lieu hien tai chi luu tam tren may nay.', 'warning');
-      return;
-    }
-    toast('Google Sheets chua co du lieu.', 'info');
-  } catch(e) {
-    googleSheetLoaded = false;
-    console.error('Google Sheets load error:', e);
-    toast('Khong tai duoc Google Sheets. Dang dung du lieu tam tren may nay.', 'warning');
-  }
-}
-
-// ===========================
 // UTILITIES
 // ===========================
 function genId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
@@ -2034,8 +2125,8 @@ function formatNumber(n) {
 }
 
 function formatCurrency(n) {
-  if (n === null || n === undefined || isNaN(n)) return '0 \u0111';
-  return Number(n).toLocaleString('vi-VN') + ' \u0111';
+  if (n === null || n === undefined || isNaN(n)) return '0 ₫';
+  return Number(n).toLocaleString('vi-VN') + ' ₫';
 }
 
 function formatDate(dateStr) {
@@ -2098,7 +2189,8 @@ function switchTab(tab) {
     export: 'Xuất Kho',
     temporary: 'Vật Tư Gửi Tạm',
     lend: 'Xuất Cho Mượn',
-    aging: 'Báo Cáo Lưu Kho'
+    aging: 'Báo Cáo Lưu Kho',
+    detail: 'Chi Tiết Vật Tư'
   };
   
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => {
@@ -2194,7 +2286,7 @@ function renderVoucherItems(type) {
       const lineTotal = parseNum(item.soLuong) * parseNum(item.donGia);
       total += lineTotal;
       return `
-        <div id="im_row_${idx}" style="display:grid;grid-template-columns:minmax(180px,1.5fr) minmax(260px,2fr) 70px 100px 120px 130px 36px;gap:8px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;min-width:980px;">
+        <div id="im_row_${idx}" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,2fr) 60px 90px 110px 120px 36px;gap:8px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;">
           <div class="form-group has-suggest" style="margin:0;">
             <label style="font-size:11px;">Mã vật tư <span class="req">*</span></label>
             <input type="text" id="im_item_ma_${idx}" value="${item.maVatTu}" oninput="suggestVoucherItem('import', ${idx})" onfocus="suggestVoucherItem('import', ${idx})" placeholder="Mã..." style="padding:6px 8px;font-size:12px;min-width:0;">
@@ -2241,7 +2333,7 @@ function renderVoucherItems(type) {
       const lineTotal = parseNum(item.soLuong) * parseNum(item.donGiaVon);
       total += lineTotal;
       return `
-        <div id="ex_row_${idx}" style="display:grid;grid-template-columns:minmax(160px,1.2fr) minmax(240px,1.5fr) 60px 90px 90px 110px 120px 36px;gap:6px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;min-width:1080px;">
+        <div id="ex_row_${idx}" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr) 55px 80px 80px 100px 110px 36px;gap:6px;align-items:end;background:rgba(255,255,255,0.01);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:visible;">
           <div class="form-group has-suggest" style="margin:0;">
             <label style="font-size:11px;">Mã hàng <span class="req">*</span></label>
             <input type="text" id="ex_item_ma_${idx}" value="${item.maHang}" oninput="suggestVoucherItem('export', ${idx})" onfocus="suggestVoucherItem('export', ${idx})" placeholder="Mã..." style="padding:6px 8px;font-size:12px;">
@@ -2734,6 +2826,13 @@ function renderCategory() {
   const body = document.getElementById('categoryBody');
   const search = (document.getElementById('searchCategory').value || '').toLowerCase();
 
+  // Reset page to 1 if search term changes
+  const state = PaginationState.category;
+  if (search !== state.lastFilter) {
+    state.currentPage = 1;
+    state.lastFilter = search;
+  }
+
   let data = Store.materials;
   if (search) {
     data = data.filter(i =>
@@ -2743,15 +2842,22 @@ function renderCategory() {
     );
   }
 
-  if (data.length === 0) {
+  const totalItems = data.length;
+  renderPagination('paginationCategory', totalItems, 'category');
+
+  const startIdx = (state.currentPage - 1) * state.pageSize;
+  const paginatedData = data.slice(startIdx, startIdx + state.pageSize);
+
+  if (totalItems === 0) {
     body.innerHTML = `<tr><td colspan="7"><div class="empty-state">
       <div class="empty-icon">🗂️</div><p>Danh mục chưa có mặt hàng nào</p>
       <p class="sub">Thêm mặt hàng hoặc nhập bằng file Excel</p>
     </div></td></tr>`;
   } else {
-    body.innerHTML = data.map((item, idx) => {
+    body.innerHTML = paginatedData.map((item, idx) => {
+      const globalIdx = startIdx + idx;
       return `<tr>
-        <td>${idx + 1}</td>
+        <td>${globalIdx + 1}</td>
         <td class="primary">${item.maHang}</td>
         <td class="col-ten-vat-tu">${item.tenHang}</td>
         <td>${item.dvt}</td>
@@ -3071,6 +3177,151 @@ function getExportValueInMonth(maVatTu, year, month) {
   return expVal;
 }
 
+// ===========================
+// DATE RANGE STOCK HELPERS
+// ===========================
+function getStockBeforeDateStr(maVatTu, dateStr) {
+  const opening = Store.openingBalance
+    .filter(i => i.maVatTu.toUpperCase() === maVatTu.toUpperCase())
+    .reduce((s, i) => s + parseNum(i.soLuong), 0);
+
+  const imported = Store.imports
+    .filter(i => i.maVatTu.toUpperCase() === maVatTu.toUpperCase() && i.ngayNhap < dateStr)
+    .reduce((s, i) => s + parseNum(i.soLuong), 0);
+
+  const exported = Store.exports
+    .filter(i => i.maHang.toUpperCase() === maVatTu.toUpperCase() && i.ngayXuat < dateStr)
+    .reduce((s, i) => s + parseNum(i.soLuong), 0);
+
+  let lentCount = 0;
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.items) {
+        l.items.forEach(i => {
+          if (i.maHang.toUpperCase() === maVatTu.toUpperCase()) {
+            if (l.ngayXuat < dateStr) lentCount += parseNum(i.soLuong);
+            if (i.ngayTra && i.ngayTra < dateStr) {
+              lentCount -= parseNum(i.soLuongTra || 0);
+            }
+          }
+        });
+      }
+    });
+  }
+  return opening + imported - exported - lentCount;
+}
+
+function getStockValueBeforeDateStr(maVatTu, dateStr) {
+  const openingVal = Store.openingBalance
+    .filter(i => i.maVatTu.toUpperCase() === maVatTu.toUpperCase())
+    .reduce((s, i) => s + parseNum(i.soLuong) * parseNum(i.donGia), 0);
+
+  const importedVal = Store.imports
+    .filter(i => i.maVatTu.toUpperCase() === maVatTu.toUpperCase() && i.ngayNhap < dateStr)
+    .reduce((s, i) => s + parseNum(i.thanhTien), 0);
+
+  const exportedVal = Store.exports
+    .filter(i => i.maHang.toUpperCase() === maVatTu.toUpperCase() && i.ngayXuat < dateStr)
+    .reduce((s, i) => s + parseNum(i.tongGiaVon), 0);
+
+  let lentVal = 0;
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.items) {
+        l.items.forEach(i => {
+          if (i.maHang.toUpperCase() === maVatTu.toUpperCase()) {
+            if (l.ngayXuat < dateStr) lentVal += parseNum(i.soLuong) * parseNum(i.donGiaVon);
+            if (i.ngayTra && i.ngayTra < dateStr) {
+              lentVal -= parseNum(i.soLuongTra || 0) * parseNum(i.donGiaVon);
+            }
+          }
+        });
+      }
+    });
+  }
+  return openingVal + importedVal - exportedVal - lentVal;
+}
+
+function getImportInPeriod(maVatTu, startStr, endStr) {
+  let imp = Store.imports
+    .filter(i => i.maVatTu.toUpperCase() === maVatTu.toUpperCase() && i.ngayNhap >= startStr && i.ngayNhap <= endStr)
+    .reduce((s, i) => s + parseNum(i.soLuong), 0);
+    
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.items) {
+        l.items.forEach(i => {
+          if (i.ngayTra && i.maHang.toUpperCase() === maVatTu.toUpperCase()) {
+            if (i.ngayTra >= startStr && i.ngayTra <= endStr) {
+              imp += parseNum(i.soLuongTra || 0);
+            }
+          }
+        });
+      }
+    });
+  }
+  return imp;
+}
+
+function getImportValueInPeriod(maVatTu, startStr, endStr) {
+  let impVal = Store.imports
+    .filter(i => i.maVatTu.toUpperCase() === maVatTu.toUpperCase() && i.ngayNhap >= startStr && i.ngayNhap <= endStr)
+    .reduce((s, i) => s + parseNum(i.thanhTien), 0);
+    
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.items) {
+        l.items.forEach(i => {
+          if (i.ngayTra && i.maHang.toUpperCase() === maVatTu.toUpperCase()) {
+            if (i.ngayTra >= startStr && i.ngayTra <= endStr) {
+              impVal += parseNum(i.soLuongTra || 0) * parseNum(i.donGiaVon);
+            }
+          }
+        });
+      }
+    });
+  }
+  return impVal;
+}
+
+function getExportInPeriod(maVatTu, startStr, endStr) {
+  let exp = Store.exports
+    .filter(i => i.maHang.toUpperCase() === maVatTu.toUpperCase() && i.ngayXuat >= startStr && i.ngayXuat <= endStr)
+    .reduce((s, i) => s + parseNum(i.soLuong), 0);
+    
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.ngayXuat >= startStr && l.ngayXuat <= endStr) {
+        if (l.items) {
+          l.items.forEach(i => {
+            if (i.maHang.toUpperCase() === maVatTu.toUpperCase()) exp += parseNum(i.soLuong);
+          });
+        }
+      }
+    });
+  }
+  return exp;
+}
+
+function getExportValueInPeriod(maVatTu, startStr, endStr) {
+  let expVal = Store.exports
+    .filter(i => i.maHang.toUpperCase() === maVatTu.toUpperCase() && i.ngayXuat >= startStr && i.ngayXuat <= endStr)
+    .reduce((s, i) => s + parseNum(i.tongGiaVon), 0);
+    
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.ngayXuat >= startStr && l.ngayXuat <= endStr) {
+        if (l.items) {
+          l.items.forEach(i => {
+            if (i.maHang.toUpperCase() === maVatTu.toUpperCase()) expVal += parseNum(i.soLuong) * parseNum(i.donGiaVon);
+          });
+        }
+      }
+    });
+  }
+  return expVal;
+}
+
 function getAllMaterials() {
   const map = {};
   Store.materials.forEach(i => {
@@ -3275,6 +3526,14 @@ function renderImports() {
   const maTen = document.getElementById('filterImportMaTen').value.trim().toLowerCase();
   const ncc = document.getElementById('filterImportNCC').value.trim().toLowerCase();
 
+  // Reset page to 1 if any filter changes
+  const filterKey = `${fromDate}|${toDate}|${soPhieu}|${maTen}|${ncc}`;
+  const state = PaginationState.import;
+  if (filterKey !== state.lastFilter) {
+    state.currentPage = 1;
+    state.lastFilter = filterKey;
+  }
+
   let data = [...Store.imports].sort((a, b) => new Date(b.ngayNhap) - new Date(a.ngayNhap));
   
   if (fromDate) {
@@ -3293,12 +3552,19 @@ function renderImports() {
     data = data.filter(i => i.nhaCungCap && i.nhaCungCap.toLowerCase().includes(ncc));
   }
 
-  if (data.length === 0) {
-    body.innerHTML = `<tr><td colspan="14"><div class="empty-state">
+  const totalItems = data.length;
+  renderPagination('paginationImport', totalItems, 'import');
+
+  const startIdx = (state.currentPage - 1) * state.pageSize;
+  const paginatedData = data.slice(startIdx, startIdx + state.pageSize);
+
+  if (totalItems === 0) {
+    body.innerHTML = `<tr><td colspan="15"><div class="empty-state">
       <div class="empty-icon">📥</div><p>Không tìm thấy lịch sử nhập kho phù hợp.</p>
     </div></td></tr>`;
   } else {
-    body.innerHTML = data.map((item, idx) => {
+    body.innerHTML = paginatedData.map((item, idx) => {
+      const globalIdx = startIdx + idx;
       const prevImport = getLatestPurchasePriceBeforeId(item.maVatTu, item.id, item.ngayNhap);
       let prevPriceStr = "—";
       let percentChangeStr = "—";
@@ -3317,7 +3583,8 @@ function renderImports() {
       }
 
       return `<tr>
-        <td>${idx + 1}</td>
+        <td><input type="checkbox" class="row-select-import" value="${item.id}" onchange="updateBulkDeleteBtn('import')"></td>
+        <td>${globalIdx + 1}</td>
         <td>${formatDate(item.ngayNhap)}</td>
         <td class="primary">${item.soPhieu}</td>
         <td>${item.maVatTu}</td>
@@ -3342,6 +3609,9 @@ function renderImports() {
   const total = data.reduce((s, i) => s + parseNum(i.thanhTien), 0);
   document.getElementById('importCount').textContent = data.length + ' dòng';
   document.getElementById('importTotal').textContent = 'Tổng giá trị nhập lọc được: ' + formatCurrency(total);
+  const selAll = document.getElementById('selectAllImport');
+  if (selAll) selAll.checked = false;
+  updateBulkDeleteBtn('import');
   updateBadges();
 }
 
@@ -3705,6 +3975,14 @@ function renderExports() {
   const nguoiNhan = document.getElementById('filterExportNguoiNhan').value.trim().toLowerCase();
   const boPhan = document.getElementById('filterExportBoPhan').value.trim().toLowerCase();
 
+  // Reset page to 1 if any filter changes
+  const filterKey = `${fromDate}|${toDate}|${soPhieu}|${maTen}|${nguoiNhan}|${boPhan}`;
+  const state = PaginationState.export;
+  if (filterKey !== state.lastFilter) {
+    state.currentPage = 1;
+    state.lastFilter = filterKey;
+  }
+
   let data = [...Store.exports].sort((a, b) => new Date(b.ngayXuat) - new Date(a.ngayXuat));
   
   if (fromDate) {
@@ -3726,14 +4004,22 @@ function renderExports() {
     data = data.filter(i => i.boPhanNhan && i.boPhanNhan.toLowerCase().includes(boPhan));
   }
 
-  if (data.length === 0) {
-    body.innerHTML = `<tr><td colspan="14"><div class="empty-state">
+  const totalItems = data.length;
+  renderPagination('paginationExport', totalItems, 'export');
+
+  const startIdx = (state.currentPage - 1) * state.pageSize;
+  const paginatedData = data.slice(startIdx, startIdx + state.pageSize);
+
+  if (totalItems === 0) {
+    body.innerHTML = `<tr><td colspan="15"><div class="empty-state">
       <div class="empty-icon">📤</div><p>Không tìm thấy lịch sử xuất kho phù hợp.</p>
     </div></td></tr>`;
   } else {
-    body.innerHTML = data.map((item, idx) => {
+    body.innerHTML = paginatedData.map((item, idx) => {
+      const globalIdx = startIdx + idx;
       return `<tr>
-        <td>${idx + 1}</td>
+        <td><input type="checkbox" class="row-select-export" value="${item.id}" onchange="updateBulkDeleteBtn('export')"></td>
+        <td>${globalIdx + 1}</td>
         <td>${formatDate(item.ngayXuat)}</td>
         <td class="primary">${item.soPhieu}</td>
         <td>${item.maHang}</td>
@@ -3758,6 +4044,9 @@ function renderExports() {
   const total = data.reduce((s, i) => s + parseNum(i.tongGiaVon), 0);
   document.getElementById('exportCount').textContent = data.length + ' dòng';
   document.getElementById('exportTotal').textContent = 'Tổng giá trị xuất lọc được: ' + formatCurrency(total);
+  const selAll = document.getElementById('selectAllExport');
+  if (selAll) selAll.checked = false;
+  updateBulkDeleteBtn('export');
   updateBadges();
 }
 
@@ -3903,14 +4192,29 @@ function editTemp(id) {
 // GROUPED SUMMARY REPORT
 // ===========================
 function renderSummary() {
-  const month = parseInt(document.getElementById('summaryMonth').value);
-  const year = parseInt(document.getElementById('summaryYear').value);
+  const fromDate = document.getElementById('summaryFromDate').value;
+  const toDate = document.getElementById('summaryToDate').value;
   const search = (document.getElementById('summarySearch')?.value || '').toLowerCase();
   const warningOnly = document.getElementById('summaryWarningOnly')?.checked;
   
+  if (!fromDate || !toDate) return;
+
   const materials = getAllMaterials();
   let keys = Object.keys(materials);
 
+  // 1. Sort keys by Category (chủng loại) first, then alphabetically by material code
+  keys.sort((a, b) => {
+    const clA = materials[a].cl || 'G';
+    const clB = materials[b].cl || 'G';
+    if (clA !== clB) {
+      return clA.localeCompare(clB);
+    }
+    const maA = materials[a].ma || '';
+    const maB = materials[b].ma || '';
+    return maA.localeCompare(maB);
+  });
+
+  // 2. Filter keys
   if (search) {
     keys = keys.filter(k => 
       (materials[k].ma && materials[k].ma.toLowerCase().includes(search)) || 
@@ -3920,9 +4224,9 @@ function renderSummary() {
 
   if (warningOnly) {
     keys = keys.filter(k => {
-      const slDK = getStockBeforeDate(k, year, month);
-      const slN = getImportInMonth(k, year, month);
-      const slX = getExportInMonth(k, year, month);
+      const slDK = getStockBeforeDateStr(k, fromDate);
+      const slN = getImportInPeriod(k, fromDate, toDate);
+      const slX = getExportInPeriod(k, fromDate, toDate);
       const slCK = slDK + slN - slX;
       return slCK < (materials[k].tonKhoToiThieu || 0);
     });
@@ -3930,8 +4234,8 @@ function renderSummary() {
 
   const totalMaterials = keys.length;
   const totalStockValue = keys.reduce((s, k) => s + getStockValue(k), 0);
-  const totalImportMonth = keys.reduce((s, k) => s + getImportValueInMonth(k, year, month), 0);
-  const totalExportMonth = keys.reduce((s, k) => s + getExportValueInMonth(k, year, month), 0);
+  const totalImportPeriod = keys.reduce((s, k) => s + getImportValueInPeriod(k, fromDate, toDate), 0);
+  const totalExportPeriod = keys.reduce((s, k) => s + getExportValueInPeriod(k, fromDate, toDate), 0);
   const outOfStock = keys.filter(k => getStock(k) <= 0).length;
 
   document.getElementById('summaryStats').innerHTML = `
@@ -3946,14 +4250,14 @@ function renderSummary() {
       <div class="stat-sub">Tổng giá trị hiện tại</div>
     </div>
     <div class="stat-card info">
-      <div class="stat-label">Nhập trong tháng</div>
-      <div class="stat-value">${formatCurrency(totalImportMonth)}</div>
-      <div class="stat-sub">Tháng ${month}/${year}</div>
+      <div class="stat-label">Nhập trong kỳ</div>
+      <div class="stat-value">${formatCurrency(totalImportPeriod)}</div>
+      <div class="stat-sub">${formatDate(fromDate)} → ${formatDate(toDate)}</div>
     </div>
     <div class="stat-card warning">
-      <div class="stat-label">Xuất trong tháng</div>
-      <div class="stat-value">${formatCurrency(totalExportMonth)}</div>
-      <div class="stat-sub">Tháng ${month}/${year}</div>
+      <div class="stat-label">Xuất trong kỳ</div>
+      <div class="stat-value">${formatCurrency(totalExportPeriod)}</div>
+      <div class="stat-sub">${formatDate(fromDate)} → ${formatDate(toDate)}</div>
     </div>
     <div class="stat-card danger">
       <div class="stat-label">Hết hàng</div>
@@ -3964,24 +4268,66 @@ function renderSummary() {
 
   const body = document.getElementById('summaryBody');
   if (keys.length === 0) {
-    body.innerHTML = `<tr><td colspan="12"><div class="empty-state">
+    body.innerHTML = `<tr><td colspan="13"><div class="empty-state">
       <div class="empty-icon">📊</div><p>Chưa có dữ liệu tồn kho để lập báo cáo.</p>
     </div></td></tr>`;
+    const paginationContainer = document.getElementById('paginationSummary');
+    if (paginationContainer) {
+      paginationContainer.innerHTML = '';
+      paginationContainer.style.display = 'none';
+    }
     return;
   }
 
-  const grouped = { A: [], B: [], C: [], D: [], E: [], F: [], G: [], Z: [] };
-  keys.forEach(k => {
+  // Reset page to 1 if any filter changes
+  const filterKey = `${fromDate}|${toDate}|${search}|${warningOnly}`;
+  const state = PaginationState.summary;
+  if (filterKey !== state.lastFilter) {
+    state.currentPage = 1;
+    state.lastFilter = filterKey;
+  }
+
+  const totalItems = keys.length;
+  renderPagination('paginationSummary', totalItems, 'summary');
+
+  const startIdx = (state.currentPage - 1) * state.pageSize;
+  const paginatedKeys = keys.slice(startIdx, startIdx + state.pageSize);
+
+  // Map each key to its global index
+  const keyToGlobalIdx = {};
+  keys.forEach((key, index) => {
+    keyToGlobalIdx[key] = index;
+  });
+
+  const paginatedGrouped = { A: [], B: [], C: [], D: [], E: [], F: [], G: [], Z: [] };
+  paginatedKeys.forEach(k => {
     const cl = materials[k].cl || 'G';
-    if (grouped[cl]) grouped[cl].push(k);
-    else grouped['G'].push(k);
+    if (paginatedGrouped[cl]) paginatedGrouped[cl].push(k);
+    else paginatedGrouped['G'].push(k);
   });
 
   let htmlRows = [];
   let grandTotals = { slDK: 0, gtDK: 0, slN: 0, gtN: 0, slX: 0, gtX: 0, slCK: 0, gtCK: 0 };
 
+  // Calculate grand totals over all filtered keys, not just paginated ones
+  keys.forEach(key => {
+    const slDK = getStockBeforeDateStr(key, fromDate);
+    const gtDK = getStockValueBeforeDateStr(key, fromDate);
+    const slN = getImportInPeriod(key, fromDate, toDate);
+    const gtN = getImportValueInPeriod(key, fromDate, toDate);
+    const slX = getExportInPeriod(key, fromDate, toDate);
+    const gtX = getExportValueInPeriod(key, fromDate, toDate);
+    const slCK = slDK + slN - slX;
+    const gtCK = gtDK + gtN - gtX;
+
+    grandTotals.slDK += slDK; grandTotals.gtDK += gtDK;
+    grandTotals.slN += slN; grandTotals.gtN += gtN;
+    grandTotals.slX += slX; grandTotals.gtX += gtX;
+    grandTotals.slCK += slCK; grandTotals.gtCK += gtCK;
+  });
+
   Object.keys(Categories).forEach(catKey => {
-    const list = grouped[catKey] || [];
+    const list = paginatedGrouped[catKey] || [];
     if (list.length === 0) return;
 
     htmlRows.push(`
@@ -3992,14 +4338,14 @@ function renderSummary() {
 
     let catTotals = { slDK: 0, gtDK: 0, slN: 0, gtN: 0, slX: 0, gtX: 0, slCK: 0, gtCK: 0 };
 
-    list.forEach((key, idx) => {
+    list.forEach((key) => {
       const m = materials[key];
-      const slDK = getStockBeforeDate(key, year, month);
-      const gtDK = getStockValueBeforeDate(key, year, month);
-      const slN = getImportInMonth(key, year, month);
-      const gtN = getImportValueInMonth(key, year, month);
-      const slX = getExportInMonth(key, year, month);
-      const gtX = getExportValueInMonth(key, year, month);
+      const slDK = getStockBeforeDateStr(key, fromDate);
+      const gtDK = getStockValueBeforeDateStr(key, fromDate);
+      const slN = getImportInPeriod(key, fromDate, toDate);
+      const gtN = getImportValueInPeriod(key, fromDate, toDate);
+      const slX = getExportInPeriod(key, fromDate, toDate);
+      const gtX = getExportValueInPeriod(key, fromDate, toDate);
       const slCK = slDK + slN - slX;
       const gtCK = gtDK + gtN - gtX;
 
@@ -4008,11 +4354,6 @@ function renderSummary() {
       catTotals.slX += slX; catTotals.gtX += gtX;
       catTotals.slCK += slCK; catTotals.gtCK += gtCK;
 
-      grandTotals.slDK += slDK; grandTotals.gtDK += gtDK;
-      grandTotals.slN += slN; grandTotals.gtN += gtN;
-      grandTotals.slX += slX; grandTotals.gtX += gtX;
-      grandTotals.slCK += slCK; grandTotals.gtCK += gtCK;
-
       let stockClass = slCK > 0 ? '' : (slCK === 0 ? 'warning' : 'danger');
       let rowStyle = '';
       if (m.tonKhoToiThieu && slCK < m.tonKhoToiThieu) {
@@ -4020,10 +4361,12 @@ function renderSummary() {
          stockClass = 'warning';
       }
 
+      const globalIdx = keyToGlobalIdx[key];
+
       htmlRows.push(`
         <tr style="${rowStyle}">
-          <td>${idx + 1}</td>
-          <td class="primary">${m.ma}</td>
+          <td>${globalIdx + 1}</td>
+          <td class="primary" style="cursor:pointer;text-decoration:underline;" onclick="openMaterialDetail('${m.ma}')" title="Xem chi tiết vật tư ${m.ma}">${m.ma}</td>
           <td class="col-ten-vat-tu">${m.ten}</td>
           <td>${m.dvt}</td>
           <td class="right number" style="color:var(--warning)">${formatNumber(m.tonKhoToiThieu || 0)}</td>
@@ -4254,13 +4597,29 @@ function confirmClearAll() {
 // CSV/EXCEL SUMMARY EXPORT
 // ===========================
 function exportExcel() {
-  const month = parseInt(document.getElementById('summaryMonth').value);
-  const year = parseInt(document.getElementById('summaryYear').value);
+  const fromDate = document.getElementById('summaryFromDate').value;
+  const toDate = document.getElementById('summaryToDate').value;
+  if (!fromDate || !toDate) {
+    toast('Vui lòng chọn khoảng thời gian hợp lệ!', 'warning');
+    return;
+  }
   const materials = getAllMaterials();
   const keys = Object.keys(materials);
 
+  // Sort keys by Category first, then alphabetically by material code
+  keys.sort((a, b) => {
+    const clA = materials[a].cl || 'G';
+    const clB = materials[b].cl || 'G';
+    if (clA !== clB) {
+      return clA.localeCompare(clB);
+    }
+    const maA = materials[a].ma || '';
+    const maB = materials[b].ma || '';
+    return maA.localeCompare(maB);
+  });
+
   let csv = '\uFEFF';
-  csv += `BÁO CÁO TỔNG HỢP NHẬP XUẤT TỒN PHÂN NHÓM - THÁNG ${month}/${year}\n\n`;
+  csv += `BÁO CÁO TỔNG HỢP NHẬP XUẤT TỒN PHÂN NHÓM - TỪ ${formatDate(fromDate)} ĐẾN ${formatDate(toDate)}\n\n`;
   csv += 'STT,Mã VT,Tên Vật Tư,ĐVT,SL Đầu Kỳ,GT Đầu Kỳ,SL Nhập,GT Nhập,SL Xuất,GT Xuất,SL Cuối Kỳ,GT Cuối Kỳ\n';
 
   const grouped = { A: [], B: [], C: [], D: [], E: [], F: [], G: [], Z: [] };
@@ -4276,12 +4635,12 @@ function exportExcel() {
     csv += `\n* CHỦNG LOẠI: ${catKey} - ${Categories[catKey].toUpperCase()}\n`;
     list.forEach((key, idx) => {
       const m = materials[key];
-      const slDK = getStockBeforeDate(key, year, month);
-      const gtDK = getStockValueBeforeDate(key, year, month);
-      const slN = getImportInMonth(key, year, month);
-      const gtN = getImportValueInMonth(key, year, month);
-      const slX = getExportInMonth(key, year, month);
-      const gtX = getExportValueInMonth(key, year, month);
+      const slDK = getStockBeforeDateStr(key, fromDate);
+      const gtDK = getStockValueBeforeDateStr(key, fromDate);
+      const slN = getImportInPeriod(key, fromDate, toDate);
+      const gtN = getImportValueInPeriod(key, fromDate, toDate);
+      const slX = getExportInPeriod(key, fromDate, toDate);
+      const gtX = getExportValueInPeriod(key, fromDate, toDate);
       const slCK = slDK + slN - slX;
       const gtCK = gtDK + gtN - gtX;
 
@@ -4293,7 +4652,10 @@ function exportExcel() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `BaoCaoTonKhoPhanNhom_T${month}_${year}.csv`;
+  
+  const fnFrom = fromDate.replace(/-/g, '');
+  const fnTo = toDate.replace(/-/g, '');
+  a.download = `BaoCaoTonKhoPhanNhom_${fnFrom}_den_${fnTo}.csv`;
   a.click();
   URL.revokeObjectURL(url);
   toast('Đã xuất báo cáo phân nhóm CSV!', 'info');
@@ -4350,8 +4712,12 @@ function downloadSampleExcel(type) {
 // EXPORT SUMMARY TO EXCEL
 // ===========================
 function exportSummaryExcel() {
-  const month = parseInt(document.getElementById('summaryMonth').value);
-  const year = parseInt(document.getElementById('summaryYear').value);
+  const fromDate = document.getElementById('summaryFromDate').value;
+  const toDate = document.getElementById('summaryToDate').value;
+  if (!fromDate || !toDate) {
+    toast('Vui lòng chọn khoảng thời gian hợp lệ!', 'warning');
+    return;
+  }
   const materials = getAllMaterials();
   const keys = Object.keys(materials);
   
@@ -4360,15 +4726,27 @@ function exportSummaryExcel() {
     return;
   }
   
+  // Sort keys by Category first, then alphabetically by material code
+  keys.sort((a, b) => {
+    const clA = materials[a].cl || 'G';
+    const clB = materials[b].cl || 'G';
+    if (clA !== clB) {
+      return clA.localeCompare(clB);
+    }
+    const maA = materials[a].ma || '';
+    const maB = materials[b].ma || '';
+    return maA.localeCompare(maB);
+  });
+  
   let data = [];
   keys.forEach(k => {
     const m = materials[k];
-    const slDK = getStockBeforeDate(k, year, month);
-    const gtDK = getStockValueBeforeDate(k, year, month);
-    const slN = getImportInMonth(k, year, month);
-    const gtN = getImportValueInMonth(k, year, month);
-    const slX = getExportInMonth(k, year, month);
-    const gtX = getExportValueInMonth(k, year, month);
+    const slDK = getStockBeforeDateStr(k, fromDate);
+    const gtDK = getStockValueBeforeDateStr(k, fromDate);
+    const slN = getImportInPeriod(k, fromDate, toDate);
+    const gtN = getImportValueInPeriod(k, fromDate, toDate);
+    const slX = getExportInPeriod(k, fromDate, toDate);
+    const gtX = getExportValueInPeriod(k, fromDate, toDate);
     const slCK = slDK + slN - slX;
     const gtCK = gtDK + gtN - gtX;
     
@@ -4396,7 +4774,9 @@ function exportSummaryExcel() {
   const cols = Object.keys(data[0]);
   worksheet['!cols'] = cols.map(c => ({ wch: Math.max(c.length, 12) + 2 }));
   
-  XLSX.writeFile(workbook, `TongHop_NhapXuatTon_T${month}_${year}.xlsx`);
+  const fnFrom = fromDate.replace(/-/g, '');
+  const fnTo = toDate.replace(/-/g, '');
+  XLSX.writeFile(workbook, `TongHop_NhapXuatTon_${fnFrom}_den_${fnTo}.xlsx`);
   toast('Đã xuất Excel tổng hợp nhập xuất tồn!', 'success');
 }
 
@@ -5109,34 +5489,6 @@ function renderAll() {
   renderSummary();
   renderReport();
   updateBadges();
-  setTimeout(syncTableScrollProxies, 0);
-}
-
-function syncTableScrollProxies() {
-  document.querySelectorAll('.table-scroll-proxy[data-scroll-target]').forEach(proxy => {
-    const target = document.getElementById(proxy.dataset.scrollTarget);
-    const inner = proxy.querySelector('.table-scroll-proxy-inner');
-    if (!target || !inner) return;
-
-    inner.style.width = Math.max(target.scrollWidth, target.clientWidth) + 'px';
-
-    if (proxy.dataset.bound === '1') return;
-    proxy.dataset.bound = '1';
-
-    let syncing = false;
-    proxy.addEventListener('scroll', () => {
-      if (syncing) return;
-      syncing = true;
-      target.scrollLeft = proxy.scrollLeft;
-      syncing = false;
-    });
-    target.addEventListener('scroll', () => {
-      if (syncing) return;
-      syncing = true;
-      proxy.scrollLeft = target.scrollLeft;
-      syncing = false;
-    });
-  });
 }
 
 function makeTableResizable(tableId) {
@@ -5181,27 +5533,445 @@ function makeTableResizable(tableId) {
 }
 
 // ===========================
+// RECALCULATE COST PRICE (WEIGHTED AVERAGE)
+// ===========================
+function recalcCostPrice() {
+  const fromDate = document.getElementById('recalcFromDate').value;
+  const toDate = document.getElementById('recalcToDate').value;
+  
+  if (!fromDate || !toDate) {
+    toast('Vui lòng chọn đầy đủ khoảng ngày để tính lại giá vốn!', 'warning');
+    return;
+  }
+  
+  if (new Date(fromDate) > new Date(toDate)) {
+    toast('Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!', 'warning');
+    return;
+  }
+  
+  // Find all export items in the date range
+  const exportsInRange = Store.exports.filter(item => {
+    const d = new Date(item.ngayXuat);
+    return d >= new Date(fromDate) && d <= new Date(toDate);
+  });
+  
+  if (exportsInRange.length === 0) {
+    toast('Không có phiếu xuất nào trong khoảng ngày đã chọn!', 'info');
+    return;
+  }
+  
+  showConfirm('Tính lại giá vốn bình quân', 
+    `Sẽ tính lại giá vốn bình quân gia quyền cho ${exportsInRange.length} dòng xuất kho từ ${formatDate(fromDate)} đến ${formatDate(toDate)}. Tiếp tục?`, 
+    () => {
+      let updatedCount = 0;
+      
+      // Sort exports by date ascending to process chronologically
+      const sortedExports = [...exportsInRange].sort((a, b) => new Date(a.ngayXuat) - new Date(b.ngayXuat));
+      
+      sortedExports.forEach(exportItem => {
+        const maHang = exportItem.maHang.toUpperCase();
+        
+        // Calculate weighted average cost at the time of this export
+        // Include: opening balance + all imports before/on export date - all exports before this one
+        let totalQty = 0;
+        let totalVal = 0;
+        
+        // Opening balance
+        Store.openingBalance.forEach(ob => {
+          if (ob.maVatTu.toUpperCase() === maHang) {
+            totalQty += parseNum(ob.soLuong);
+            totalVal += parseNum(ob.soLuong) * parseNum(ob.donGia);
+          }
+        });
+        
+        // All imports up to and including the export date
+        Store.imports.forEach(imp => {
+          if (imp.maVatTu.toUpperCase() === maHang && new Date(imp.ngayNhap) <= new Date(exportItem.ngayXuat)) {
+            totalQty += parseNum(imp.soLuong);
+            totalVal += parseNum(imp.thanhTien);
+          }
+        });
+        
+        // Subtract all exports BEFORE this one (by date, then by id for same-date)
+        Store.exports.forEach(ex => {
+          if (ex.maHang.toUpperCase() === maHang && ex.id !== exportItem.id) {
+            const exDate = new Date(ex.ngayXuat);
+            const curDate = new Date(exportItem.ngayXuat);
+            if (exDate < curDate || (exDate.getTime() === curDate.getTime() && ex.id < exportItem.id)) {
+              totalQty -= parseNum(ex.soLuong);
+              totalVal -= parseNum(ex.soLuong) * parseNum(ex.donGiaVon);
+            }
+          }
+        });
+        
+        // Subtract lent items (net of returns)
+        if (Store.lends) {
+          Store.lends.forEach(l => {
+            if (l.items && new Date(l.ngayXuat) <= new Date(exportItem.ngayXuat)) {
+              l.items.forEach(i => {
+                if (i.maHang.toUpperCase() === maHang) {
+                  totalQty -= parseNum(i.soLuong) - parseNum(i.soLuongTra || 0);
+                  totalVal -= (parseNum(i.soLuong) - parseNum(i.soLuongTra || 0)) * parseNum(i.donGiaVon);
+                }
+              });
+            }
+          });
+        }
+        
+        // Calculate weighted average
+        const avgPrice = totalQty > 0 ? Math.round(totalVal / totalQty) : 0;
+        
+        // Update the export item in Store
+        const storeItem = Store.exports.find(e => e.id === exportItem.id);
+        if (storeItem && avgPrice > 0) {
+          storeItem.donGiaVon = avgPrice;
+          storeItem.tongGiaVon = parseNum(storeItem.soLuong) * avgPrice;
+          updatedCount++;
+        }
+      });
+      
+      saveData();
+      renderExports();
+      toast(`Đã tính lại giá vốn bình quân cho ${updatedCount}/${exportsInRange.length} dòng xuất kho!`, 'success');
+    }
+  );
+}
+
+// ===========================
+// MATERIAL DETAIL - AUTOCOMPLETE
+// ===========================
+function suggestDetailMaterial() {
+  const input = document.getElementById('detailMaVatTu');
+  const dropdown = document.getElementById('detailSuggest');
+  const val = input.value.trim().toUpperCase();
+  const materials = getAllMaterials();
+  const keys = Object.keys(materials);
+
+  let filtered = keys;
+  if (val) {
+    filtered = keys.filter(k => k.includes(val) || materials[k].ten.toUpperCase().includes(val));
+  }
+
+  if (filtered.length === 0 || (filtered.length === 1 && filtered[0] === val)) {
+    dropdown.classList.remove('show');
+    return;
+  }
+
+  dropdown.innerHTML = filtered.slice(0, 10).map(k => {
+    const m = materials[k];
+    const stock = getStock(k);
+    return `<div class="suggest-item" onclick="selectDetailMaterial('${k}')">${m.ma} — ${m.ten} (Tồn: ${formatNumber(stock)} ${m.dvt})</div>`;
+  }).join('');
+  dropdown.classList.add('show');
+}
+
+function selectDetailMaterial(key) {
+  const materials = getAllMaterials();
+  const m = materials[key];
+  if (!m) return;
+  document.getElementById('detailMaVatTu').value = m.ma;
+  document.getElementById('detailSuggest').classList.remove('show');
+  renderMaterialDetail();
+}
+
+// ===========================
+// MATERIAL DETAIL - RENDER
+// ===========================
+function renderMaterialDetail() {
+  const maInput = document.getElementById('detailMaVatTu').value.trim();
+  const fromDate = document.getElementById('detailFromDate').value;
+  const toDate = document.getElementById('detailToDate').value;
+  const body = document.getElementById('detailBody');
+  const statsDiv = document.getElementById('detailStats');
+  
+  if (!maInput) {
+    body.innerHTML = `<tr><td colspan="10"><div class="empty-state">
+      <div class="empty-icon">🔎</div><p>Nhập mã hoặc tên vật tư ở ô phía trên để tra cứu</p>
+    </div></td></tr>`;
+    statsDiv.style.display = 'none';
+    document.getElementById('detailCount').textContent = 'Chọn mã vật tư để xem chi tiết';
+    document.getElementById('detailTotal').textContent = '';
+    return;
+  }
+  
+  // Find matching material key
+  const materials = getAllMaterials();
+  const keys = Object.keys(materials);
+  const maKey = keys.find(k => k.toUpperCase() === maInput.toUpperCase());
+  
+  if (!maKey) {
+    body.innerHTML = `<tr><td colspan="10"><div class="empty-state">
+      <div class="empty-icon">❌</div><p>Không tìm thấy mã vật tư "${maInput}"</p>
+    </div></td></tr>`;
+    statsDiv.style.display = 'none';
+    return;
+  }
+  
+  const m = materials[maKey];
+  const ma = maKey.toUpperCase();
+  
+  // Collect all transactions
+  let transactions = [];
+  
+  // Opening balance
+  Store.openingBalance.forEach(ob => {
+    if (ob.maVatTu.toUpperCase() === ma) {
+      transactions.push({
+        date: new Date('2000-01-01'),
+        dateStr: '—',
+        type: '📋 Số dư đầu kỳ',
+        typeClass: 'info',
+        soPhieu: '—',
+        doiTac: '—',
+        slNhap: parseNum(ob.soLuong),
+        slXuat: 0,
+        donGia: parseNum(ob.donGia),
+        thanhTien: parseNum(ob.soLuong) * parseNum(ob.donGia)
+      });
+    }
+  });
+  
+  // Imports
+  Store.imports.forEach(imp => {
+    if (imp.maVatTu.toUpperCase() === ma) {
+      transactions.push({
+        date: new Date(imp.ngayNhap),
+        dateStr: formatDate(imp.ngayNhap),
+        type: '📥 Nhập kho',
+        typeClass: 'success',
+        soPhieu: imp.soPhieu,
+        doiTac: imp.nhaCungCap || '—',
+        slNhap: parseNum(imp.soLuong),
+        slXuat: 0,
+        donGia: parseNum(imp.donGia),
+        thanhTien: parseNum(imp.thanhTien)
+      });
+    }
+  });
+  
+  // Exports
+  Store.exports.forEach(ex => {
+    if (ex.maHang.toUpperCase() === ma) {
+      transactions.push({
+        date: new Date(ex.ngayXuat),
+        dateStr: formatDate(ex.ngayXuat),
+        type: '📤 Xuất kho',
+        typeClass: 'danger',
+        soPhieu: ex.soPhieu,
+        doiTac: (ex.nguoiNhan || '') + (ex.boPhanNhan ? ' (' + ex.boPhanNhan + ')' : ''),
+        slNhap: 0,
+        slXuat: parseNum(ex.soLuong),
+        donGia: parseNum(ex.donGiaVon),
+        thanhTien: parseNum(ex.tongGiaVon)
+      });
+    }
+  });
+  
+  // Lends
+  if (Store.lends) {
+    Store.lends.forEach(l => {
+      if (l.items) {
+        l.items.forEach(i => {
+          if (i.maHang.toUpperCase() === ma) {
+            transactions.push({
+              date: new Date(l.ngayXuat),
+              dateStr: formatDate(l.ngayXuat),
+              type: '🤝 Cho mượn',
+              typeClass: 'warning',
+              soPhieu: l.soPhieu,
+              doiTac: (l.nguoiNhan || '') + (l.boPhanNhan ? ' (' + l.boPhanNhan + ')' : ''),
+              slNhap: 0,
+              slXuat: parseNum(i.soLuong),
+              donGia: parseNum(i.donGiaVon),
+              thanhTien: parseNum(i.soLuong) * parseNum(i.donGiaVon)
+            });
+            // Return
+            if (i.soLuongTra > 0 && i.ngayTra) {
+              transactions.push({
+                date: new Date(i.ngayTra),
+                dateStr: formatDate(i.ngayTra),
+                type: '↩️ Trả mượn',
+                typeClass: 'info',
+                soPhieu: l.soPhieu,
+                doiTac: (l.nguoiNhan || ''),
+                slNhap: parseNum(i.soLuongTra),
+                slXuat: 0,
+                donGia: parseNum(i.donGiaVon),
+                thanhTien: parseNum(i.soLuongTra) * parseNum(i.donGiaVon)
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  // Sort by date ascending
+  transactions.sort((a, b) => a.date - b.date);
+  
+  // Apply date filters
+  if (fromDate) {
+    transactions = transactions.filter(t => t.date >= new Date(fromDate) || t.dateStr === '—');
+  }
+  if (toDate) {
+    transactions = transactions.filter(t => t.date <= new Date(toDate) || t.dateStr === '—');
+  }
+  
+  // Calculate running balance
+  let runningQty = 0;
+  let totalIn = 0, totalOut = 0, totalInVal = 0, totalOutVal = 0;
+  
+  transactions.forEach(t => {
+    runningQty += t.slNhap - t.slXuat;
+    t.tonLuyKe = runningQty;
+    totalIn += t.slNhap;
+    totalOut += t.slXuat;
+    totalInVal += (t.slNhap > 0 ? t.thanhTien : 0);
+    totalOutVal += (t.slXuat > 0 ? t.thanhTien : 0);
+  });
+  
+  // Render stats
+  statsDiv.style.display = 'block';
+  statsDiv.innerHTML = `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+      <div style="flex:1;min-width:140px;padding:12px 16px;background:rgba(99,102,241,0.1);border-radius:var(--radius-sm);border:1px solid rgba(99,102,241,0.2);">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Vật tư</div>
+        <div style="font-size:15px;font-weight:700;color:var(--primary);">${m.ma}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${m.ten} (${m.dvt})</div>
+      </div>
+      <div style="flex:1;min-width:120px;padding:12px 16px;background:rgba(34,197,94,0.1);border-radius:var(--radius-sm);border:1px solid rgba(34,197,94,0.2);">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Tổng nhập</div>
+        <div style="font-size:15px;font-weight:700;color:var(--success);">${formatNumber(totalIn)} ${m.dvt}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${formatCurrency(totalInVal)}</div>
+      </div>
+      <div style="flex:1;min-width:120px;padding:12px 16px;background:rgba(239,68,68,0.1);border-radius:var(--radius-sm);border:1px solid rgba(239,68,68,0.2);">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Tổng xuất</div>
+        <div style="font-size:15px;font-weight:700;color:var(--danger);">${formatNumber(totalOut)} ${m.dvt}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${formatCurrency(totalOutVal)}</div>
+      </div>
+      <div style="flex:1;min-width:120px;padding:12px 16px;background:rgba(59,130,246,0.1);border-radius:var(--radius-sm);border:1px solid rgba(59,130,246,0.2);">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Tồn cuối kỳ</div>
+        <div style="font-size:15px;font-weight:700;color:#3b82f6;">${formatNumber(runningQty)} ${m.dvt}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${formatCurrency(totalInVal - totalOutVal)}</div>
+      </div>
+    </div>
+  `;
+  
+  // Render table
+  if (transactions.length === 0) {
+    body.innerHTML = `<tr><td colspan="10"><div class="empty-state">
+      <div class="empty-icon">📭</div><p>Không có giao dịch nào trong khoảng thời gian đã chọn</p>
+    </div></td></tr>`;
+  } else {
+    body.innerHTML = transactions.map((t, idx) => {
+      return `<tr>
+        <td>${idx + 1}</td>
+        <td>${t.dateStr}</td>
+        <td><span class="stock-badge ${t.typeClass === 'success' ? 'in-stock' : (t.typeClass === 'danger' ? 'out-of-stock' : 'in-stock')}" style="font-size:11px;">${t.type}</span></td>
+        <td class="primary">${t.soPhieu}</td>
+        <td>${t.doiTac || '—'}</td>
+        <td class="right number success">${t.slNhap > 0 ? formatNumber(t.slNhap) : '—'}</td>
+        <td class="right number danger">${t.slXuat > 0 ? formatNumber(t.slXuat) : '—'}</td>
+        <td class="right number">${formatCurrency(t.donGia)}</td>
+        <td class="right number">${formatCurrency(t.thanhTien)}</td>
+        <td class="right number" style="font-weight:700;">${formatNumber(t.tonLuyKe)}</td>
+      </tr>`;
+    }).join('');
+  }
+  
+  document.getElementById('detailCount').textContent = `${transactions.length} giao dịch`;
+  document.getElementById('detailTotal').textContent = `Tồn hiện tại: ${formatNumber(getStock(maKey))} ${m.dvt}`;
+}
+
+// ===========================
+// OPEN MATERIAL DETAIL FROM SUMMARY
+// ===========================
+function openMaterialDetail(maVatTu) {
+  switchTab('detail');
+  document.getElementById('detailMaVatTu').value = maVatTu;
+  document.getElementById('detailFromDate').value = '';
+  document.getElementById('detailToDate').value = '';
+  renderMaterialDetail();
+}
+// ===========================
+// BULK SELECT & DELETE
+// ===========================
+function toggleSelectAll(type) {
+  const checkAll = document.getElementById(type === 'import' ? 'selectAllImport' : 'selectAllExport');
+  const rowChecks = document.querySelectorAll(`.row-select-${type}`);
+  rowChecks.forEach(cb => cb.checked = checkAll.checked);
+  updateBulkDeleteBtn(type);
+}
+
+function updateBulkDeleteBtn(type) {
+  const checked = document.querySelectorAll(`.row-select-${type}:checked`);
+  const btn = document.getElementById(type === 'import' ? 'btnBulkDeleteImport' : 'btnBulkDeleteExport');
+  const countSpan = document.getElementById(type === 'import' ? 'bulkCountImport' : 'bulkCountExport');
+  if (btn) {
+    btn.style.display = checked.length > 0 ? 'inline-flex' : 'none';
+  }
+  if (countSpan) {
+    countSpan.textContent = checked.length;
+  }
+}
+
+function bulkDeleteImports() {
+  const checked = document.querySelectorAll('.row-select-import:checked');
+  if (checked.length === 0) return;
+  
+  showConfirm(`Xóa ${checked.length} dòng nhập kho`, 
+    `Bạn có chắc muốn xóa ${checked.length} dòng nhập kho đã chọn? Thao tác này không thể hoàn tác.`, 
+    () => {
+      const idsToDelete = new Set([...checked].map(cb => cb.value));
+      Store.imports = Store.imports.filter(i => !idsToDelete.has(i.id));
+      saveData();
+      renderImports();
+      toast(`Đã xóa ${idsToDelete.size} dòng nhập kho!`, 'success');
+    }
+  );
+}
+
+function bulkDeleteExports() {
+  const checked = document.querySelectorAll('.row-select-export:checked');
+  if (checked.length === 0) return;
+  
+  showConfirm(`Xóa ${checked.length} dòng xuất kho`, 
+    `Bạn có chắc muốn xóa ${checked.length} dòng xuất kho đã chọn? Số lượng tồn kho sẽ được tự động khôi phục. Thao tác này không thể hoàn tác.`, 
+    () => {
+      const idsToDelete = new Set([...checked].map(cb => cb.value));
+      Store.exports = Store.exports.filter(i => !idsToDelete.has(i.id));
+      saveData();
+      renderExports();
+      toast(`Đã xóa ${idsToDelete.size} dòng xuất kho!`, 'success');
+    }
+  );
+}
+
+// ===========================
 // INITIALIZATION
 // ===========================
 function init() {
   loadData();
 
   const now = new Date();
-  document.getElementById('summaryMonth').value = now.getMonth() + 1;
+  
+  // Set default date range for Summary (From Date - To Date) to current month
+  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const fromInput = document.getElementById('summaryFromDate');
+  const toInput = document.getElementById('summaryToDate');
+  if (fromInput) fromInput.value = firstDay.toISOString().split('T')[0];
+  if (toInput) toInput.value = lastDay.toISOString().split('T')[0];
+
   const reportMonthSelect = document.getElementById('reportMonth');
   if (reportMonthSelect) reportMonthSelect.value = now.getMonth() + 1;
 
-  const yearSelect = document.getElementById('summaryYear');
   const reportYearSelect = document.getElementById('reportYear');
   const currentYear = now.getFullYear();
-  for (let y = 2020; y <= 2035; y++) {
-    const opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y;
-    if (y === currentYear) opt.selected = true;
-    yearSelect.appendChild(opt);
-    
-    if (reportYearSelect) {
+  
+  if (reportYearSelect) {
+    reportYearSelect.innerHTML = '';
+    for (let y = 2020; y <= 2035; y++) {
       const optRep = document.createElement('option');
       optRep.value = y;
       optRep.textContent = y;
@@ -5221,10 +5991,6 @@ function init() {
   resetLendForm();
 
   renderAll();
-  initGoogleSheetSync();
-  syncTableScrollProxies();
-  window.addEventListener('resize', syncTableScrollProxies);
-  setInterval(syncTableScrollProxies, 1500);
   
   makeTableResizable('summaryTable');
   makeTableResizable('categoryTable');
@@ -5238,8 +6004,36 @@ function init() {
   });
 }
 
-init();
+// ===========================
+// LOGIN
+// ===========================
+function doLogin() {
+  const id = document.getElementById('loginId').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  
+  if (id === 'Thukhobvnqb' && pass === 'bvnqb@123') {
+    errEl.style.display = 'none';
+    sessionStorage.setItem('bvn_logged_in', '1');
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('appLayout').style.display = 'flex';
+    init();
+  } else {
+    errEl.style.display = 'block';
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+function checkLogin() {
+  if (sessionStorage.getItem('bvn_logged_in') === '1') {
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('appLayout').style.display = 'flex';
+    init();
+  }
+}
+
+checkLogin();
 </script>
 </body>
 </html>
-
