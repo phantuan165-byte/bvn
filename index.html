@@ -2089,29 +2089,168 @@ function changePageSize(stateKey, size) {
 // ===========================
 // PERSISTENCE
 // ===========================
-function saveData() {
+const LOCAL_STORAGE_KEY = 'tonKhoData_v4';
+const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxn1tLkOBaNdZQSqFXD2VfHpUwptcsapdo6xvgSk1F13XEm3kcAN2NPMUB7rt-btz8/exec';
+const GOOGLE_SHEETS_TOKEN = 'bvn-sync-2026-phantuanbvn';
+
+let googleSheetSaveTimer = null;
+let googleSheetSaving = false;
+let googleSheetPendingSave = false;
+let googleSheetInitialLoadDone = false;
+
+function normalizeStoreShape(data) {
+  const base = {
+    materials: [],
+    openingBalance: [],
+    imports: [],
+    exports: [],
+    temporary: [],
+    lends: []
+  };
+
+  if (!data || typeof data !== 'object') return base;
+
+  Object.keys(base).forEach(key => {
+    base[key] = Array.isArray(data[key]) ? data[key] : [];
+  });
+
+  return base;
+}
+
+function hasStoreData(data) {
+  const normalized = normalizeStoreShape(data);
+  return Object.values(normalized).some(arr => arr.length > 0);
+}
+
+function saveLocalDataOnly() {
   try {
-    localStorage.setItem('tonKhoData_v4', JSON.stringify(Store));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Store));
   } catch(e) {
-    toast('Lỗi lưu dữ liệu: ' + e.message, 'error');
+    toast('Lỗi lưu dữ liệu cục bộ: ' + e.message, 'error');
   }
+}
+
+function saveData() {
+  saveLocalDataOnly();
+  queueGoogleSheetSave();
 }
 
 function loadData() {
   try {
-    const d = localStorage.getItem('tonKhoData_v4');
-    if (d) {
-      Store = JSON.parse(d);
-      if (!Store.materials) Store.materials = [];
-      if (!Store.openingBalance) Store.openingBalance = [];
-      if (!Store.imports) Store.imports = [];
-      if (!Store.exports) Store.exports = [];
-      if (!Store.temporary) Store.temporary = [];
-      if (!Store.lends) Store.lends = [];
-    }
+    const d = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (d) Store = normalizeStoreShape(JSON.parse(d));
+    else Store = normalizeStoreShape(Store);
   } catch(e) {
     console.error('Load error:', e);
+    Store = normalizeStoreShape(Store);
   }
+}
+
+function queueGoogleSheetSave() {
+  if (!googleSheetInitialLoadDone) return;
+
+  googleSheetPendingSave = true;
+  clearTimeout(googleSheetSaveTimer);
+  googleSheetSaveTimer = setTimeout(saveGoogleSheetNow, 900);
+}
+
+async function saveGoogleSheetNow() {
+  if (!googleSheetPendingSave || googleSheetSaving) return;
+
+  googleSheetSaving = true;
+  googleSheetPendingSave = false;
+
+  try {
+    await fetch(GOOGLE_SHEETS_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify({
+        token: GOOGLE_SHEETS_TOKEN,
+        action: 'save',
+        store: normalizeStoreShape(Store),
+        savedAt: new Date().toISOString()
+      })
+    });
+  } catch(e) {
+    googleSheetPendingSave = true;
+    console.error('Google Sheets save error:', e);
+    toast('Chưa đồng bộ được Google Sheets. Dữ liệu vẫn đã lưu trên máy này.', 'warning');
+  } finally {
+    googleSheetSaving = false;
+  }
+}
+
+function loadGoogleSheetData() {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'bvnSheetCallback_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    const script = document.createElement('script');
+    const cleanup = () => {
+      delete window[callbackName];
+      script.remove();
+    };
+
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error('Quá thời gian tải Google Sheets'));
+    }, 15000);
+
+    window[callbackName] = (payload) => {
+      clearTimeout(timeout);
+      cleanup();
+
+      if (!payload || payload.ok === false) {
+        reject(new Error((payload && payload.error) || 'Không tải được Google Sheets'));
+        return;
+      }
+
+      resolve(normalizeStoreShape(payload.store || payload.data));
+    };
+
+    const params = new URLSearchParams({
+      action: 'load',
+      token: GOOGLE_SHEETS_TOKEN,
+      callback: callbackName,
+      ts: Date.now().toString()
+    });
+
+    script.onerror = () => {
+      clearTimeout(timeout);
+      cleanup();
+      reject(new Error('Không kết nối được Google Sheets'));
+    };
+
+    script.src = `${GOOGLE_SHEETS_ENDPOINT}?${params.toString()}`;
+    document.head.appendChild(script);
+  });
+}
+
+async function initGoogleSheetSync() {
+  try {
+    const cloudStore = await loadGoogleSheetData();
+
+    if (hasStoreData(cloudStore)) {
+      Store = normalizeStoreShape(cloudStore);
+      saveLocalDataOnly();
+      renderAll();
+      toast('Đã tải dữ liệu đồng bộ từ Google Sheets', 'success');
+    } else if (hasStoreData(Store)) {
+      googleSheetInitialLoadDone = true;
+      googleSheetPendingSave = true;
+      await saveGoogleSheetNow();
+      toast('Đã khởi tạo dữ liệu lên Google Sheets', 'success');
+      return;
+    } else {
+      toast('Google Sheets đã sẵn sàng đồng bộ dữ liệu', 'info');
+    }
+  } catch(e) {
+    console.error('Google Sheets load error:', e);
+    toast('Không tải được Google Sheets, đang dùng dữ liệu lưu trên máy này.', 'warning');
+  }
+
+  googleSheetInitialLoadDone = true;
 }
 
 // ===========================
@@ -5991,6 +6130,7 @@ function init() {
   resetLendForm();
 
   renderAll();
+  initGoogleSheetSync();
   
   makeTableResizable('summaryTable');
   makeTableResizable('categoryTable');
